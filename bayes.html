@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Bayesische Auswertung (19. Dez) | Gartenbauliche Kulturen - Daten auswerten mit R</title>
+  <meta name="description" content="Chapter 6 Bayesische Auswertung (19. Dez) | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Bayesische Auswertung (19. Dez) | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Bayesische Auswertung (19. Dez) | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  
+  
+  
+
+<meta name="author" content="Katja Schiffers" />
+
+
+<meta name="date" content="2025-02-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="zeitreihen.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#zeitplan"><i class="fa fa-check"></i>Zeitplan</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="05-bayes.html"><a href="#einf%C3%BChrungR"><i class="fa fa-check"></i><b>2</b> Einführung R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="einführungR.html"><a href="einführungR.html"><i class="fa fa-check"></i><b>2.1</b> Was ist R?</a></li>
+<li class="chapter" data-level="2.2" data-path="einführungR.html"><a href="einführungR.html#r-und-r-studio-installieren"><i class="fa fa-check"></i><b>2.2</b> R und R-Studio installieren</a></li>
+<li class="chapter" data-level="2.3" data-path="einführungR.html"><a href="einführungR.html#erste-schritte-mit-r"><i class="fa fa-check"></i><b>2.3</b> Erste Schritte mit R</a></li>
+<li class="chapter" data-level="2.4" data-path="einführungR.html"><a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r"><i class="fa fa-check"></i><b>2.4</b> Importieren von Daten aus Excel/LibreOffice nach R</a></li>
+<li class="chapter" data-level="2.5" data-path="einführungR.html"><a href="einführungR.html#daten-kontrollieren"><i class="fa fa-check"></i><b>2.5</b> Daten kontrollieren</a></li>
+<li class="chapter" data-level="2.6" data-path="einführungR.html"><a href="einführungR.html#hilfe-bekommen"><i class="fa fa-check"></i><b>2.6</b> Hilfe bekommen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="daten.html"><a href="daten.html"><i class="fa fa-check"></i><b>3</b> Daten vorbereiten, Prinzip Anova</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="daten.html"><a href="daten.html#r-projekte"><i class="fa fa-check"></i><b>3.1</b> R-Projekte</a></li>
+<li class="chapter" data-level="3.2" data-path="daten.html"><a href="daten.html#datentypen-und--transformationen"><i class="fa fa-check"></i><b>3.2</b> Datentypen und -transformationen</a></li>
+<li class="chapter" data-level="3.3" data-path="daten.html"><a href="daten.html#umgang-mit-nas"><i class="fa fa-check"></i><b>3.3</b> Umgang mit NAs</a></li>
+<li class="chapter" data-level="3.4" data-path="05-bayes.html"><a href="#datens%C3%A4tze-umstrukturieren"><i class="fa fa-check"></i><b>3.4</b> Datensätze umstrukturieren</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="daten.html"><a href="daten.html#der-pipe-operator"><i class="fa fa-check"></i><b>3.4.1</b> Der Pipe-Operator</a></li>
+<li class="chapter" data-level="3.4.2" data-path="daten.html"><a href="daten.html#drop_na"><i class="fa fa-check"></i><b>3.4.2</b> drop_na()</a></li>
+<li class="chapter" data-level="3.4.3" data-path="daten.html"><a href="daten.html#select"><i class="fa fa-check"></i><b>3.4.3</b> select()</a></li>
+<li class="chapter" data-level="3.4.4" data-path="daten.html"><a href="daten.html#filter"><i class="fa fa-check"></i><b>3.4.4</b> filter()</a></li>
+<li class="chapter" data-level="3.4.5" data-path="daten.html"><a href="daten.html#mutate"><i class="fa fa-check"></i><b>3.4.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.4.6" data-path="daten.html"><a href="daten.html#pivot_longer"><i class="fa fa-check"></i><b>3.4.6</b> pivot_longer()</a></li>
+<li class="chapter" data-level="3.4.7" data-path="daten.html"><a href="daten.html#pivot_wider"><i class="fa fa-check"></i><b>3.4.7</b> pivot_wider()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="daten.html"><a href="daten.html#kontinuierlich"><i class="fa fa-check"></i><b>3.5</b> Kontinuierliche Daten auswerten</a></li>
+<li class="chapter" data-level="3.6" data-path="daten.html"><a href="daten.html#das-grundprinzip-der-varianzanalyse"><i class="fa fa-check"></i><b>3.6</b> Das Grundprinzip der Varianzanalyse</a></li>
+<li class="chapter" data-level="3.7" data-path="daten.html"><a href="daten.html#das-prinzip-der-parsimonie"><i class="fa fa-check"></i><b>3.7</b> Das Prinzip der Parsimonie</a></li>
+<li class="chapter" data-level="3.8" data-path="05-bayes.html"><a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>3.8</b> Annahmen der ANOVA überprüfen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="05-bayes.html"><a href="#z%C3%A4hldaten"><i class="fa fa-check"></i><b>4</b> Zähl- und Boniturdaten auswerten</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="zähldaten.html"><a href="zähldaten.html"><i class="fa fa-check"></i><b>4.1</b> Nicht-normalverteilte Daten</a></li>
+<li class="chapter" data-level="4.2" data-path="zähldaten.html"><a href="zähldaten.html#daten-transformieren"><i class="fa fa-check"></i><b>4.2</b> Daten transformieren?</a></li>
+<li class="chapter" data-level="4.3" data-path="zähldaten.html"><a href="zähldaten.html#generalisierte-lineare-modelle"><i class="fa fa-check"></i><b>4.3</b> Generalisierte lineare Modelle</a></li>
+<li class="chapter" data-level="4.4" data-path="zähldaten.html"><a href="zähldaten.html#beispiel-tomaten"><i class="fa fa-check"></i><b>4.4</b> Beispiel: Tomaten</a></li>
+<li class="chapter" data-level="4.5" data-path="zähldaten.html"><a href="zähldaten.html#overdispersion"><i class="fa fa-check"></i><b>4.5</b> Overdispersion</a></li>
+<li class="chapter" data-level="4.6" data-path="zähldaten.html"><a href="zähldaten.html#bonitur"><i class="fa fa-check"></i><b>4.6</b> Anteils- und Boniturdaten auswerten</a></li>
+<li class="chapter" data-level="4.7" data-path="zähldaten.html"><a href="zähldaten.html#anteilsdaten-auswerten"><i class="fa fa-check"></i><b>4.7</b> Anteilsdaten auswerten</a></li>
+<li class="chapter" data-level="4.8" data-path="zähldaten.html"><a href="zähldaten.html#bonitur-daten"><i class="fa fa-check"></i><b>4.8</b> Bonitur-Daten</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zeitreihen.html"><a href="zeitreihen.html"><i class="fa fa-check"></i><b>5</b> Zeitreihen auswerten und PostHoc Tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-plotten"><i class="fa fa-check"></i><b>5.1</b> Zeitreihen plotten</a></li>
+<li class="chapter" data-level="5.2" data-path="05-bayes.html"><a href="#zuf%C3%A4llige-effekte"><i class="fa fa-check"></i><b>5.2</b> Zufällige Effekte</a></li>
+<li class="chapter" data-level="5.3" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-analysieren"><i class="fa fa-check"></i><b>5.3</b> Zeitreihen analysieren</a></li>
+<li class="chapter" data-level="5.4" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests"><i class="fa fa-check"></i><b>5.4</b> Post-hoc Tests</a></li>
+<li class="chapter" data-level="5.5" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests---die-problematik"><i class="fa fa-check"></i><b>5.5</b> Post-hoc Tests - die Problematik</a></li>
+<li class="chapter" data-level="5.6" data-path="zeitreihen.html"><a href="zeitreihen.html#die-herangehensweise"><i class="fa fa-check"></i><b>5.6</b> Die Herangehensweise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>6</b> Bayesische Auswertung (19. Dez)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayes.html"><a href="bayes.html#der-satz-von-bayes"><i class="fa fa-check"></i><b>6.1</b> Der Satz von Bayes</a></li>
+<li class="chapter" data-level="6.2" data-path="bayes.html"><a href="bayes.html#das-prinzip-des-bayes-statistik"><i class="fa fa-check"></i><b>6.2</b> Das Prinzip des Bayes-Statistik</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bayes.html"><a href="bayes.html#mcmc---markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.2.1</b> MCMC - Markov Chain Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bayes.html"><a href="bayes.html#ein-etwas-konstruiertes-beispiel"><i class="fa fa-check"></i><b>6.3</b> Ein (etwas konstruiertes) Beispiel</a></li>
+<li class="chapter" data-level="6.4" data-path="bayes.html"><a href="bayes.html#frequentistisch-versus-bayesisch"><i class="fa fa-check"></i><b>6.4</b> Frequentistisch versus Bayesisch</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayes" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Bayesische Auswertung (19. Dez)<a href="bayes.html#bayes" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Auch im agrarwissenschaftlichen Bereich findet man zunehmend Studien, die nicht auf dem Formulieren von Null-Hypothesen und deren Testen mittels p-Werten beruhen (die frequentistische Statistik), sondern sich die Vorteile der Bayes-Statistik zunutze machen. Dazu gehören vor allem die intuitiver zu interpretierende Ergebnisse und die Möglichkeit, schon vorhandenes Wissen formalisiert in die Analyse einbeziehen zu können. Deshalb möchten wir Ihnen die Bayes-Statistik nicht vorenthalten! Das folgende Kapitel stützt sich stark auf einen sehr gut geschriebenen Artikel “Kurze Einführung in Bayes-Statistik mit R für Ornithologen” (2016) von Fränzi Korner-Nievergelt &amp; Ommo Hüppop in ‘Die Vogelwarte’. Am Ende des Kapitels kennen Sie</p>
+<ul>
+<li>das Prinzip der Bayesischen Statistik,</li>
+<li>Möglichkeiten, sie mit Hilfe des R-Packets ‘bmrs’ anzuwenden und</li>
+<li>die Unterschiede zwischen frequentistischer und bayesischer Statistik bezüglich der Interpretation der Ergebnisse</li>
+</ul>
+<hr />
+<div id="der-satz-von-bayes" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Der Satz von Bayes<a href="bayes.html#der-satz-von-bayes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Keine Einführung in die Bayesische Statistik kommt ohne den Satz von Bayes aus: Thomas Bayes war ein englischer Geistlicher, Philosoph und Statistiker von dem 1763 - posthum - ein Manuskript mit dem Titel ‘An essay towards solving a problem in the doctrine of chances’ veröffentlicht wurde. In diesem beschreibt er, wie basierend auf vorhandenem Wissen und zusätzlichen Beobachtungen <strong>X</strong> die Wahrscheinlichkeit dafür berechnet werden kann, dass eine Hypothese <strong>H</strong> zutrifft:</p>
+<p><span class="math display">\[P(H|X) = \frac {P(X|H)×P(H)}{P(X)}\]</span></p>
+<p>In Worten ausgedrückt: Die Wahrscheinlichkeit (P = probability) dass die Hypothese zutrifft, nachdem wir die Daten betrachtet haben (P(H|X), <strong>a-posteriori</strong> Wissen), ist gleich der Wahrscheinlichkeit, die Daten so zu beobachten, angenommen die Hypothese trifft zu (P(X|H), <strong>Likelihood</strong>), mal der Wahrscheinlichkeit, dass die Hypothese zutrifft, bevor wir die Daten betrachtet haben (P(H), <strong>a-priori Wissen</strong> oder <strong>Prior</strong>), geteilt durch die Wahrscheinlichkeit die Daten so zu beobachten ohne irgendeine Annahme zur Hypothese (P(X), Normalisierungskonstante).<br />
+Wichtig ist noch anzumerken, dass Hypothesen dabei als Parameterwerte ausgedrückt werden. Ist unsere Hypothese also, dass unter Behandlung A der Mittelwert der abhängigen Variable größer ist als unter Behandlung B, berechnen wir die Wahrscheinlichkeit für den Parameter Mittelwert(A) - Mittelwert(B) und bekommen als Ergebnis, mit welcher Wahrscheinlichkeit er &gt; 0 ist.</p>
+</div>
+<div id="das-prinzip-des-bayes-statistik" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Das Prinzip des Bayes-Statistik<a href="bayes.html#das-prinzip-des-bayes-statistik" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In der Bayes-Statistik wird diese Idee verwendet, um bereits vorhandenes Wissen - das A-priori-Wissen (P(HP)) - mit den Information, die in den neu erhobenen Daten X stecken zu kombinieren und so das ‘geupdatete- A-posteriori-Wissen zu generieren. Wir sehen außerdem, dass wir als Ergebnis die Wahrscheinlichkeit unserer Hypothese bekommen. Das ist wesentlich leichter bekömmlich und näher an unserem ’normalen’ Denken als die Interpretation eines p-Wertes: ‘Die Wahrscheinlichkeit solche oder extremere Daten zu finden, wenn die Null-Hypothese wahr ist’.</p>
+<blockquote>
+<p><strong>Exkurs: Wahrscheinlichkeitsverteilungen</strong><br />
+Um Wahrscheinlichkeiten darzustellen, zum Beispiel das a-priori Wissen, werden Wahrscheinlichkeitsverteilungen verwendet. In der foldenden Abbildung sehen Sie eine solche Wahrscheinlichkeitsverteilung: Je höher die Dichte, desto wahrscheinlicher der Parameterwert, der auf der x-Achse abgetragen ist. Die Gesamtfläche unter der Kurve beträgt immer 1 (genau irgendein Parameterwert trifft immer zu). <img src="images/wahrscheinlichkeitsverteilung.png" alt="Quelle: Korner-Nievergelt und Hüppop (2016). Wahrscheinlichkeitsverteilung." /></p>
+</blockquote>
+<p>Wie berechnen wir also diese Wahrscheinlichkeit? Leider ist das meistens nicht ganz so trivial, wie es aussieht. Zwar können wir meistens die Likelihood berechnen (das wird auch in der frequentistischen Statistik zur Bestimmung der Parameterwerte unserer Modelle gemacht) und unser a-priori Wissen durch eine Wahrscheinlichkeitsverteilung festlegen. Schwierig wird es aber, zumindest sobald wir keine ganz simplen Modelle mehr haben, bei dem Teil P(X), der Wahrscheinlichkeit der Daten. Hierzu müsste man die Wahrscheinlichkeit der Daten über alle überhaupt möglichen Parameterwerte integrieren und das ist oft nicht möglich. Zum Glück kann dieses Problem aber mit einer Simulationstechnik, die in den 80er und 90er Jahren entwickelt wurde, umgangen werden:</p>
+<div id="mcmc---markov-chain-monte-carlo" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> MCMC - Markov Chain Monte Carlo<a href="bayes.html#mcmc---markov-chain-monte-carlo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MCMC-Verfahren können Wahrscheinlichkeitsverteilung annähern (in diesem Fall P(H|X)), die man nicht analystisch berechnen kann. Die intuitivste und ziemlich geniale Erklärung, die ich dazu gefunden habe ist die von Michael Franke auf seiner github Seite <a href="https://michael-franke.github.io/intro-data-analysis/Ch-03-03-estimation-algorithms.html" class="uri">https://michael-franke.github.io/intro-data-analysis/Ch-03-03-estimation-algorithms.html</a>
+Ich habe sie hier in Teilen übersetzt:</p>
+<div class="float">
+<img src="images/apple_tree.jpg" alt="Image by brgfx on Freepik" />
+<div class="figcaption">Image by brgfx on Freepik</div>
+</div>
+<blockquote>
+<p><strong>Wie die Äpfel an die Bäume kommen</strong><br />
+Jedes Jahr im Frühling schickt Mutter Natur die Kinder los, um Äpfel in den Apfelbäumen zu verteilen. Für jeden Baum soll die Anzahl der Äpfel proportional zur Anzahl der Blätter sein: Riese Ralf mit doppelt so vielen Blättern wie Dünner Daniel soll also am Ende auch doppelt so viele Äpfel haben. Wenn es also insgesamt <span class="math inline">\(n_a\)</span> Äpfel gibt, und <span class="math inline">\(L(t)\)</span> die Anzahl der Blätter von Baum <span class="math inline">\(t\)</span> ist, soll jeder Baum <span class="math inline">\(A(t)\)</span> Äpfel bekommen.</p>
+</blockquote>
+<p><span class="math display">\[A(t) = \frac {L(t)}{\sum L(t&#39;)}n_a\]</span></p>
+<blockquote>
+<p>Das Problem ist nur, dass Mutter Natur <span class="math inline">\(\sum L(t&#39;)\)</span> (die Normalisierungskonstante) nicht ausrechnen kann, also nicht weiß, wie viele Blätter alle Bäume zusammengenommen haben.<br />
+Die Kinder (Markov-Ketten) können aber zählen. Sie können zwar nicht alle Bäume besuchen und sich die Zahlen auch nicht so lange merken, aber immerhin für je zwei Bäume. Was sie jetzt tun, ist folgendes: sie starten je an einem zufälligen Baum (Parameterwert), hängen schonmal einen Apfel rein, zählen dort die Blätter <span class="math inline">\(L(t_1)\)</span> und suchen dann nach einem Baum in der Nähe, von dem sie auch die Blätter zählen <span class="math inline">\(L(t_2)\)</span> (der Zähler unserer Verteilung). Ist die Zahl der Blätter im zweiten Baum höher, gehen sie dort auf jeden Fall hin und hängen einen Apfel hinr
+ein. Ist sie niedriger gehen sie nur mit der Wahrscheinlichkeit <span class="math inline">\(L(t_2)/L(t_1)\)</span> dorthin und hängen einen Apfel auf. So laufen sie weiter zwischen den Bäumen hin und her und am Ende sind die Äpfel ungefähr richtig verteilt. Je mehr Äpfel es sind, desto besser das Ergebnis. Die Besuchshäufigkeit der Kinder hat sich also der gewünschten Verteilung (die Mutter Natur nicht ausrechnen konnte) angenähert!</p>
+</blockquote>
+<p>MCMC Verfahren machen das gleiche: eine MCMC Kette zieht zufällig Werte für die Modell-Parameter und berechnet damit Ergebnis1 = Likelihood der Daten * Prior. Dann zieht sie zufällig Werte, die um die ersten Werte herum liegen, und berechnet dafür wiederum Likelihood der Daten * Prior = Ergebnis2. Wenn Ergebnis2 höher ist als Ergebnis1, springt sie dorthin und zieht von dort aus neue Parameter-Werte. Wenn das Ergebnis2 niedriger ist, springt sie nur mit der Wahrscheinlichkeit Ergebnis2/Ergebnis1 dorthin. Jetzt werden wieder zufällig Werte gezogen usw.<br />
+In der folgenden Abbildung sind die erfolgreichen Sprünge durch blaue Pfeile symbolisiert, die abgelehnten Sprünge durch grüne Pfeile.</p>
+<div class="float">
+<img src="images/mcmc.png" alt="Visualisierung einer MCMC-Simulation. Sie müssen sich vorstellen, dass Sie die lachsfarbene Parameterlandschaft, die die Werte für Likelihood * Prior darstellt, nicht sehen können, sondern nur die Werte der einzelnen Punkte berechnen können. Weitere Erklärungen im Text. Quelle: https://www.turing.ac.uk/research/research-projects/adaptive-multilevel-mcmc-sampling" />
+<div class="figcaption">Visualisierung einer MCMC-Simulation. Sie müssen sich vorstellen, dass Sie die lachsfarbene Parameterlandschaft, die die Werte für Likelihood * Prior darstellt, nicht sehen können, sondern nur die Werte der einzelnen Punkte berechnen können. Weitere Erklärungen im Text. Quelle: <a href="https://www.turing.ac.uk/research/research-projects/adaptive-multilevel-mcmc-sampling" class="uri">https://www.turing.ac.uk/research/research-projects/adaptive-multilevel-mcmc-sampling</a></div>
+</div>
+<p>Wenn dieser Prozess lang genug fortgesetzt wird, nähert sich die Verteilung der blauen Punkte der a-posteriori Wahrscheinlichkeitsverteilung der Parameter an, die wir haben wollen: Wir haben a-priori Wissen und die Information, die in den neu gesammelten Daten steckt, erfolgreich zum a-posteriori Wissen kombiniert!</p>
+</div>
+</div>
+<div id="ein-etwas-konstruiertes-beispiel" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Ein (etwas konstruiertes) Beispiel<a href="bayes.html#ein-etwas-konstruiertes-beispiel" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir müssen uns entscheiden, welche Hühnerrasse wir in größerem Maßstab auf unserer Streuobstwiese halten möchten. Wir haben selbst schon 3 Kraienköppe und 6 Niederrheiner. Die Niederreihner sind uns ein bisschen lieber, weil sie weniger aggressiv sind, aber die Kraienköppe scheinen eine etwas höhere Legeleistung zu haben. Ist es deshalb wirklich sinnvoll, eher Kraienköppe zu wählen?</p>
+<p><strong>Schritt 1: Definition der A-priori-Wahrscheinlichkeitsverteilung</strong></p>
+<p>Wir erkundigen uns über die Legeleistung der beiden Rassen und erfahren, dass Niederrheiner zwischen 190 und 210 Eier pro Jahr legen, Kraienköppe zwischen 200 und 220. Entsprechend formulieren wir unsere a-priori Wahrscheinlichkeitsverteilungen:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="bayes.html#cb130-1" tabindex="-1"></a><span class="fu">library</span>(brms, <span class="at">warn.conflicts=</span>F, <span class="at">quietly=</span>T)</span></code></pre></div>
+<pre><code>## Loading &#39;brms&#39; package (version 2.22.0). Useful instructions
+## can be found by typing help(&#39;brms&#39;). A more detailed introduction
+## to the package is available through vignette(&#39;brms_overview&#39;).</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bayes.html#cb132-1" tabindex="-1"></a><span class="co"># mit der Funktion set_prior definieren wir 2 Normalverteilungen, eine mit Mittelwert 200 </span></span>
+<span id="cb132-2"><a href="bayes.html#cb132-2" tabindex="-1"></a><span class="co"># und Standardabweichung 1,5, und eine mit Mittelwert 210 und Standardabweichung 1,5. </span></span>
+<span id="cb132-3"><a href="bayes.html#cb132-3" tabindex="-1"></a><span class="co"># Unter &#39;coef&#39; legen wir fest, zu welchen Parameter im Modell, das wir später </span></span>
+<span id="cb132-4"><a href="bayes.html#cb132-4" tabindex="-1"></a><span class="co"># fromulieren, diese Priors gehören.</span></span>
+<span id="cb132-5"><a href="bayes.html#cb132-5" tabindex="-1"></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">set_prior</span>(<span class="st">&quot;normal(200, 5)&quot;</span>, <span class="at">coef =</span> <span class="st">&quot;rasseN&quot;</span>), <span class="fu">set_prior</span>(<span class="st">&quot;normal(210, 5)&quot;</span>, <span class="at">coef =</span> <span class="st">&quot;rasseK&quot;</span>))</span>
+<span id="cb132-6"><a href="bayes.html#cb132-6" tabindex="-1"></a></span>
+<span id="cb132-7"><a href="bayes.html#cb132-7" tabindex="-1"></a><span class="co">#So können wir sie plotten, um ein Gefühl dafür zu bekommen</span></span>
+<span id="cb132-8"><a href="bayes.html#cb132-8" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">200</span>, <span class="dv">5</span>), <span class="at">from =</span> <span class="dv">170</span>, <span class="at">to =</span> <span class="dv">230</span>, <span class="at">xlab=</span><span class="st">&quot;Legeleistung&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Dichte&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><strong>2. Erhebung von neuen Daten</strong></p>
+<p>Jetzt geben wir unsere eigenen Beobachtungen der Legeleistung der 3 Kraienköppe und 6 Niederrheinern aus dem vorigen Jahr an:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="bayes.html#cb133-1" tabindex="-1"></a>rasse <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;K&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;N&quot;</span>, <span class="st">&quot;N&quot;</span>)</span>
+<span id="cb133-2"><a href="bayes.html#cb133-2" tabindex="-1"></a>ll <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">225</span>, <span class="dv">222</span>, <span class="dv">221</span>, <span class="dv">219</span>, <span class="dv">219</span>, <span class="dv">216</span>, <span class="dv">221</span>, <span class="dv">218</span>, <span class="dv">217</span>)</span>
+<span id="cb133-3"><a href="bayes.html#cb133-3" tabindex="-1"></a>daten <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rasse=</span>rasse, <span class="at">ll=</span>ll)</span></code></pre></div>
+<p><strong>3. Kombination der a-priori-Verteilung mit den Daten, um die a-posteriori-Verteilung zu erhalten</strong></p>
+<p>Um die a-posteriori Verteilung zu schätzen nutzen wir die Funktion ‘brm’ des Packets ‘brms’. Wie wir es schon von anderen Auswertungen kennen, formulieren wir zuerst unser Modell, nämlich das die Legeleistung ll von der Rasse abhängt. Die -1 in der Modell-Formel bewirkt, dass das Modell die Mittelwerte für die Legeleistung schätzt und nicht nur den Mittelwert für die erste Rasse und den Unterschied dazu. Unter ‘data’ geben wir unsere selbst erhobenen Daten ein und unter ‘prior’ die oben definierten Priors. Das argument ‘silent’ bestimmt, wie viele Informationen auf der Konsole ausgegeben werden, wenn die MCMC Ketten loslaufen. Diese Simulationen laufen je nach Modell-Komplexizität einige Sekunden oder Minuten.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bayes.html#cb134-1" tabindex="-1"></a>legeleistung <span class="ot">&lt;-</span> <span class="fu">brm</span>(ll <span class="sc">~</span> rasse <span class="sc">-</span><span class="dv">1</span>, <span class="at">data =</span> daten, <span class="at">prior =</span> priors, <span class="at">silent =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><strong>4. Interpretation</strong></p>
+<p>Der obige Code hat die MCMC Simulation durchgeführt und wir können uns jetzt die a-posteriori Verteilungen für die Legeleistungen der Hühnerrassen anschauen:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="bayes.html#cb135-1" tabindex="-1"></a><span class="co"># So kann man sich die Zusammenfassung anschauen</span></span>
+<span id="cb135-2"><a href="bayes.html#cb135-2" tabindex="-1"></a><span class="fu">summary</span>(legeleistung)</span></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: ll ~ rasse - 1 
+##    Data: daten (Number of observations: 9) 
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
+## 
+## Regression Coefficients:
+##        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## rasseK   221.78      1.52   218.28   224.39 1.00     1888     1356
+## rasseN   217.66      1.17   215.01   219.46 1.00     1985     1309
+## 
+## Further Distributional Parameters:
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     2.34      0.90     1.27     4.68 1.00     1345     1167
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Die Zusammenfassung zeigt uns zuerst nochmal unsere Eingaben und ein paar Informationen zu den Markov-Ketten. Am interessantesten für uns sind natürlich die Schätzer für rasseK und rasseN und ihre Kredibilitätsintervalle. Wie Sie sehen, überschneiden sich die Konfidenzintervalle: der untere Wert von rasseK (l-95%) ist mit etwa 218 kleiner als der obere Wert (u-95%) von etwa 219 von rasseN, die legeschwächer ist.)
+Sigma ist die geschätzte Standardabweichung der angenommenen Normalverteilung und interessiert uns hier weniger.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="bayes.html#cb137-1" tabindex="-1"></a><span class="fu">plot</span>(legeleistung)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p>In der Abbildung sind die Ergebnisse noch leichter zu interpretieren. Links sehen Sie die a-posteriori Verteilungen für beide Rassen (beachten Sie, dass die x-Achsen der beiden oberen Verteilungen nicht ausgerichtet sind). Rechts daneben die Dynamik der Markov-Ketten.
+Aus den a-posteriori Verteilungen ließe sich jetzt auch die genaue Wahrscheinlichkeit berechnen, dass die Legeleistung wirklich unterschiedlich ist. Da wir aber schon gesehen haben, dass die Kredibilitätsintervalle sich überschneiden, bleiben wir bei unserer Vorliebe für die Niederrheiner, auch wenn es nicht ausgeschlossen ist, dass sie ein paar Eier weniger legen.</p>
+</div>
+<div id="frequentistisch-versus-bayesisch" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Frequentistisch versus Bayesisch<a href="bayes.html#frequentistisch-versus-bayesisch" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<table>
+<colgroup>
+<col width="51%" />
+<col width="48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frequentistisch</th>
+<th>Bayesisch</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Wahrscheinlichkeit für Daten, in Bezug auf Hypothese nur ja/nein Antwort</td>
+<td>Wahrscheinlichkeit für Hypothesen</td>
+</tr>
+<tr class="even">
+<td>Vertrauensintervall: in welchem Intervall erwarten wir 95% der Mittelwerte von weiteren Zufallsstichproben gleicher Stichprobengröße</td>
+<td>Kredibilitätsintervall: in welchem Wertebereich liegt mit einer Wahrscheinlichkeit von 95 % der wahre Mittelwert der Population</td>
+</tr>
+<tr class="odd">
+<td>Annahme, dass es <strong>einen</strong> ‘wahren’ Wert gibt, die Beobachtungen aber zu einer Verteilung führen</td>
+<td>Annahme, dass die beobachteten Werte wahr sind und eine intrinsische Varianz haben</td>
+</tr>
+</tbody>
+</table>
+<p>Die sinnvollere Interpretierbarkeit der Ergebnisse von bayesischen Analysen wird am besten durch folgene Abbildung dargestellt:</p>
+<div class="float">
+<img src="images/effektgroesse.png" alt="Quelle: Korner-Nievergelt und Hüppop (2016). Fünf mögliche Resultate der Schätzung eines Effektes, zum Beispiel der Unterschied im Ertrag bei anderer Düngung. Die Punkte geben die geschätzten Differenzen, die vertikalen Balken die 95 % Unsicherheitsintervalle (Vertrauensintervall bzw. Kredibilitätsintervall) an. Die Resultate des zugehörigen Nullhypothesentest sind in der ersten Zeile aufgeführt. In der zweiten Zeile finden sich die posterior Wahrscheinlichkeit für die Hypothese, dass der Effekt „wirtschaftlich relevant“ ist. Die Hintergrundfarbe unterscheidet schematisch „wirtschaftlich relevante“ (orange) von „wirtschaftlich nicht relevanten“ (hellblau) Effektgrößen." />
+<div class="figcaption">Quelle: Korner-Nievergelt und Hüppop (2016). Fünf mögliche Resultate der Schätzung eines Effektes, zum Beispiel der Unterschied im Ertrag bei anderer Düngung. Die Punkte geben die geschätzten Differenzen, die vertikalen Balken die 95 % Unsicherheitsintervalle (Vertrauensintervall bzw. Kredibilitätsintervall) an. Die Resultate des zugehörigen Nullhypothesentest sind in der ersten Zeile aufgeführt. In der zweiten Zeile finden sich die posterior Wahrscheinlichkeit für die Hypothese, dass der Effekt „wirtschaftlich relevant“ ist. Die Hintergrundfarbe unterscheidet schematisch „wirtschaftlich relevante“ (orange) von „wirtschaftlich nicht relevanten“ (hellblau) Effektgrößen.</div>
+</div>
+<p>Bei einem unkritischen frequentistischen Ansatz würde das Ergebnis lauten: “Der Effekt bei Gruppe/Behandlung A und E ist signifikant, also Düngen wir jetzt mit dem getesteten Mittel. Bei den anderen Gruppen gibt es anscheinend keinen Einfluss.”<br />
+Natürlich gibt es auch in B einen wichtigen Effekt und auch wenn der Effekt in E statistisch signifikant ist, ist die Effektgröße auf den Ertrag so klein, dass es von wirtschaftlichem Standpunkt aus wahrscheinlich keinen Sinn macht, zusätzlich zu düngen.
+Die Ergebnisse der bayesischen Analyse (also die Wahrscheinlichkeiten für die Hypothese, dass es einen Effekt gibt), spiegeln diese Interpretationen viel direkter wider.</p>
+<p>Auch in diesem Kapitel gibt es eine Quiz-Fragen.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="zeitreihen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-bayes.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

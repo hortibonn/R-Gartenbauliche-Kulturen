@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Zeitreihen auswerten und PostHoc Tests | Gartenbauliche Kulturen - Daten auswerten mit R</title>
+  <meta name="description" content="Chapter 5 Zeitreihen auswerten und PostHoc Tests | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Zeitreihen auswerten und PostHoc Tests | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Zeitreihen auswerten und PostHoc Tests | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  
+  
+  
+
+<meta name="author" content="Katja Schiffers" />
+
+
+<meta name="date" content="2025-02-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="zähldaten.html"/>
+<link rel="next" href="bayes.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#zeitplan"><i class="fa fa-check"></i>Zeitplan</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="04-zeitreihen_posthoc.html"><a href="#einf%C3%BChrungR"><i class="fa fa-check"></i><b>2</b> Einführung R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="einführungR.html"><a href="einführungR.html"><i class="fa fa-check"></i><b>2.1</b> Was ist R?</a></li>
+<li class="chapter" data-level="2.2" data-path="einführungR.html"><a href="einführungR.html#r-und-r-studio-installieren"><i class="fa fa-check"></i><b>2.2</b> R und R-Studio installieren</a></li>
+<li class="chapter" data-level="2.3" data-path="einführungR.html"><a href="einführungR.html#erste-schritte-mit-r"><i class="fa fa-check"></i><b>2.3</b> Erste Schritte mit R</a></li>
+<li class="chapter" data-level="2.4" data-path="einführungR.html"><a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r"><i class="fa fa-check"></i><b>2.4</b> Importieren von Daten aus Excel/LibreOffice nach R</a></li>
+<li class="chapter" data-level="2.5" data-path="einführungR.html"><a href="einführungR.html#daten-kontrollieren"><i class="fa fa-check"></i><b>2.5</b> Daten kontrollieren</a></li>
+<li class="chapter" data-level="2.6" data-path="einführungR.html"><a href="einführungR.html#hilfe-bekommen"><i class="fa fa-check"></i><b>2.6</b> Hilfe bekommen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="daten.html"><a href="daten.html"><i class="fa fa-check"></i><b>3</b> Daten vorbereiten, Prinzip Anova</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="daten.html"><a href="daten.html#r-projekte"><i class="fa fa-check"></i><b>3.1</b> R-Projekte</a></li>
+<li class="chapter" data-level="3.2" data-path="daten.html"><a href="daten.html#datentypen-und--transformationen"><i class="fa fa-check"></i><b>3.2</b> Datentypen und -transformationen</a></li>
+<li class="chapter" data-level="3.3" data-path="daten.html"><a href="daten.html#umgang-mit-nas"><i class="fa fa-check"></i><b>3.3</b> Umgang mit NAs</a></li>
+<li class="chapter" data-level="3.4" data-path="04-zeitreihen_posthoc.html"><a href="#datens%C3%A4tze-umstrukturieren"><i class="fa fa-check"></i><b>3.4</b> Datensätze umstrukturieren</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="daten.html"><a href="daten.html#der-pipe-operator"><i class="fa fa-check"></i><b>3.4.1</b> Der Pipe-Operator</a></li>
+<li class="chapter" data-level="3.4.2" data-path="daten.html"><a href="daten.html#drop_na"><i class="fa fa-check"></i><b>3.4.2</b> drop_na()</a></li>
+<li class="chapter" data-level="3.4.3" data-path="daten.html"><a href="daten.html#select"><i class="fa fa-check"></i><b>3.4.3</b> select()</a></li>
+<li class="chapter" data-level="3.4.4" data-path="daten.html"><a href="daten.html#filter"><i class="fa fa-check"></i><b>3.4.4</b> filter()</a></li>
+<li class="chapter" data-level="3.4.5" data-path="daten.html"><a href="daten.html#mutate"><i class="fa fa-check"></i><b>3.4.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.4.6" data-path="daten.html"><a href="daten.html#pivot_longer"><i class="fa fa-check"></i><b>3.4.6</b> pivot_longer()</a></li>
+<li class="chapter" data-level="3.4.7" data-path="daten.html"><a href="daten.html#pivot_wider"><i class="fa fa-check"></i><b>3.4.7</b> pivot_wider()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="daten.html"><a href="daten.html#kontinuierlich"><i class="fa fa-check"></i><b>3.5</b> Kontinuierliche Daten auswerten</a></li>
+<li class="chapter" data-level="3.6" data-path="daten.html"><a href="daten.html#das-grundprinzip-der-varianzanalyse"><i class="fa fa-check"></i><b>3.6</b> Das Grundprinzip der Varianzanalyse</a></li>
+<li class="chapter" data-level="3.7" data-path="daten.html"><a href="daten.html#das-prinzip-der-parsimonie"><i class="fa fa-check"></i><b>3.7</b> Das Prinzip der Parsimonie</a></li>
+<li class="chapter" data-level="3.8" data-path="04-zeitreihen_posthoc.html"><a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>3.8</b> Annahmen der ANOVA überprüfen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="04-zeitreihen_posthoc.html"><a href="#z%C3%A4hldaten"><i class="fa fa-check"></i><b>4</b> Zähl- und Boniturdaten auswerten</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="zähldaten.html"><a href="zähldaten.html"><i class="fa fa-check"></i><b>4.1</b> Nicht-normalverteilte Daten</a></li>
+<li class="chapter" data-level="4.2" data-path="zähldaten.html"><a href="zähldaten.html#daten-transformieren"><i class="fa fa-check"></i><b>4.2</b> Daten transformieren?</a></li>
+<li class="chapter" data-level="4.3" data-path="zähldaten.html"><a href="zähldaten.html#generalisierte-lineare-modelle"><i class="fa fa-check"></i><b>4.3</b> Generalisierte lineare Modelle</a></li>
+<li class="chapter" data-level="4.4" data-path="zähldaten.html"><a href="zähldaten.html#beispiel-tomaten"><i class="fa fa-check"></i><b>4.4</b> Beispiel: Tomaten</a></li>
+<li class="chapter" data-level="4.5" data-path="zähldaten.html"><a href="zähldaten.html#overdispersion"><i class="fa fa-check"></i><b>4.5</b> Overdispersion</a></li>
+<li class="chapter" data-level="4.6" data-path="zähldaten.html"><a href="zähldaten.html#bonitur"><i class="fa fa-check"></i><b>4.6</b> Anteils- und Boniturdaten auswerten</a></li>
+<li class="chapter" data-level="4.7" data-path="zähldaten.html"><a href="zähldaten.html#anteilsdaten-auswerten"><i class="fa fa-check"></i><b>4.7</b> Anteilsdaten auswerten</a></li>
+<li class="chapter" data-level="4.8" data-path="zähldaten.html"><a href="zähldaten.html#bonitur-daten"><i class="fa fa-check"></i><b>4.8</b> Bonitur-Daten</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zeitreihen.html"><a href="zeitreihen.html"><i class="fa fa-check"></i><b>5</b> Zeitreihen auswerten und PostHoc Tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-plotten"><i class="fa fa-check"></i><b>5.1</b> Zeitreihen plotten</a></li>
+<li class="chapter" data-level="5.2" data-path="04-zeitreihen_posthoc.html"><a href="#zuf%C3%A4llige-effekte"><i class="fa fa-check"></i><b>5.2</b> Zufällige Effekte</a></li>
+<li class="chapter" data-level="5.3" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-analysieren"><i class="fa fa-check"></i><b>5.3</b> Zeitreihen analysieren</a></li>
+<li class="chapter" data-level="5.4" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests"><i class="fa fa-check"></i><b>5.4</b> Post-hoc Tests</a></li>
+<li class="chapter" data-level="5.5" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests---die-problematik"><i class="fa fa-check"></i><b>5.5</b> Post-hoc Tests - die Problematik</a></li>
+<li class="chapter" data-level="5.6" data-path="zeitreihen.html"><a href="zeitreihen.html#die-herangehensweise"><i class="fa fa-check"></i><b>5.6</b> Die Herangehensweise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>6</b> Bayesische Auswertung (19. Dez)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayes.html"><a href="bayes.html#der-satz-von-bayes"><i class="fa fa-check"></i><b>6.1</b> Der Satz von Bayes</a></li>
+<li class="chapter" data-level="6.2" data-path="bayes.html"><a href="bayes.html#das-prinzip-des-bayes-statistik"><i class="fa fa-check"></i><b>6.2</b> Das Prinzip des Bayes-Statistik</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bayes.html"><a href="bayes.html#mcmc---markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.2.1</b> MCMC - Markov Chain Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bayes.html"><a href="bayes.html#ein-etwas-konstruiertes-beispiel"><i class="fa fa-check"></i><b>6.3</b> Ein (etwas konstruiertes) Beispiel</a></li>
+<li class="chapter" data-level="6.4" data-path="bayes.html"><a href="bayes.html#frequentistisch-versus-bayesisch"><i class="fa fa-check"></i><b>6.4</b> Frequentistisch versus Bayesisch</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="zeitreihen" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Zeitreihen auswerten und PostHoc Tests<a href="zeitreihen.html#zeitreihen" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Im Gartenbau und in den Agrarwissenschaften allgemein haben wir es viel mit Wachstum zu tun: Pflanzen wachsen, Früchte wachsen, Nutztiere wachsen. Auf dem Campus Klein Altendorf beschäftigen sich Wissenschaftler zum Beispiel mit dem Wachstum von Äpfeln und seine Abhängigkeit von verschiedenen Umweltfaktoren. Dazu gibt es unter folgendem Link ein <a href="https://uni-bonn.sciebo.de/s/8UbL5d6e2LQTdDc">Video</a>.<br />
+In diesem Kapitel schauen wir uns an, wie solche Zeitreihen mit R dargestellt werden können und wie man Unterschiede im Wachstum (oder anderen über die Zeit aufgenommenen Parametern) analysieren kann. Am Ende des Kapitels</p>
+<ul>
+<li>haben Sie noch eine weitere Möglichkeit kennengelernt, die Funktionen von ggplot zu verwenden</li>
+<li>wissen Sie, was feste und zufällige Effekte in einem Modell sind und</li>
+<li>können gemischte lineare Modelle zur Analyse von Zeitreihen nutzen</li>
+</ul>
+<div id="zeitreihen-plotten" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Zeitreihen plotten<a href="zeitreihen.html#zeitreihen-plotten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Zunächst laden wir die library ‘ggplot2’, lesen die Wachstumsdaten aus der Datei ‘Braeburn.csv’ ein (im Order ‘data’ auf eCampus) und kontrollieren den Import. ID und Zeitpunkt wandeln wir in Faktoren um. Wie Sie sehen, haben wir Daten von 4 Früchten, 2 von Ästen mit niedrigen Behangdichten und 2 von Ästen mit hohen Behangdichten, deren Umfang stündlich gemessen wurde.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="zeitreihen.html#cb90-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb90-2"><a href="zeitreihen.html#cb90-2" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="zeitreihen.html#cb90-3" tabindex="-1"></a>Braeburn <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Braeburn.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb90-4"><a href="zeitreihen.html#cb90-4" tabindex="-1"></a><span class="fu">summary</span>(Braeburn)</span></code></pre></div>
+<pre><code>##     Datum               Umfang            ID          Behang         
+##  Length:2508        Min.   : 1434   Min.   :1.00   Length:2508       
+##  Class :character   1st Qu.: 5049   1st Qu.:1.75   Class :character  
+##  Mode  :character   Median : 7294   Median :2.50   Mode  :character  
+##                     Mean   : 7443   Mean   :2.50                     
+##                     3rd Qu.: 9583   3rd Qu.:3.25                     
+##                     Max.   :14609   Max.   :4.00                     
+##    Zeitpunkt  
+##  Min.   :  1  
+##  1st Qu.:157  
+##  Median :314  
+##  Mean   :314  
+##  3rd Qu.:471  
+##  Max.   :627</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="zeitreihen.html#cb92-1" tabindex="-1"></a>Braeburn<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Braeburn<span class="sc">$</span>ID)</span>
+<span id="cb92-2"><a href="zeitreihen.html#cb92-2" tabindex="-1"></a>Braeburn<span class="sc">$</span>Zeitpunkt <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Braeburn<span class="sc">$</span>Zeitpunkt)</span></code></pre></div>
+<p>Um das Wachstum dieser 4 Früchte zu visualisieren, nutzen wir die ggplot Funktion und geben bei den Aestetics (ein Parameter der Funktion) den Zeitpunkt (x-Achse), den Umfang dividiert durch 1000 um von Mikro- auf Millimeter zu kommen (y-Achse) und den Behang (niedrig/hoch) für die Gruppierung durch Farbe an:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="zeitreihen.html#cb93-1" tabindex="-1"></a><span class="fu">ggplot</span>(Braeburn, <span class="fu">aes</span>(Zeitpunkt, Umfang<span class="sc">/</span><span class="dv">1000</span>, <span class="at">color=</span>Behang)) <span class="sc">+</span> </span>
+<span id="cb93-2"><a href="zeitreihen.html#cb93-2" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Umfang (mm)&quot;</span>, <span class="at">x=</span><span class="st">&quot;Zeit&quot;</span>) <span class="sc">+</span></span>
+<span id="cb93-3"><a href="zeitreihen.html#cb93-3" tabindex="-1"></a>   <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="768" /></p>
+<p>Im besten Fall, insbesondere wenn wir Unterschiede im Wachstum durch verschiedene Behandlung statistisch nachweisen wollen, haben wir nicht nur 2 Wiederholungen wie hier sondern deutlich mehr. Dies ist im Datensatz ‘Hühner’ der Fall, in dem das Gewicht von Junghennen, die mit unterschiedlichem Futter aufgezogen wurden, über 21 Tage protokolliert wurde.</p>
+<p>Auch diesen Datensatz lesen wir ein (auch Ordner ‘data) und wandeln ’Futter’ und ‘ID’ in Faktoren um:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="zeitreihen.html#cb94-1" tabindex="-1"></a>Hühner <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Huehner.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb94-2"><a href="zeitreihen.html#cb94-2" tabindex="-1"></a><span class="fu">head</span>(Hühner)</span></code></pre></div>
+<pre><code>##   X Gewicht Tag ID Futter
+## 1 1      42   0  1      1
+## 2 2      51   2  1      1
+## 3 3      59   4  1      1
+## 4 4      64   6  1      1
+## 5 5      76   8  1      1
+## 6 6      93  10  1      1</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="zeitreihen.html#cb96-1" tabindex="-1"></a><span class="fu">summary</span>(Hühner)</span></code></pre></div>
+<pre><code>##        X            Gewicht           Tag              ID       
+##  Min.   :  1.0   Min.   : 35.0   Min.   : 0.00   Min.   : 1.00  
+##  1st Qu.:145.2   1st Qu.: 63.0   1st Qu.: 4.00   1st Qu.:13.00  
+##  Median :289.5   Median :103.0   Median :10.00   Median :26.00  
+##  Mean   :289.5   Mean   :121.8   Mean   :10.72   Mean   :25.75  
+##  3rd Qu.:433.8   3rd Qu.:163.8   3rd Qu.:16.00   3rd Qu.:38.00  
+##  Max.   :578.0   Max.   :373.0   Max.   :21.00   Max.   :50.00  
+##      Futter     
+##  Min.   :1.000  
+##  1st Qu.:1.000  
+##  Median :2.000  
+##  Mean   :2.235  
+##  3rd Qu.:3.000  
+##  Max.   :4.000</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="zeitreihen.html#cb98-1" tabindex="-1"></a>Hühner<span class="sc">$</span>Futter <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Hühner<span class="sc">$</span>Futter)</span>
+<span id="cb98-2"><a href="zeitreihen.html#cb98-2" tabindex="-1"></a>Hühner<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(Hühner<span class="sc">$</span>ID)</span></code></pre></div>
+<p>Das entsprechende Diagramm sieht folgendermaßen aus:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="zeitreihen.html#cb99-1" tabindex="-1"></a><span class="fu">ggplot</span>(Hühner, <span class="fu">aes</span>(Tag, Gewicht, <span class="at">color=</span>Futter)) <span class="sc">+</span> </span>
+<span id="cb99-2"><a href="zeitreihen.html#cb99-2" tabindex="-1"></a>   <span class="fu">geom_point</span>() <span class="sc">+</span>   <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Gewicht (g)&quot;</span>, <span class="at">x=</span><span class="st">&quot;Tage seit Geburt&quot;</span>) <span class="sc">+</span></span>
+<span id="cb99-3"><a href="zeitreihen.html#cb99-3" tabindex="-1"></a>   <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="768" /></p>
+<p>Für eine bessere Übersicht wäre es wünschenswert, nicht alle Datenpunkte zu plotten¸ sondern den Mittelwert des Gewichts der Hühner einer Behandlung und ein Maß entweder für die Varianz in den Daten oder die Genauigkeit des Mittelwertes. Mit der ggplot-Funktion ‘stat_summary’ können wir genau das machen: der Wert ‘mean_se’ im Parameter ‘fun.data’ bewirkt, dass Mittelwert und Standardfehler des Mittelwertes berechnet und geplottet werden:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="zeitreihen.html#cb100-1" tabindex="-1"></a><span class="fu">ggplot</span>(Hühner, <span class="fu">aes</span>(Tag, Gewicht, <span class="at">color=</span>Futter)) <span class="sc">+</span> </span>
+<span id="cb100-2"><a href="zeitreihen.html#cb100-2" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data=</span>mean_se, <span class="at">geom=</span><span class="st">&quot;pointrange&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb100-3"><a href="zeitreihen.html#cb100-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;Gewicht (g)&quot;</span>, <span class="at">x=</span><span class="st">&quot;Zeit (Tage seit Geburt)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="768" /></p>
+<p>Wir sehen in diesem Plot einen deutlichen Trend, nämlich dass das Futter des Typs 3 zu schnellerer Gewichtszunahme führt, als die übrigen. Die nächsten beiden Abschnitte erklären, wie wir testen, ob dieser Trend tatsächlich signifikant ist.</p>
+</div>
+<div id="zufällige-effekte" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Zufällige Effekte<a href="#zuf%C3%A4llige-effekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Im Prinzip sollte man meinen, dass sich Gewichts- oder Wachstumsdaten gut eignen sollten, um eine Varianzanalyse durchführen zu können: sie sind kontinuierlich und wir erwarten im Prinzip eine Normalverteilung der Residuen. Allerdings ist eine grundlegende Annahme verletzt: die Unabhängigkeit der Daten. Wenn wir immer wieder den gleichen Apfel oder das gleiche Huhn messen, können wir davon ausgehen, dass die Werte einander ähnlicher sind, als wenn wir immer andere Indiviuen nehmen würden. Wir haben also keine echten unabhängigen Wiederholungen sondern <strong>Pseudoreplikationen</strong>. Andere Beispiele die zu Pseudoreplikationen führen sind Versuchsblöcke, Standorte, unterschiedliche Probennehmer, etc.</p>
+<p>Wie können solche Faktoren adäquat im Modell berücksichtigt werden? Der klassische Ansatz war lange, sie als ‘normale’ Variablen, also als <strong>festen Effekt</strong> mit ins Modell aufzunehmen. Das verbraucht aber viele Freiheitsgrade, weil für jeden Level des Zufallseffekts (also jedes Huhn) ein Parameter geschätzt wird (z.B. das mittlere Gewicht jedes Huhns, siehe Abbildung unten). Hier gibt es eine recht gute Erklärung für Freiheitsgrade: <a href="https://welt-der-bwl.de/Freiheitsgrade" class="uri">https://welt-der-bwl.de/Freiheitsgrade</a>. Je weniger Freiheitsgrade es gibt, desto schwieriger ist es in einer Varianzanalyse, tatsächlich existierende Unterschiede in den Behandlungsgruppen auch als solche zu erkennen (Fähigkeit, Unterschiede zu erkennen = Power der Analyse). Deshalb ist der bessere Ansatz, die Variable als <strong>Zufallseffekt</strong> einzubeziehen. Das beruht auf der Annahme, dass die Basis-Parameter für jedes Level dieser Variable (jedes Huhn) aus einer gemeinsamen Verteilung stammen. Geschätzt werden muss für das Modell nur die Breite, also Varianz dieser Verteilung. Auf diese Weise wird nur 1 Freiheitsgrad verwendet und die Power der Analyse bleibt höher.</p>
+<div class="float">
+<img src="images/Huhn_Zufallseffekt.png" alt="Linke Seite: Klassischer Ansatz - für jedes Huhn wird ein Parameter für den Achsenabschnitt Gewicht geschätzt. Rechte Seite: Nur die breite der Verteilung, aus der die Parameter stammen, wird geschätzt, es wird also nur 1 Freiheitsgrad ‘verbraucht’. Verändert nach einer Folie von Frank Schurr" />
+<div class="figcaption">Linke Seite: Klassischer Ansatz - für jedes Huhn wird ein Parameter für den Achsenabschnitt Gewicht geschätzt. Rechte Seite: Nur die breite der Verteilung, aus der die Parameter stammen, wird geschätzt, es wird also nur 1 Freiheitsgrad ‘verbraucht’. Verändert nach einer Folie von Frank Schurr</div>
+</div>
+<p>Feste Effekte</p>
+<ul>
+<li>die geschätzten Paremeter sind von Interesse, es sind zum Beispiel die unterschiedlichen Behandlungslevels (Behangdichte, Futter, …)</li>
+<li>die Namen der Levels haben eine (agrarwissenschaftliche) Bedeutung</li>
+</ul>
+<p>Zufällige Effekte</p>
+<ul>
+<li>die geschätzten Parameter interessieren uns nicht</li>
+<li>die Namen der Level haben keine agrarwissenschafliche Bedeutung</li>
+<li>nur einbezogen, um Pseudoreplikation zu vermeiden (ID des Huhn, des Apfels, Block, Ort, Probennehmer)</li>
+</ul>
+</div>
+<div id="zeitreihen-analysieren" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Zeitreihen analysieren<a href="zeitreihen.html#zeitreihen-analysieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Um zufällige Faktoren zu berücksichtigen, benötigen wir <strong>gemischte Modelle</strong>.</p>
+<div class="float">
+<img src="images/Vergleich_lm_lme.png" alt="Vergleich der Struktur eines linearen Modells mit einem gemischten linearen Modell, verändert nach einer Folie von Frank Schurr" />
+<div class="figcaption">Vergleich der Struktur eines linearen Modells mit einem gemischten linearen Modell, verändert nach einer Folie von Frank Schurr</div>
+</div>
+<p>Ein Paket, das Funktionen für gemischte Modelle zur Verfügung stellt ist ‘lme4’. Dieses Paket laden wir jetzt (nachdem Sie es installiert haben).</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="zeitreihen.html#cb101-1" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code></pre></div>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## Warning in check_dep_version(): ABI version mismatch: 
+## lme4 was built with Matrix ABI version 2
+## Current Matrix ABI version is 1
+## Please re-install lme4 from source or restore original &#39;Matrix&#39; package</code></pre>
+<p>Die Funktion lmer() fitted lineare gemischte Modelle. Die abhängige Variable und die festen erklärenden Variablen werden wie bekannt in Zusammenhang gebracht: In unserem Beispiel steht das Gewicht links von der Tilde und Tag und Futter werden mit einem Multiplikationszeichen verbunden, um auszudrücken, dass in dem Modell beide Faktoren und ihre Interaktion einen Einfluss auf das Gewicht haben können. Dahinter kommen in runden Klammern die Zufallseffekte: Hier gehen wir davon aus, dass es einen Zufallseffekt geben könnte (individuelle Unterschiede im Gewicht der Hühner), der sich auf den y-Achsenabschnitt der Zeitreihen auswirkt. Das wird ausgedrückt, indem die ID hinter den senkrechten Strich geschrieben wird. Um die Modelle im Anschluss vergleichen zu können, müssen wir noch die Standardmethode ‘REML’ auf ‘FALSE’ setzen.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="zeitreihen.html#cb106-1" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Gewicht <span class="sc">~</span> Tag <span class="sc">*</span> Futter <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span> ID), <span class="at">data =</span> Hühner, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Danach geht es wie gewohnt weiter: wir vereinfachen das Modell, zuerst durch Ersetzen des Multiplikationszeichens mit einem Additionszeichen, womit wir die Interaktion zwischen Tag und Futter rauswerfen. Ist die Interaktion nicht signifikant, nehmen wir als nächstes das Futter ganz raus. Der Zeitpunkt (=Tag) sollte bei solchen Zeitreihen-Analysen allerdings immer im Modell bleiben, es sei denn, wir gehen davon aus, dass es möglicherweise gar keine Veränderung der abhängigen Variable über die Zeit gibt.</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="zeitreihen.html#cb107-1" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Gewicht <span class="sc">~</span> Tag <span class="sc">+</span> Futter <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>Hühner, <span class="at">REML =</span> F)</span>
+<span id="cb107-2"><a href="zeitreihen.html#cb107-2" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Gewicht <span class="sc">~</span> Tag <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID), <span class="at">data=</span>Hühner, <span class="at">REML =</span> F)</span></code></pre></div>
+<p>Dann kann man die Modelle mittels anova() vergleichen. Wie Sie sehen, können auch mehrere Modelle gleichzeitig verglichen werden.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="zeitreihen.html#cb108-1" tabindex="-1"></a><span class="fu">anova</span>(model1, model2, model3)</span></code></pre></div>
+<pre><code>## Data: Hühner
+## Models:
+## model3: Gewicht ~ Tag + (1 | ID)
+## model2: Gewicht ~ Tag + Futter + (1 | ID)
+## model1: Gewicht ~ Tag * Futter + (1 | ID)
+##        npar    AIC    BIC  logLik deviance   Chisq Df Pr(&gt;Chisq)    
+## model3    4 5630.3 5647.8 -2811.2   5622.3                          
+## model2    7 5619.2 5649.7 -2802.6   5605.2  17.143  3  0.0006603 ***
+## model1   10 5508.0 5551.6 -2744.0   5488.0 117.184  3  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Sie sehen, dass sowohl der Einfluss des Futters auf den Gewichtsverlauf als auch die Interaktion zwischen Futter und Tag hochsignifikant sind.
+Die Vorhersagen des besten Modells (also model1) können wir nun noch zu dem Plot hinzufügen:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="zeitreihen.html#cb110-1" tabindex="-1"></a><span class="fu">last_plot</span>() <span class="sc">+</span> <span class="fu">stat_summary</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">fitted</span>(model1)), <span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="768" /></p>
+</div>
+<div id="post-hoc-tests" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Post-hoc Tests<a href="zeitreihen.html#post-hoc-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nachdem wir in den letzten Kapiteln Varianzanalysen mit verschiedenen Datentypen besprochen haben, können Sie testen, ob eine erklärende Variable “signifikant” ist, also ihr Einbezug in ein Modell die übrigbleibenden Fehler (=Residuen) signifikant reduziert. Was Sie noch nicht wissen ist, welche der Level (=Behandlungsgruppen) der erklärenden Variable signifikant unterschiedlich sind. Zum Beispiel haben Sie beim Ansaaten-Versuch den Effekt von 4 verschiedene Substraten auf die Keimungsrate von 2 Arten getestet. Mit einer ANOVA finden Sie heraus, ob das Substrat grundsätzlich einen signifikaten Effekt auf die Keimungsrate hat. Bei WELCHEM Substrat oder welchen Substraten aber die Keimungsrate signifikant höher ist oder sind als bei den anderen, wissen Sie noch nicht. Um das herauszufinden, benutzen wir post-hoc Tests, also Tests, die nach der ANOVA durchgeführt werden.</p>
+<p>Am Ende dieses Kapitels wissen Sie</p>
+<ul>
+<li>um die Problematik der multiplen post-hoc Tests</li>
+<li>wie Sie solche Tests sinnvoll durchführen können</li>
+</ul>
+<hr />
+</div>
+<div id="post-hoc-tests---die-problematik" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Post-hoc Tests - die Problematik<a href="zeitreihen.html#post-hoc-tests---die-problematik" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Natürlich können wir jetzt jedes Substrat nochmal einzeln mit einer ANOVA gegen jedes andere Substrat testen und schauen, ob das Ergebnis siginifkant ist. Allerdings gibt es dabei ein Problem: jeder Test hat per Definition eine Irrtumswahrscheinlichkeit von 5% (wir nennen eine erklärende Variable signifikant, wenn der p-Wert, also die Wahrscheinlichkeit solche oder noch extremere Daten zu finden, obwohl die Null-Hypothese wahr ist, kleiner als 0.05 = 5% ist). Je mehr Vergleiche wir machen, desto höher ist also auch die Wahrscheinlichkeit, dass wir in der gesamten Auswertung eine Signifikanz finden, obwohl gar kein wahrer Effekt vorhanden ist - das Problem der multiplen Tests.</p>
+<div class="float">
+<img src="images/multiples_testen.png" alt="source: https://xkcd.com/882/" />
+<div class="figcaption">source: <a href="https://xkcd.com/882/" class="uri">https://xkcd.com/882/</a></div>
+</div>
+<p>Einige Statistiker sagen deshalb, dass post-hoc Tests grundsätzlich vermieden werden sollten und auch nicht nötig sind, wenn das experimentelle Design des zugrundeliegenden Versuchs nur gut genug angelegt wurde. Die agrarwissenschaftlichen Realität sieht aber oft anders aus: es wird häufig eine Vielzahl von Behandlungslevels gegeneinander getestet und es interessiert uns nicht nur, OB die Wahl des Substrats einen Effekt auf die Keimungsrate einer Art hat, sondern auch bei welchem davon die Keimungsrate signifikant höher ist. Wahr ist aber, dass man gut durchdenken sollte, wann post-hoc Tests wirklich gebraucht werden und wie genau man sie durchführt.</p>
+</div>
+<div id="die-herangehensweise" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Die Herangehensweise<a href="zeitreihen.html#die-herangehensweise" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Die generelle Herangehensweise ist, dass man für die Anzahl an Vergleichen, die man macht, korrigiert, indem die einzelnen Signifikanz-Niveaus so angepasst werden, dass man INSGESAMT auf eine Irrtumswahrscheinlichkeit von 5% kommt. Gängige Ansätze sind die Bonferroni-Korrektur und der Tukey’s HSD Test. Hier nutzen wir eine angepasste Bonferroni Korrektur, die sich ‘Holm’ nennt. Wer sich für die methodischen Details interessiert findet <a href="https://statistikguru.de/lexikon/bonferroni-holm-korrektur.html">hier</a> eine recht gute Erklärung.</p>
+<p>Bitte laden Sie die Daten zum Ansaaten-Versuch von diesem Jahr herunter: <a href="https://ecampus.uni-bonn.de/goto_ecampus_file_2859385_download.html" class="uri">https://ecampus.uni-bonn.de/goto_ecampus_file_2859385_download.html</a><br />
+und installieren Sie das R-Paket ‘multcomp’.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="zeitreihen.html#cb111-1" tabindex="-1"></a><span class="co"># Laden der benötigten Pakete</span></span>
+<span id="cb111-2"><a href="zeitreihen.html#cb111-2" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span></code></pre></div>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: TH.data</code></pre>
+<pre><code>## Loading required package: MASS</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre><code>## 
+## Attaching package: &#39;TH.data&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     geyser</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="zeitreihen.html#cb120-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb120-2"><a href="zeitreihen.html#cb120-2" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="zeitreihen.html#cb120-3" tabindex="-1"></a><span class="co"># Einlesen der Daten und Umwandeln der erklärenden Variablen in Faktoren</span></span>
+<span id="cb120-4"><a href="zeitreihen.html#cb120-4" tabindex="-1"></a>ansaaten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Ansaaten_neu.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb120-5"><a href="zeitreihen.html#cb120-5" tabindex="-1"></a>ansaaten<span class="sc">$</span>Art <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ansaaten<span class="sc">$</span>Art)</span>
+<span id="cb120-6"><a href="zeitreihen.html#cb120-6" tabindex="-1"></a>ansaaten<span class="sc">$</span>Substrat <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(ansaaten<span class="sc">$</span>Substrat)</span>
+<span id="cb120-7"><a href="zeitreihen.html#cb120-7" tabindex="-1"></a></span>
+<span id="cb120-8"><a href="zeitreihen.html#cb120-8" tabindex="-1"></a><span class="co"># Kombinieren der beiden Spalten mit Anteilsdaten</span></span>
+<span id="cb120-9"><a href="zeitreihen.html#cb120-9" tabindex="-1"></a>ansaaten<span class="sc">$</span>keimung <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ansaaten<span class="sc">$</span>Angelaufen, ansaaten<span class="sc">$</span>Ausfälle)</span>
+<span id="cb120-10"><a href="zeitreihen.html#cb120-10" tabindex="-1"></a></span>
+<span id="cb120-11"><a href="zeitreihen.html#cb120-11" tabindex="-1"></a><span class="co"># Umformen des Datensatzes, um einen Plot zu machen</span></span>
+<span id="cb120-12"><a href="zeitreihen.html#cb120-12" tabindex="-1"></a>Keimung_w <span class="ot">&lt;-</span> <span class="fu">reshape</span>(ansaaten, </span>
+<span id="cb120-13"><a href="zeitreihen.html#cb120-13" tabindex="-1"></a>                     <span class="at">direction =</span> <span class="st">&quot;long&quot;</span>,</span>
+<span id="cb120-14"><a href="zeitreihen.html#cb120-14" tabindex="-1"></a>                     <span class="at">varying =</span> <span class="fu">list</span>(<span class="fu">names</span>(ansaaten)[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]),</span>
+<span id="cb120-15"><a href="zeitreihen.html#cb120-15" tabindex="-1"></a>                     <span class="at">v.names =</span> <span class="st">&quot;Anzahl&quot;</span>,</span>
+<span id="cb120-16"><a href="zeitreihen.html#cb120-16" tabindex="-1"></a>                     <span class="at">idvar =</span> <span class="fu">c</span>(<span class="st">&quot;Art&quot;</span>, <span class="st">&quot;Substrat&quot;</span>, <span class="st">&quot;Wdh&quot;</span>),</span>
+<span id="cb120-17"><a href="zeitreihen.html#cb120-17" tabindex="-1"></a>                     <span class="at">timevar =</span> <span class="st">&quot;Beobachtung&quot;</span>,</span>
+<span id="cb120-18"><a href="zeitreihen.html#cb120-18" tabindex="-1"></a>                     <span class="at">times =</span> <span class="fu">c</span>(<span class="st">&quot;Ausfaelle&quot;</span>, <span class="st">&quot;Angelaufen&quot;</span>))</span>
+<span id="cb120-19"><a href="zeitreihen.html#cb120-19" tabindex="-1"></a><span class="fu">head</span>(Keimung_w)</span></code></pre></div>
+<pre><code>##                                Art   Substrat Wdh keimung.1 keimung.2
+## Bohne.Jiffy.1.Ausfaelle      Bohne      Jiffy   1        63        21
+## Bohne.Jiffy.2.Ausfaelle      Bohne      Jiffy   2        34        50
+## Bohne.Presstopf.1.Ausfaelle  Bohne  Presstopf   1        76         8
+## Bohne.Presstopf.2.Ausfaelle  Bohne  Presstopf   2        76         8
+## Bohne.Steinwolle.1.Ausfaelle Bohne Steinwolle   1        64        20
+## Bohne.Steinwolle.2.Ausfaelle Bohne Steinwolle   2        70        14
+##                              Beobachtung Anzahl
+## Bohne.Jiffy.1.Ausfaelle        Ausfaelle     63
+## Bohne.Jiffy.2.Ausfaelle        Ausfaelle     34
+## Bohne.Presstopf.1.Ausfaelle    Ausfaelle     76
+## Bohne.Presstopf.2.Ausfaelle    Ausfaelle     76
+## Bohne.Steinwolle.1.Ausfaelle   Ausfaelle     64
+## Bohne.Steinwolle.2.Ausfaelle   Ausfaelle     70</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="zeitreihen.html#cb122-1" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb122-2"><a href="zeitreihen.html#cb122-2" tabindex="-1"></a><span class="fu">ggplot</span>(Keimung_w, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(Wdh), <span class="at">y=</span>Anzahl, <span class="at">fill=</span>Beobachtung)) <span class="sc">+</span></span>
+<span id="cb122-3"><a href="zeitreihen.html#cb122-3" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Art <span class="sc">*</span> Substrat) <span class="sc">+</span></span>
+<span id="cb122-4"><a href="zeitreihen.html#cb122-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;stack&quot;</span>, <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb122-5"><a href="zeitreihen.html#cb122-5" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;legend&quot;</span>, </span>
+<span id="cb122-6"><a href="zeitreihen.html#cb122-6" tabindex="-1"></a>                    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Angelaufen&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;Ausfaelle&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightgrey&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb122-7"><a href="zeitreihen.html#cb122-7" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="zeitreihen.html#cb123-1" tabindex="-1"></a><span class="co"># Generalisiertes lineares Modell unserer Hypothese: </span></span>
+<span id="cb123-2"><a href="zeitreihen.html#cb123-2" tabindex="-1"></a><span class="co"># Substrat und Art haben einen Effekt auf die Keimungsrate</span></span>
+<span id="cb123-3"><a href="zeitreihen.html#cb123-3" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(keimung <span class="sc">~</span> Substrat <span class="sc">*</span> Art, <span class="at">family=</span>quasibinomial, <span class="at">data =</span> ansaaten)</span>
+<span id="cb123-4"><a href="zeitreihen.html#cb123-4" tabindex="-1"></a></span>
+<span id="cb123-5"><a href="zeitreihen.html#cb123-5" tabindex="-1"></a><span class="co"># Genestetes Modell ohne den Effekt von &#39;Substrat&#39;, </span></span>
+<span id="cb123-6"><a href="zeitreihen.html#cb123-6" tabindex="-1"></a><span class="co"># um die Signifikanz dieser Variable testen zu können</span></span>
+<span id="cb123-7"><a href="zeitreihen.html#cb123-7" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(keimung <span class="sc">~</span> Art, <span class="at">family =</span> quasibinomial, <span class="at">data =</span> ansaaten)</span>
+<span id="cb123-8"><a href="zeitreihen.html#cb123-8" tabindex="-1"></a></span>
+<span id="cb123-9"><a href="zeitreihen.html#cb123-9" tabindex="-1"></a><span class="co"># Varianzanalyse der beiden Modelle</span></span>
+<span id="cb123-10"><a href="zeitreihen.html#cb123-10" tabindex="-1"></a><span class="fu">anova</span>(model1, model2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: keimung ~ Substrat * Art
+## Model 2: keimung ~ Art
+##   Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    
+## 1         8      31.78                                 
+## 2        14     326.94 -6  -295.16 12.977 0.0009685 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Mit der Funktion <code>interaction()</code> generieren wir jetzt eine neue Spalte ‘gruppe’, in der die erklärenden Variablen kombiniert werden. Mit diesen Behandlungsgruppen fitten wir ein neues glm, um sie dann in einem nächsten Schritt in einer post-hoc Analyse gegeneinander testen zu können.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="zeitreihen.html#cb125-1" tabindex="-1"></a>ansaaten<span class="sc">$</span>gruppe<span class="ot">&lt;-</span><span class="fu">interaction</span>(ansaaten<span class="sc">$</span>Art, ansaaten<span class="sc">$</span>Substrat)</span>
+<span id="cb125-2"><a href="zeitreihen.html#cb125-2" tabindex="-1"></a><span class="fu">head</span>(ansaaten)</span></code></pre></div>
+<pre><code>##     Art   Substrat Wdh Angelaufen Ausfälle keimung.1 keimung.2           gruppe
+## 1 Bohne      Jiffy   1         63       21        63        21      Bohne.Jiffy
+## 2 Bohne      Jiffy   2         34       50        34        50      Bohne.Jiffy
+## 3 Bohne  Presstopf   1         76        8        76         8  Bohne.Presstopf
+## 4 Bohne  Presstopf   2         76        8        76         8  Bohne.Presstopf
+## 5 Bohne Steinwolle   1         64       20        64        20 Bohne.Steinwolle
+## 6 Bohne Steinwolle   2         70       14        70        14 Bohne.Steinwolle</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="zeitreihen.html#cb127-1" tabindex="-1"></a>model_posthoc <span class="ot">&lt;-</span> <span class="fu">glm</span>(keimung <span class="sc">~</span> gruppe, <span class="at">family=</span>quasibinomial, <span class="at">data =</span> ansaaten)</span></code></pre></div>
+<p>Bevor wir das tun, sollten wir überlegen, welche Gruppen wir tatsächlich vergleichen wollen. Die Abbildung oben legt nahe, dass Jiffy stripes zu einer höheren Keimungsrate führen als Steinwolle und Sand und wir wollen vielleicht testen, ob diese Unterschiede signifikant sind. In der Funktion <code>glht</code> , die den post-hoc Test für uns durchführt können wir festlegen, welche Gruppen wir gegeneinander testen wollen:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="zeitreihen.html#cb128-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glht</span>(model_posthoc, </span>
+<span id="cb128-2"><a href="zeitreihen.html#cb128-2" tabindex="-1"></a>             <span class="at">linfct =</span> <span class="fu">mcp</span>(<span class="at">gruppe =</span></span>
+<span id="cb128-3"><a href="zeitreihen.html#cb128-3" tabindex="-1"></a><span class="co">#Ist die Differenz zwischen diesen Gruppen ungleich 0?</span></span>
+<span id="cb128-4"><a href="zeitreihen.html#cb128-4" tabindex="-1"></a>            <span class="fu">c</span>(<span class="st">&quot;(Bohne.Jiffy)-(Bohne.Sand)=0&quot;</span>,</span>
+<span id="cb128-5"><a href="zeitreihen.html#cb128-5" tabindex="-1"></a>              <span class="st">&quot;(Bohne.Steinwolle)-(Bohne.Sand)=0&quot;</span>))),<span class="at">test =</span> <span class="fu">adjusted</span>(<span class="st">&quot;holm&quot;</span>))</span></code></pre></div>
+<pre><code>## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Multiple Comparisons of Means: User-defined Contrasts
+## 
+## 
+## Fit: glm(formula = keimung ~ gruppe, family = quasibinomial, data = ansaaten)
+## 
+## Linear Hypotheses:
+##                                        Estimate Std. Error z value Pr(&gt;|z|)  
+## (Bohne.Jiffy) - (Bohne.Sand) == 0       -1.4319     0.5202  -2.753   0.0118 *
+## (Bohne.Steinwolle) - (Bohne.Sand) == 0  -0.3725     0.5639  -0.661   0.5089  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## (Adjusted p values reported -- holm method)</code></pre>
+<p>Jetzt sehen Sie, dass der Unterschied zwischen Jiffy stripes und Sand bei der Bohne signifikant ist, der Unterschied Steinwolle - Sand aber nicht.</p>
+<p>Signifikante Unterschiede, die zwischen den Behandlungsgruppen gefunden wurden, werden in Abbildungen häufig durch verschiedene Buchstaben gekennzeichnet. Zum Beispiel so (hier liegen andere Daten zugrunde):</p>
+<div class="float">
+<img src="images/post_hoc_letters.png" alt="https://r-graph-gallery.com/84-tukey-test.html" />
+<div class="figcaption"><a href="https://r-graph-gallery.com/84-tukey-test.html" class="uri">https://r-graph-gallery.com/84-tukey-test.html</a></div>
+</div>
+<p>Allerdings bietet R keine guten Standardlösungen dafür an. Wenn Sie den TukeyHSD Test durchführen, bietet das Packet ‘multcompView’ eine Möglichkeit. R-Code um die Abbildung oben zu erstellen finden Sie <a href="https://r-graph-gallery.com/84-tukey-test.html">hier</a>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="zähldaten.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bayes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-zeitreihen_posthoc.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

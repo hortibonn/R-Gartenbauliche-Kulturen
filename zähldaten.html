@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Zähl- und Boniturdaten auswerten | Gartenbauliche Kulturen - Daten auswerten mit R</title>
+  <meta name="description" content="Chapter 4 Zähl- und Boniturdaten auswerten | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Zähl- und Boniturdaten auswerten | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Zähl- und Boniturdaten auswerten | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  
+  
+  
+
+<meta name="author" content="Katja Schiffers" />
+
+
+<meta name="date" content="2025-02-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="daten.html"/>
+<link rel="next" href="zeitreihen.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#zeitplan"><i class="fa fa-check"></i>Zeitplan</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="03-zähldaten_bonitur.html"><a href="#einf%C3%BChrungR"><i class="fa fa-check"></i><b>2</b> Einführung R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="einführungR.html"><a href="einführungR.html"><i class="fa fa-check"></i><b>2.1</b> Was ist R?</a></li>
+<li class="chapter" data-level="2.2" data-path="einführungR.html"><a href="einführungR.html#r-und-r-studio-installieren"><i class="fa fa-check"></i><b>2.2</b> R und R-Studio installieren</a></li>
+<li class="chapter" data-level="2.3" data-path="einführungR.html"><a href="einführungR.html#erste-schritte-mit-r"><i class="fa fa-check"></i><b>2.3</b> Erste Schritte mit R</a></li>
+<li class="chapter" data-level="2.4" data-path="einführungR.html"><a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r"><i class="fa fa-check"></i><b>2.4</b> Importieren von Daten aus Excel/LibreOffice nach R</a></li>
+<li class="chapter" data-level="2.5" data-path="einführungR.html"><a href="einführungR.html#daten-kontrollieren"><i class="fa fa-check"></i><b>2.5</b> Daten kontrollieren</a></li>
+<li class="chapter" data-level="2.6" data-path="einführungR.html"><a href="einführungR.html#hilfe-bekommen"><i class="fa fa-check"></i><b>2.6</b> Hilfe bekommen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="daten.html"><a href="daten.html"><i class="fa fa-check"></i><b>3</b> Daten vorbereiten, Prinzip Anova</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="daten.html"><a href="daten.html#r-projekte"><i class="fa fa-check"></i><b>3.1</b> R-Projekte</a></li>
+<li class="chapter" data-level="3.2" data-path="daten.html"><a href="daten.html#datentypen-und--transformationen"><i class="fa fa-check"></i><b>3.2</b> Datentypen und -transformationen</a></li>
+<li class="chapter" data-level="3.3" data-path="daten.html"><a href="daten.html#umgang-mit-nas"><i class="fa fa-check"></i><b>3.3</b> Umgang mit NAs</a></li>
+<li class="chapter" data-level="3.4" data-path="03-zähldaten_bonitur.html"><a href="#datens%C3%A4tze-umstrukturieren"><i class="fa fa-check"></i><b>3.4</b> Datensätze umstrukturieren</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="daten.html"><a href="daten.html#der-pipe-operator"><i class="fa fa-check"></i><b>3.4.1</b> Der Pipe-Operator</a></li>
+<li class="chapter" data-level="3.4.2" data-path="daten.html"><a href="daten.html#drop_na"><i class="fa fa-check"></i><b>3.4.2</b> drop_na()</a></li>
+<li class="chapter" data-level="3.4.3" data-path="daten.html"><a href="daten.html#select"><i class="fa fa-check"></i><b>3.4.3</b> select()</a></li>
+<li class="chapter" data-level="3.4.4" data-path="daten.html"><a href="daten.html#filter"><i class="fa fa-check"></i><b>3.4.4</b> filter()</a></li>
+<li class="chapter" data-level="3.4.5" data-path="daten.html"><a href="daten.html#mutate"><i class="fa fa-check"></i><b>3.4.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.4.6" data-path="daten.html"><a href="daten.html#pivot_longer"><i class="fa fa-check"></i><b>3.4.6</b> pivot_longer()</a></li>
+<li class="chapter" data-level="3.4.7" data-path="daten.html"><a href="daten.html#pivot_wider"><i class="fa fa-check"></i><b>3.4.7</b> pivot_wider()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="daten.html"><a href="daten.html#kontinuierlich"><i class="fa fa-check"></i><b>3.5</b> Kontinuierliche Daten auswerten</a></li>
+<li class="chapter" data-level="3.6" data-path="daten.html"><a href="daten.html#das-grundprinzip-der-varianzanalyse"><i class="fa fa-check"></i><b>3.6</b> Das Grundprinzip der Varianzanalyse</a></li>
+<li class="chapter" data-level="3.7" data-path="daten.html"><a href="daten.html#das-prinzip-der-parsimonie"><i class="fa fa-check"></i><b>3.7</b> Das Prinzip der Parsimonie</a></li>
+<li class="chapter" data-level="3.8" data-path="03-zähldaten_bonitur.html"><a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>3.8</b> Annahmen der ANOVA überprüfen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="03-zähldaten_bonitur.html"><a href="#z%C3%A4hldaten"><i class="fa fa-check"></i><b>4</b> Zähl- und Boniturdaten auswerten</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="zähldaten.html"><a href="zähldaten.html"><i class="fa fa-check"></i><b>4.1</b> Nicht-normalverteilte Daten</a></li>
+<li class="chapter" data-level="4.2" data-path="zähldaten.html"><a href="zähldaten.html#daten-transformieren"><i class="fa fa-check"></i><b>4.2</b> Daten transformieren?</a></li>
+<li class="chapter" data-level="4.3" data-path="zähldaten.html"><a href="zähldaten.html#generalisierte-lineare-modelle"><i class="fa fa-check"></i><b>4.3</b> Generalisierte lineare Modelle</a></li>
+<li class="chapter" data-level="4.4" data-path="zähldaten.html"><a href="zähldaten.html#beispiel-tomaten"><i class="fa fa-check"></i><b>4.4</b> Beispiel: Tomaten</a></li>
+<li class="chapter" data-level="4.5" data-path="zähldaten.html"><a href="zähldaten.html#overdispersion"><i class="fa fa-check"></i><b>4.5</b> Overdispersion</a></li>
+<li class="chapter" data-level="4.6" data-path="zähldaten.html"><a href="zähldaten.html#bonitur"><i class="fa fa-check"></i><b>4.6</b> Anteils- und Boniturdaten auswerten</a></li>
+<li class="chapter" data-level="4.7" data-path="zähldaten.html"><a href="zähldaten.html#anteilsdaten-auswerten"><i class="fa fa-check"></i><b>4.7</b> Anteilsdaten auswerten</a></li>
+<li class="chapter" data-level="4.8" data-path="zähldaten.html"><a href="zähldaten.html#bonitur-daten"><i class="fa fa-check"></i><b>4.8</b> Bonitur-Daten</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zeitreihen.html"><a href="zeitreihen.html"><i class="fa fa-check"></i><b>5</b> Zeitreihen auswerten und PostHoc Tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-plotten"><i class="fa fa-check"></i><b>5.1</b> Zeitreihen plotten</a></li>
+<li class="chapter" data-level="5.2" data-path="03-zähldaten_bonitur.html"><a href="#zuf%C3%A4llige-effekte"><i class="fa fa-check"></i><b>5.2</b> Zufällige Effekte</a></li>
+<li class="chapter" data-level="5.3" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-analysieren"><i class="fa fa-check"></i><b>5.3</b> Zeitreihen analysieren</a></li>
+<li class="chapter" data-level="5.4" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests"><i class="fa fa-check"></i><b>5.4</b> Post-hoc Tests</a></li>
+<li class="chapter" data-level="5.5" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests---die-problematik"><i class="fa fa-check"></i><b>5.5</b> Post-hoc Tests - die Problematik</a></li>
+<li class="chapter" data-level="5.6" data-path="zeitreihen.html"><a href="zeitreihen.html#die-herangehensweise"><i class="fa fa-check"></i><b>5.6</b> Die Herangehensweise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>6</b> Bayesische Auswertung (19. Dez)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayes.html"><a href="bayes.html#der-satz-von-bayes"><i class="fa fa-check"></i><b>6.1</b> Der Satz von Bayes</a></li>
+<li class="chapter" data-level="6.2" data-path="bayes.html"><a href="bayes.html#das-prinzip-des-bayes-statistik"><i class="fa fa-check"></i><b>6.2</b> Das Prinzip des Bayes-Statistik</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bayes.html"><a href="bayes.html#mcmc---markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.2.1</b> MCMC - Markov Chain Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bayes.html"><a href="bayes.html#ein-etwas-konstruiertes-beispiel"><i class="fa fa-check"></i><b>6.3</b> Ein (etwas konstruiertes) Beispiel</a></li>
+<li class="chapter" data-level="6.4" data-path="bayes.html"><a href="bayes.html#frequentistisch-versus-bayesisch"><i class="fa fa-check"></i><b>6.4</b> Frequentistisch versus Bayesisch</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="zähldaten" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Zähl- und Boniturdaten auswerten<a href="#z%C3%A4hldaten" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In der letzten Woche haben Sie gelernt, wie man Experimente mit kontinuierlichen Daten der abhängigen Variable auswertet. In den Agrarwissenschaften kommen aber auch häufig andere Datentypen vor. In diesem Kapitel beschäftigen wir uns speziell mit Zähldaten (wieviele Äpfel trägt der Baum? wieviele Läuse sitzen auf der Pflanze? wieviele Eier legt das Huhn?)</p>
+<p>Am Ende dieses Kapitels</p>
+<ul>
+<li>wissen Sie, warum Zähldaten häufig nicht mit einer normalen Varianzanalyse ausgewertet werden können.</li>
+<li>kennen Sie eine Methode, um solche Daten trotzdem zu analysieren.</li>
+<li>sind Sie eine Fallstudie nochmal im Detail durchgegangen.</li>
+</ul>
+<div id="nicht-normalverteilte-daten" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Nicht-normalverteilte Daten<a href="zähldaten.html#nicht-normalverteilte-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Im letzten Kapitel haben wir gesehen, dass eine Voraussetzung für die Durchführung einer ANOVA die Normalverteilung der Residuen (Fehler, Abstände der Messpunkte zum Mittelpunkt) ist. Bei kontinuierlichen Daten wie Größe, Gewicht etc. ist das normalerweise der Fall, wenn das Modell richtig formuliert ist (d.h. wenn alle Faktoren, die einen Einfluss haben, enthalten sind und deren Beziehung - additiv, multitplikativ, exponentiell - korrekt dargestellt ist). Sind die Daten nicht kontinuierlich, können wir erstmal nicht von einer Normalverteilung der Residuen ausgehen. Häufig sind auch die Varianzen (= Streuung der Daten) nicht homogen über die Behandlungsgruppen. Das ist zum Beispiel bei Zähldaten der Fall, zumindest, wenn es sich um eher kleine Zahlen handelt (bis etwa 7).</p>
+</div>
+<div id="daten-transformieren" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Daten transformieren?<a href="zähldaten.html#daten-transformieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In so einem Fall wurde früher oft dazu geraten, die Daten zu transformieren, um sie ANOVA-fähig zu machen. Das birgt allerdings verschiedene Schwierigkeiten:</p>
+<ul>
+<li>die Interpretation der Ergebnisse wird schwieriger, weil die Ergebnisse und Signifikanzen nur für die transformierten Daten zutreffen. Damit verbunden ändert sich auch die Funktion des Zusammenhanges der erklärenden Parameter. Wenn die erklärenden Variablen vorher addiert wurden, um die abhängige Variable zu schätzen, müssen sie zum Beispiel nach einer Logarithmierung multipliziert werden.</li>
+<li>das Logarithmieren von Zähldaten, das häufig propagiert wird (wobei häufig eine 1 addiert wird, um Nullen zu vermeiden), führt häufig zu einer nicht gewollten Abnahme der Varianz der abhängigen Variable, die abhängig vom Mittelwert ist.</li>
+<li>in jedem Fall muss die Annahme der normalverteilten Residuen auch nach einer Transformation überprüft werden.</li>
+</ul>
+<p>Die meisten Ratschläge, Daten zu transformieren, stammen aus der Zeit, als Varianzanalysen noch von Hand durchgeführt wurden und kompliziertere Modelle kaum zu rechnen waren. Zum Glück haben wir heute Computer und R, um auch viele nicht-normalverteilte Daten mittels einer ANOVA (Varianzanalyse) analysieren zu können. Der Trick hierbei ist, nicht die schon bekannten linearen Modelle (lm) zu verwenden, sondern generalisierte lineare Modelle (glm).</p>
+</div>
+<div id="generalisierte-lineare-modelle" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Generalisierte lineare Modelle<a href="zähldaten.html#generalisierte-lineare-modelle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>… können Poisson-verteilte Residuen (aus Zähldaten), binomial-verteilte Residuen (aus Anteilsdaten) und viele andere Residuenverteilungen beschreiben. Ich werde hier nicht auf die Charakteristika dieser Verteilungen eingehen, weil es für das Verständnis der Auswertung nicht essentiell ist. Wenn Sie Interesse haben, finden Sie aber gute Erklärungen über eine Internet-Suche.</p>
+<div class="float">
+<img src="images/glm.png" alt="Vergleich der Funktionsweisen eines linearen und eines generalisierten linearen Modells. Verändert nach einer Folie von Frank Schurr." />
+<div class="figcaption">Vergleich der Funktionsweisen eines linearen und eines generalisierten linearen Modells. Verändert nach einer Folie von Frank Schurr.</div>
+</div>
+<p>In einem normalen linearen Modell (oberer Teil der Abbildung) liefern die erklärenden Variablen (zum Beispiel ‘Düngung’)und die Modellgleichung direkt eine Schätzung der abhängigen Variable <span class="math inline">\(\mu\)</span> (zum Beispiel ‘Ertrag). Die Abstände zu den tatsächlich beobachteten Daten <span class="math inline">\(y\)</span> sind die Fehler oder Residuen und es wird angenommen, dass sie normalverteilt sind. Bei einem GLM wird zusätzlich eine ’link-function’ benötigt, die das Ergebnis der Modellgleichung auf den biologisch sinnvollen Bereich abbildet. So wird zum Beispiel verhindert, dass negative Zahlen geschätzt werden (ein Baum mit -5 Äpfeln). Zusätzlich ist die Annahme der Verteilung der Residuen/Fehler flexiber, wie oben bereits erwähnt.</p>
+<blockquote>
+<p><strong>Exkurs: Schätzung der Modell-Parameter</strong><br />
+Grundsätzlich findet man die Modell-Parameter (bei einer Geradengleichung <span class="math inline">\(y = a * x + b\)</span>, wären das zum Beispiel <span class="math inline">\(a\)</span> und <span class="math inline">\(b\)</span>), für die die Daten am wahrscheinlichsten sind, indem man das Maximum-Likelihood Prinzip anwendet, sprich die <em>deviance</em> - also die Abweichung der geschätzten von den beobachteten Werten - minimiert. Bei normalverteilten Fehlern ist die deviance als die Summe der Fehlerquadrate RSS (residual sum of squares) definiert: <span class="math inline">\(\sum (\mu - y)^2\)</span>.
+Bei nicht-normalverteilten Fehlern funktioniert der Trick mit dem Minimieren der Summe der Fehlerquadrate nicht. Die deviance ist hier etwas komplizierter definiert. Für Poisson-verteilte Daten zum Beispiel <span class="math inline">\(2\sum(y_i log(y/\mu)-(y-\mu))\)</span>.</p>
+</blockquote>
+</div>
+<div id="beispiel-tomaten" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Beispiel: Tomaten<a href="zähldaten.html#beispiel-tomaten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Leichter verständlich, wird es sicher, wenn wir uns ein konkretes Beispiel anschauen - hier können Sie einen Datensatz zu einem Tomatenversuch herunterladen:
+<a href="https://ecampus.uni-bonn.de/goto_ecampus_file_2786370_download.html" class="uri">https://ecampus.uni-bonn.de/goto_ecampus_file_2786370_download.html</a>
+Speichern Sie ihn in ihrem R-Projekt (wenn Sie eins angelegt haben) im Ordner ‘data’.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="zähldaten.html#cb41-1" tabindex="-1"></a><span class="co"># Zuerst lesen wir den Tomaten-Datensatz ein</span></span>
+<span id="cb41-2"><a href="zähldaten.html#cb41-2" tabindex="-1"></a>tomaten_daten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Tomaten.csv&quot;</span>)</span>
+<span id="cb41-3"><a href="zähldaten.html#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="zähldaten.html#cb41-4" tabindex="-1"></a><span class="co"># Eine kurze Kontrolle, ob alles funktioniert hat</span></span>
+<span id="cb41-5"><a href="zähldaten.html#cb41-5" tabindex="-1"></a><span class="fu">summary</span>(tomaten_daten)</span></code></pre></div>
+<pre><code>##     Datum             Zeitpunkt           Haus        Bedachung        
+##  Length:865         Min.   : 1.000   Min.   :1.000   Length:865        
+##  Class :character   1st Qu.: 3.000   1st Qu.:2.000   Class :character  
+##  Mode  :character   Median : 5.000   Median :4.000   Mode  :character  
+##                     Mean   : 5.089   Mean   :3.504                     
+##                     3rd Qu.: 7.000   3rd Qu.:5.000                     
+##                     Max.   :10.000   Max.   :6.000                     
+##                                                                        
+##   Pflanzen.Nr     Veredelung         Salzstress          Trieblänge   
+##  Min.   : 1.00   Length:865         Length:865         Min.   :  0.0  
+##  1st Qu.:25.00   Class :character   Class :character   1st Qu.: 80.0  
+##  Median :49.00   Mode  :character   Mode  :character   Median :104.0  
+##  Mean   :48.55                                         Mean   :106.4  
+##  3rd Qu.:72.00                                         3rd Qu.:130.0  
+##  Max.   :96.00                                         Max.   :196.0  
+##                                                                       
+##  Anzahl_Blätter  Anzahl_Blütenstände Anzahl_grüne_Früchte Anzahl_rote_Früchte
+##  Min.   : 0.00   Min.   : 0.000      Min.   : 0.00        Min.   : 0.000     
+##  1st Qu.:15.00   1st Qu.: 3.000      1st Qu.: 2.00        1st Qu.: 0.000     
+##  Median :19.00   Median : 4.000      Median : 7.00        Median : 0.000     
+##  Mean   :19.62   Mean   : 4.467      Mean   :11.14        Mean   : 1.029     
+##  3rd Qu.:24.00   3rd Qu.: 6.000      3rd Qu.:17.00        3rd Qu.: 0.000     
+##  Max.   :36.00   Max.   :36.000      Max.   :58.00        Max.   :15.000     
+##                                                                              
+##  Anzahl_Blütenendfäule Anzahl_geerntete_Früchte Gewicht_Trieb   Gewicht_Blätter
+##  Min.   : 0.000        Min.   : 0.000           Min.   :  0.0   Min.   :   0   
+##  1st Qu.: 0.000        1st Qu.: 0.000           1st Qu.:235.0   1st Qu.: 820   
+##  Median : 1.000        Median : 0.000           Median :368.0   Median :1237   
+##  Mean   : 3.042        Mean   : 0.341           Mean   :328.6   Mean   :1077   
+##  3rd Qu.: 5.000        3rd Qu.: 0.000           3rd Qu.:428.0   3rd Qu.:1418   
+##  Max.   :17.000        Max.   :10.000           Max.   :579.0   Max.   :1783   
+##                                                 NA&#39;s   :768     NA&#39;s   :768    
+##  Gewicht_grüne_Früchte Gewicht_rote_Früchte Gewicht_Blütenendfäule
+##  Min.   :   0.0        Min.   :  0.0        Min.   :  0.00        
+##  1st Qu.: 365.0        1st Qu.:  0.0        1st Qu.:  0.00        
+##  Median : 688.0        Median :  0.0        Median :  0.00        
+##  Mean   : 633.2        Mean   : 18.9        Mean   : 21.93        
+##  3rd Qu.: 964.0        3rd Qu.:  0.0        3rd Qu.: 28.00        
+##  Max.   :1222.0        Max.   :312.0        Max.   :221.00        
+##  NA&#39;s   :768           NA&#39;s   :768          NA&#39;s   :768</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="zähldaten.html#cb43-1" tabindex="-1"></a><span class="co"># Es fällt auf, dass die beiden erklärenden Variablen &#39;Veredelung&#39; und &#39;Salzstress&#39;, </span></span>
+<span id="cb43-2"><a href="zähldaten.html#cb43-2" tabindex="-1"></a><span class="co"># die wir gleich verwenden wollen, as &#39;character&#39; eingelesen worden sind. </span></span>
+<span id="cb43-3"><a href="zähldaten.html#cb43-3" tabindex="-1"></a><span class="co"># Das kann bei den Abbildungen zu Problemen führen. Deshalb wandeln wir sie </span></span>
+<span id="cb43-4"><a href="zähldaten.html#cb43-4" tabindex="-1"></a><span class="co"># zuerst in &#39;factors&#39; um:</span></span>
+<span id="cb43-5"><a href="zähldaten.html#cb43-5" tabindex="-1"></a>tomaten_daten<span class="sc">$</span>Veredelung <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(tomaten_daten<span class="sc">$</span>Veredelung)</span>
+<span id="cb43-6"><a href="zähldaten.html#cb43-6" tabindex="-1"></a>tomaten_daten<span class="sc">$</span>Salzstress <span class="ot">&lt;-</span></span>
+<span id="cb43-7"><a href="zähldaten.html#cb43-7" tabindex="-1"></a>  <span class="fu">as.factor</span>(tomaten_daten<span class="sc">$</span>Salzstress)</span>
+<span id="cb43-8"><a href="zähldaten.html#cb43-8" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="zähldaten.html#cb43-9" tabindex="-1"></a><span class="co"># Für die folgende Abbildung benötigen wir das package &#39;lattice&#39; </span></span>
+<span id="cb43-10"><a href="zähldaten.html#cb43-10" tabindex="-1"></a><span class="co"># (muss wie immer zuerst installiert und dann geladen werden).</span></span>
+<span id="cb43-11"><a href="zähldaten.html#cb43-11" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb43-12"><a href="zähldaten.html#cb43-12" tabindex="-1"></a></span>
+<span id="cb43-13"><a href="zähldaten.html#cb43-13" tabindex="-1"></a><span class="co"># Um die Daten ein bisschen kennenzulernen (und noch ein paar neue Arten von plots kennenzulernen), </span></span>
+<span id="cb43-14"><a href="zähldaten.html#cb43-14" tabindex="-1"></a><span class="co"># bilden wir sie erstmal in einem xyplot ab. Insbesondere interessieren wir uns </span></span>
+<span id="cb43-15"><a href="zähldaten.html#cb43-15" tabindex="-1"></a><span class="co"># jetzt für die Anzahl an Früchten, die Blütenendfäule haben in Abhängigkeit von </span></span>
+<span id="cb43-16"><a href="zähldaten.html#cb43-16" tabindex="-1"></a><span class="co"># Salzstress und Veredelung.</span></span>
+<span id="cb43-17"><a href="zähldaten.html#cb43-17" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb43-18"><a href="zähldaten.html#cb43-18" tabindex="-1"></a><span class="fu">with</span>(tomaten_daten, <span class="fu">xyplot</span>(Anzahl_Blütenendfäule <span class="sc">~</span> Salzstress, <span class="at">groups =</span> Veredelung))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Hier sehen wir nicht besonders viel, außer dass die Varianz sehr hoch ist. Machen wir noch einen Interaktionsplot, in dem die Mittelwerte der Gruppen (mit/ohne Salzstress, mit/ohne Veredelung) berechnet und abgebildet werden.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="zähldaten.html#cb44-1" tabindex="-1"></a><span class="co"># hier machen wir ein Interaktionsplot</span></span>
+<span id="cb44-2"><a href="zähldaten.html#cb44-2" tabindex="-1"></a><span class="fu">with</span>(tomaten_daten, <span class="fu">interaction.plot</span>(<span class="at">x.factor =</span> Veredelung, </span>
+<span id="cb44-3"><a href="zähldaten.html#cb44-3" tabindex="-1"></a>   <span class="at">trace.factor =</span> Salzstress, <span class="at">response =</span> Anzahl_Blütenendfäule))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Jetzt erkennen wir, dass veredelte Tomaten mit Salzstress eine deutlich geringere Zahl von Früchten mit Blütenendfäule haben, als ohne Salzstress. Bei nicht-veredelten Pflanzen ist der Effekt genau umgekehrt, allerdings deutlich kleiner. Es sieht also so aus als gäbe es eine Interaktion zwischen den beiden erklärenden Variablen Salzstress und Veredelung: der Effekt der einen erklärenden Variablen auf die abhängige Variable hängt vom Wert der anderen erklärenden Variablen ab.
+Um diesen Effekte auf Signifikanz zu testen, fitten wir jetzt generalisierte lineare Modelle, die mit der Funktion <code>glm()</code> aufgerufen werden:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="zähldaten.html#cb45-1" tabindex="-1"></a>glm_model_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Anzahl_Blütenendfäule <span class="sc">~</span> Veredelung <span class="sc">*</span> Salzstress, </span>
+<span id="cb45-2"><a href="zähldaten.html#cb45-2" tabindex="-1"></a>    <span class="at">family =</span> poisson, <span class="at">data =</span> tomaten_daten)</span></code></pre></div>
+<p>Wie Sie sehen, funktioniert das ganz ähnlich wie mit der Funktion <code>lm()</code>. Es muss lediglich der zusätzliche Parameter ‘family’ angegeben werden. Hier wählen wir ‘poisson’, weil Zähldaten Poisson-verteilt sind.</p>
+</div>
+<div id="overdispersion" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Overdispersion<a href="zähldaten.html#overdispersion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Aber Vorsicht! Bevor wir das Modell weiter analysieren können müssen wir uns noch das Verhältnis von Residual deviance (die Fehler, die es nach der Schätzung der Mittelwerte noch gibt) und den Freiheitsgraden/degrees of freedom anschauen: Ein GLM nimmt eine bestimmte Beziehung zwischen der Residual deviance und der Modellvorhersage an. Bei vielen agrarwissenschaftlichen Daten ist die Varianz aber größer als unter Poisson-Verteilung erwartet (z.B. weil nicht gemessene Variablen die abhängige Variable beeinflussen) -&gt; das bezeichnet man als Overdispersion. Wenn die Residual deviance (zweitletzte Zeile in der summary) mehr als 1,5 mal höher ist als die Freiheitsgrade, liegt Overdispersion vor.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="zähldaten.html#cb46-1" tabindex="-1"></a><span class="fu">summary</span>(glm_model_1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Anzahl_Blütenendfäule ~ Veredelung * Salzstress, 
+##     family = poisson, data = tomaten_daten)
+## 
+## Coefficients:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                    1.01664    0.04093  24.840  &lt; 2e-16 ***
+## Veredelungohne                 0.08507    0.05675   1.499    0.134    
+## Salzstressohne                 0.27847    0.05414   5.143 2.70e-07 ***
+## Veredelungohne:Salzstressohne -0.37364    0.07854  -4.757 1.96e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 4293.7  on 864  degrees of freedom
+## Residual deviance: 4256.1  on 861  degrees of freedom
+## AIC: 5833.3
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>4256/861 ist deutlich größer als 1,5, wir haben in den Daten also tatsächlich Overdispersion.</p>
+<p>Lösungen:</p>
+<ul>
+<li>wenn möglich, weitere erklärende Variablen mit in das Modell einbeziehen</li>
+<li>Wenn das nicht hilft/möglich ist: Verwendung von quasipoisson-Fehlern:</li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="zähldaten.html#cb48-1" tabindex="-1"></a>glm_model_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Anzahl_Blütenendfäule <span class="sc">~</span> Veredelung <span class="sc">*</span> Salzstress, </span>
+<span id="cb48-2"><a href="zähldaten.html#cb48-2" tabindex="-1"></a>      <span class="at">family =</span> quasipoisson, <span class="at">data =</span> tomaten_daten)</span></code></pre></div>
+<p>In diesem Modell wird nun zusätzlich geschätzt, wie hoch die Varianz in den einzelnen Behandlungsgruppen ist. Hiermit können wir weiterarbeiten: um die Interaktion zwischen Veredelung und Salzstress auf Signifikanz zu testen, formulieren wir ein einfacheres, genestetes Modell, in dem diese Interaktion fehlt (wenn sich ein Modell B von einem Modell A ableiten lässt, dass heißt, ein oder mehrere erklärende Variablen oder Interaktionen herausgenommen worden sind, sagt man, das Modell B ist in Modell A genestet). Dazu ersetzen wir das * (das für Interaktion steht) mit einem +. So haben beide erklärenden Variablen einen unabhängigen Einfluss auf die Anzahl der Früchte mit Blütenendfäule aber keine Interaktion mehr.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="zähldaten.html#cb49-1" tabindex="-1"></a>glm_model_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Anzahl_Blütenendfäule <span class="sc">~</span> Veredelung <span class="sc">+</span> Salzstress, </span>
+<span id="cb49-2"><a href="zähldaten.html#cb49-2" tabindex="-1"></a>        <span class="at">family =</span> quasipoisson, <span class="at">data =</span> tomaten_daten)</span></code></pre></div>
+<p>Mit der Funktion <code>anova()</code> vergleichen Sie die Modelle und testen, ob die Interkation signifikant ist. Zusätzlich müssen Sie hier die Statistik angeben, mit der die Modelle verglichen werden sollen, weil das bei glms mit eindeutig ist. Für quasipoisson-verteilte Residuen, wird der F-test benötigt.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="zähldaten.html#cb50-1" tabindex="-1"></a><span class="fu">anova</span>(glm_model_1, glm_model_2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>) </span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Anzahl_Blütenendfäule ~ Veredelung * Salzstress
+## Model 2: Anzahl_Blütenendfäule ~ Veredelung + Salzstress
+##   Resid. Df Resid. Dev Df Deviance      F  Pr(&gt;F)  
+## 1       861     4256.1                             
+## 2       862     4278.8 -1  -22.723 4.8598 0.02775 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Wie schon vermutet, ist die Interaktion signifikant. Wenn eine Interaktion signifikant ist, bleiben auch die beiden erklärenden Variablen, die interagieren auf jeden Fall im Modell. Die Varianzanalyse ist also jetzt abgeschlossen.</p>
+<p>Wir könnten uns jetzt mit
+<code>summary(*Modellname*)</code> noch die geschätzten Parameter-Werte anschauen. Hier müssen Sie aber beachten, dass sie auf der link-Skala angegeben sind (siehe oben, die Parameter werden so angepasst, dass das Modell sinnvolle Ergebnisse liefert) und zurück-transformiert werden müssen, um den eigentlichen Wert zu erhalten. Am einfachsten ist es, die Funktion <code>predict()</code> zu verwenden: Als erstes Argument nennen wir den Namen des glm-Modells, dann erstellen wir einen Datensatz mit den Variablen und Werten, für die wir die Vorhersagen sehen möchten, also mit/ohne Salzstress und mit/ohne Veredelung in allen 4 möglichen Kombinationen. Als <code>type</code> wählen wir ‘response’ aus, weil wir die Schätzungen nicht auf der link-Skala sondern auf der response-Skala (das sind die zurücktransformierten, interpretierbaren Werte, siehe oben) haben wollen.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="zähldaten.html#cb52-1" tabindex="-1"></a><span class="fu">predict</span>(glm_model_1, <span class="fu">data.frame</span>(<span class="at">Salzstress =</span> <span class="fu">c</span>(<span class="st">&quot;mit&quot;</span>, <span class="st">&quot;mit&quot;</span>, <span class="st">&quot;ohne&quot;</span>, <span class="st">&quot;ohne&quot;</span>), </span>
+<span id="cb52-2"><a href="zähldaten.html#cb52-2" tabindex="-1"></a>                    <span class="at">Veredelung =</span> <span class="fu">c</span>(<span class="st">&quot;mit&quot;</span>, <span class="st">&quot;ohne&quot;</span>, <span class="st">&quot;mit&quot;</span>, <span class="st">&quot;ohne&quot;</span>)), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##        1        2        3        4 
+## 2.763889 3.009302 3.651376 2.736111</code></pre>
+<p>Der geschätzte Wert für die Anzahl an Früchten mit Blütenendfäule für Pflanzen mit Salzstress und mit Veredelung ist also 2,76, für Pflanzen mit Salzstress und ohne Veredelung 3.01 usw.</p>
+</div>
+<div id="bonitur" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Anteils- und Boniturdaten auswerten<a href="zähldaten.html#bonitur" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In dieser Woche geht es gleich um zwei Datentypen: Anteils- und Bonitur-Daten. Anteilsdaten können mit generalisierten linearen Modellen (GLMs) ausgewertet werden, die Sie beim letzten Mal schon kennengelernt haben - allerdings mit zwei kleinen Änderungen. Bonitur-Daten sind im Gartenbau ziemlich häufig, sind allerdings in Bezug auf die Auswertung ein eher undankbarer Datentyp: oft ist es schwierig bis unmöglich, sie durch Verteilungen wie der Normalverteilung zu charakterisieren. Deshalb wiedersetzen sie sich auch den Auswertungen, die auf solchen Verteilungen beruhen.</p>
+<p>Am Ende dieses Kapitels wissen Sie</p>
+<ul>
+<li>wie die abhängige Variable in einem GLM zu Anteilsdaten generiert wird</li>
+<li>mit welchem Modell und welchem Test Sie Anteilsdaten auswerten, um signifikante Unterschiede zwischen den Behandlungen zu identifizieren</li>
+<li>wie man die etwas störrischen Bonitur-Daten zähmen, plotten und auswerten kann.</li>
+</ul>
+</div>
+<div id="anteilsdaten-auswerten" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Anteilsdaten auswerten<a href="zähldaten.html#anteilsdaten-auswerten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Im Keimungsversuch mit Radis und Bohnen auf zwei verschiedenen Substraten haben Sie Anteilsdaten aufgenommen: wie viele der 80 ausgesäten Samen sind gekeimt? Die csv-Dateien finden Sie hier:
+<a href="https://ecampus.uni-bonn.de/goto_ecampus_file_2786369_download.html" class="uri">https://ecampus.uni-bonn.de/goto_ecampus_file_2786369_download.html</a></p>
+<p>Wie Sie sich schon denken können, erfüllt auch dieser Datentyp nicht die Annahmen, die für eine ‘normale’ ANOVa gegeben sein müssen. Zum Glück können wir wieder auf die generalisierten linearen Modelle zurückgreifen, allerdings mit zwei kleinen Änderungen. Aber fangen wir von vorne an.</p>
+<p>Zuerst laden wir das Paket ‘tidyverse’, das uns zum Beispiel das Umstrukturieren von Datensätzen erleichtert, lesen die Daten ein (bei mir sind sie wieder im Ordner ‘data’ innerhalb des Ordners, in dem sich das r-Skript befindet gespeichert) und kontrollieren, ob alles geklappt hat:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="zähldaten.html#cb54-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb54-2"><a href="zähldaten.html#cb54-2" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="zähldaten.html#cb54-3" tabindex="-1"></a>Ansaaten <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/Ansaaten.csv&quot;</span>, <span class="at">header =</span> T) </span>
+<span id="cb54-4"><a href="zähldaten.html#cb54-4" tabindex="-1"></a><span class="fu">head</span>(Ansaaten)</span>
+<span id="cb54-5"><a href="zähldaten.html#cb54-5" tabindex="-1"></a><span class="fu">str</span>(Ansaaten)</span>
+<span id="cb54-6"><a href="zähldaten.html#cb54-6" tabindex="-1"></a><span class="fu">summary</span>(Ansaaten)</span></code></pre></div>
+<p>Um uns die Keimungsraten genauer anzuschauen, erstellen wir einen
+neuen Datensatz ‘Keimung’, indem wir mit dem pipe-Operator %&gt;% aus dem
+Datensatz ‘Ansaaten’ die entsprechenden Spalten auswählen:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="zähldaten.html#cb55-1" tabindex="-1"></a>Keimung <span class="ot">&lt;-</span> Ansaaten <span class="sc">%&gt;%</span> <span class="fu">select</span>(Art, ID, Substrat, Ausfaelle, Angelaufen)</span>
+<span id="cb55-2"><a href="zähldaten.html#cb55-2" tabindex="-1"></a><span class="fu">head</span>(Keimung)</span></code></pre></div>
+<pre><code>##     Art ID  Substrat Ausfaelle Angelaufen
+## 1 Bohne  1 Presstopf         5         79
+## 2 Bohne  2 Presstopf         3         81
+## 3 Bohne  3 Presstopf         6         78
+## 4 Bohne  4 Presstopf         6         78
+## 5 Bohne  5 Presstopf        21         63
+## 6 Bohne  6 Presstopf        23         61</code></pre>
+<p>Um einen Säulendiagramm zu erstellen, in dem die Anzahl der angelaufenen
+Samen und der Ausfälle gestapelt dargestellt werden, müssen wir den
+Datensatz umstrukturieren, um für jede Anzahl ‘Ausfaelle’ oder
+‘Angelaufen’ eine eigene Spalte zu bekommen. Dazu nutzen wir die Funktion ‘reshape’. Wichtig sind hierbei die Parameter</p>
+<ul>
+<li>idvar = die Kombination aus Plot, ID und Behandlungslevels, die eine
+Zeile in der neuen Datenstruktur definiert</li>
+<li>timevar = Bezeichnung für neue Spalte</li>
+<li>times = das, was in diese Spalte eingetragen werden soll</li>
+</ul>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="zähldaten.html#cb57-1" tabindex="-1"></a>Keimung_w <span class="ot">&lt;-</span> <span class="fu">reshape</span>(Keimung, </span>
+<span id="cb57-2"><a href="zähldaten.html#cb57-2" tabindex="-1"></a>        <span class="at">direction =</span> <span class="st">&quot;long&quot;</span>,</span>
+<span id="cb57-3"><a href="zähldaten.html#cb57-3" tabindex="-1"></a>        <span class="at">varying =</span> <span class="fu">list</span>(<span class="fu">names</span>(Keimung)[<span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>]),</span>
+<span id="cb57-4"><a href="zähldaten.html#cb57-4" tabindex="-1"></a>        <span class="at">v.names =</span> <span class="st">&quot;Anzahl&quot;</span>,</span>
+<span id="cb57-5"><a href="zähldaten.html#cb57-5" tabindex="-1"></a>        <span class="at">idvar =</span> <span class="fu">c</span>(<span class="st">&quot;Art&quot;</span>, <span class="st">&quot;ID&quot;</span>, <span class="st">&quot;Substrat&quot;</span>),</span>
+<span id="cb57-6"><a href="zähldaten.html#cb57-6" tabindex="-1"></a>        <span class="at">timevar =</span> <span class="st">&quot;Beobachtung&quot;</span>,</span>
+<span id="cb57-7"><a href="zähldaten.html#cb57-7" tabindex="-1"></a>        <span class="at">times =</span> <span class="fu">c</span>(<span class="st">&quot;Ausfaelle&quot;</span>, <span class="st">&quot;Angelaufen&quot;</span>))</span>
+<span id="cb57-8"><a href="zähldaten.html#cb57-8" tabindex="-1"></a><span class="fu">head</span>(Keimung_w)</span></code></pre></div>
+<pre><code>##                               Art ID  Substrat Beobachtung Anzahl
+## Bohne.1.Presstopf.Ausfaelle Bohne  1 Presstopf   Ausfaelle      5
+## Bohne.2.Presstopf.Ausfaelle Bohne  2 Presstopf   Ausfaelle      3
+## Bohne.3.Presstopf.Ausfaelle Bohne  3 Presstopf   Ausfaelle      6
+## Bohne.4.Presstopf.Ausfaelle Bohne  4 Presstopf   Ausfaelle      6
+## Bohne.5.Presstopf.Ausfaelle Bohne  5 Presstopf   Ausfaelle     21
+## Bohne.6.Presstopf.Ausfaelle Bohne  6 Presstopf   Ausfaelle     23</code></pre>
+<p>Jetzt können wir den Plot erstellen</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="zähldaten.html#cb59-1" tabindex="-1"></a><span class="fu">ggplot</span>(Keimung_w, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(ID), <span class="at">y=</span>Anzahl, <span class="at">fill=</span>Beobachtung)) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="zähldaten.html#cb59-2" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> Art <span class="sc">*</span> Substrat) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="zähldaten.html#cb59-3" tabindex="-1"></a><span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;stack&quot;</span>, <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="zähldaten.html#cb59-4" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;legend&quot;</span>, </span>
+<span id="cb59-5"><a href="zähldaten.html#cb59-5" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Angelaufen&quot;</span> <span class="ot">=</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="st">&quot;Ausfaelle&quot;</span> <span class="ot">=</span> <span class="st">&quot;lightgrey&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb59-6"><a href="zähldaten.html#cb59-6" tabindex="-1"></a><span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="768" /></p>
+<p>Wir sehen, dass die Erfolgsrate bei den Radis unabhängig vom Substrat
+sehr hoch ist. Bei den Bohnen gibt es mehr Ausfälle, insbesondere
+bei den auf Steinwolle ausgesäten.</p>
+<p>Sind diese Unterschiede signifikant?
+Um das zu testen, können wir wieder die generalisierten linearen
+Modelle fitten und mittels der anova-Funktion vergleichen.
+Bei Anteilsdaten wie diesen erfolgt davor allerdings noch ein
+Vorbereitungsschritt: Wir generieren aus den beiden Spalten
+‘Angelaufen’ und ‘Ausfaelle’ eine einzige abhängige Variable,
+die wir ‘Keimungsrate’ nennen. Es ist wichtig, die Rate nicht
+selber auszurechnen: ‘1 von 10 Samen gekeimt’ hat im Modell
+weniger Gewicht als ‘10 von 100’ Samen gekeimt. Stattdessen
+verwenden wir die Funktion ‘cbind()’ :</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="zähldaten.html#cb60-1" tabindex="-1"></a>Ansaaten<span class="sc">$</span>Keimungsrate <span class="ot">&lt;-</span> <span class="fu">cbind</span>(Ansaaten<span class="sc">$</span>Angelaufen, Ansaaten<span class="sc">$</span>Ausfaelle)</span></code></pre></div>
+<p>Dann können wir die Funktion glm() wie bekannt nutzen.
+Bei Anteilsdaten nutzen wir als family ‘binomial’</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="zähldaten.html#cb61-1" tabindex="-1"></a>Modell1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Keimungsrate <span class="sc">~</span> Substrat <span class="sc">*</span> Art, <span class="at">family =</span> binomial, <span class="at">data =</span> Ansaaten)</span>
+<span id="cb61-2"><a href="zähldaten.html#cb61-2" tabindex="-1"></a><span class="fu">summary</span>(Modell1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Keimungsrate ~ Substrat * Art, family = binomial, 
+##     data = Ansaaten)
+## 
+## Coefficients:
+##                              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   1.61803    0.09285  17.427  &lt; 2e-16 ***
+## SubstratSteinwolle           -1.57041    0.11570 -13.574  &lt; 2e-16 ***
+## ArtRadies                     1.61079    0.20275   7.945 1.95e-15 ***
+## SubstratSteinwolle:ArtRadies  1.33731    0.26856   4.980 6.37e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1266.76  on 39  degrees of freedom
+## Residual deviance:  561.64  on 36  degrees of freedom
+## AIC: 705.33
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>Die summary des Modells zeigt, dass die Daten overdispersed sind.
+Auch hier gibt es für diesen Fall die Möglichkeit als family
+‘quasibinomial’ anzugeben:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="zähldaten.html#cb63-1" tabindex="-1"></a>Modell1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Keimungsrate <span class="sc">~</span> Substrat <span class="sc">*</span> Art, <span class="at">family =</span> quasibinomial, <span class="at">data =</span> Ansaaten)</span></code></pre></div>
+<p>Zunächst lassen wir die Interaktion zwischen Substrat und Art
+weg, indem wir das Multiplikationszeichen durch ein Plus
+ersetzen</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="zähldaten.html#cb64-1" tabindex="-1"></a>Modell2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Keimungsrate <span class="sc">~</span> Substrat <span class="sc">+</span> Art, <span class="at">family =</span> quasibinomial, <span class="at">data =</span> Ansaaten)</span></code></pre></div>
+<p>Jetzt vergleichen wir die Modelle mittels anaova(). Als
+Test muss jetzt der F-Test angegeben werden</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="zähldaten.html#cb65-1" tabindex="-1"></a><span class="fu">anova</span>(Modell1, Modell2, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Keimungsrate ~ Substrat * Art
+## Model 2: Keimungsrate ~ Substrat + Art
+##   Resid. Df Resid. Dev Df Deviance     F Pr(&gt;F)
+## 1        36     561.64                         
+## 2        37     584.97 -1  -23.326 1.603 0.2136</code></pre>
+<p>Wie wir sehen, ist die Interaktion nicht signifikant
+(p &gt; 0.05) Also vereinfachen wir das Modell weiter und
+nehmen jetzt das Substrat als erklärende Variable raus</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="zähldaten.html#cb67-1" tabindex="-1"></a>Modell3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Keimungsrate <span class="sc">~</span> Art, <span class="at">family =</span> quasibinomial, <span class="at">data =</span> Ansaaten)</span>
+<span id="cb67-2"><a href="zähldaten.html#cb67-2" tabindex="-1"></a><span class="co"># Wieder vergleichen:</span></span>
+<span id="cb67-3"><a href="zähldaten.html#cb67-3" tabindex="-1"></a><span class="fu">anova</span>(Modell2, Modell3, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Keimungsrate ~ Substrat + Art
+## Model 2: Keimungsrate ~ Art
+##   Resid. Df Resid. Dev Df Deviance      F   Pr(&gt;F)   
+## 1        37     584.97                               
+## 2        38     767.96 -1  -182.99 11.644 0.001573 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Das Substrat hat einen hochsignifikanten Effekt auf die
+Keimungsrate. Als letztes testen wir noch die Art</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="zähldaten.html#cb69-1" tabindex="-1"></a>Modell4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Keimungsrate <span class="sc">~</span> Substrat, <span class="at">family =</span> quasibinomial, <span class="at">data =</span> Ansaaten)</span></code></pre></div>
+<p>Jetzt müssen wir Modell4 natürlich gegen Modell2 testen.
+Die Modelle müssen immer ‘genestet’ sein, sonst kann kein Signifikanzniveau berechnet werden. Genestet bedeutet, dass ein Modell eine einfachere Variante (eine oder mehrere Variable/n oder Interaktion/en weniger) des anderen Modells ist.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="zähldaten.html#cb70-1" tabindex="-1"></a><span class="fu">anova</span>(Modell2, Modell4, <span class="at">test =</span> <span class="st">&quot;F&quot;</span>)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table
+## 
+## Model 1: Keimungsrate ~ Substrat + Art
+## Model 2: Keimungsrate ~ Substrat
+##   Resid. Df Resid. Dev Df Deviance      F    Pr(&gt;F)    
+## 1        37     584.97                                 
+## 2        38    1108.34 -1  -523.38 33.303 1.283e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Auch die Art hat einen hochsignifikanten Einfluss auf
+die Keimungsrate. Damit ist die Analyse der Keimungsraten
+abgeschlossen.</p>
+</div>
+<div id="bonitur-daten" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Bonitur-Daten<a href="zähldaten.html#bonitur-daten" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bonitur-Daten sind recht speziell, weil es keine metrischen Daten sind, sondern Ordinal-Daten und darüber hinaus auch einigermaßen subjektiv.
+Trotzdem sind hierfür Methoden zur Auswertung entwickelt worden. Sie stammen aus der Psychologie, in der häufig Untersuchungen stattfinden, bei denen Personen zum Beispiel ihre Zufriedenheit auf einer Skala von 1 bis 5 bewerten sollen.</p>
+<p>Wir schauen uns dazu exemplarisch die Bonitur-Daten zur Entwicklung der Bohnen an. Dazu filtern wir den Datensatz Ansaaten, indem wir nur die Zeilen nehmen, in denen das Argument Art == “Bohne” zutrifft (das doppelte Gleichzeichen wird immer benutzt, wenn eine Abfrage gemacht wird, ein einfaches Gleichzeichen ist in R eine Zuweisung also synonym mit dem Pfeil &lt;- ). Mit dem Pipe-Operator %&gt;% verbinden wir diese Auswahl mit der Auswahl der Spalten, die wir mit der Funktion select() machen. Hier können wieder einfach die header (=Spaltenüberschriften) der benötigten Spalten angegeben werden. Vorher laden wir noch zwei Pakete, die für die Auswertung von Ordinal-Daten entwickelt wurden</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="zähldaten.html#cb72-1" tabindex="-1"></a><span class="fu">library</span>(likert)</span></code></pre></div>
+<pre><code>## Loading required package: xtable</code></pre>
+<pre><code>## 
+## Attaching package: &#39;likert&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="zähldaten.html#cb77-1" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ordinal&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     slice</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="zähldaten.html#cb80-1" tabindex="-1"></a>Bohne_Entw_l <span class="ot">&lt;-</span> <span class="fu">filter</span>(Ansaaten, Art <span class="sc">==</span> <span class="st">&quot;Bohne&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(Substrat, ID, Entwicklung)</span>
+<span id="cb80-2"><a href="zähldaten.html#cb80-2" tabindex="-1"></a><span class="fu">head</span>(Bohne_Entw_l)</span></code></pre></div>
+<pre><code>##    Substrat ID Entwicklung
+## 1 Presstopf  1           8
+## 2 Presstopf  2           5
+## 3 Presstopf  3           8
+## 4 Presstopf  4           8
+## 5 Presstopf  5           4
+## 6 Presstopf  6           5</code></pre>
+<p>Als erstes sollten die Daten wieder geplottet werden. Bei Bonitur-Daten eignen sich Histogramme am besten. Um das zu tun,
+müssen die Bonitur-Noten in Faktoren umgewandelt werden. Für die weitere
+Analyse geben wir auch direkt an, wieviele mögliche Levels (verschiedene Noten) es gibt und
+dass sie eine aussagekräftige Reihenfolge haben (ordered = TRUE):</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="zähldaten.html#cb82-1" tabindex="-1"></a>Bohne_Entw_l<span class="sc">$</span>Entwicklung <span class="ot">&lt;-</span> <span class="fu">factor</span>(Bohne_Entw_l<span class="sc">$</span>Entwicklung, <span class="at">ordered =</span> <span class="cn">TRUE</span>, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span></code></pre></div>
+<p>Jetzt können die Histogramme erstellt werden:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="zähldaten.html#cb83-1" tabindex="-1"></a><span class="fu">ggplot</span>(Bohne_Entw_l, <span class="fu">aes</span>(Entwicklung)) <span class="sc">+</span></span>
+<span id="cb83-2"><a href="zähldaten.html#cb83-2" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb83-3"><a href="zähldaten.html#cb83-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Substrat, <span class="at">ncol=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb83-4"><a href="zähldaten.html#cb83-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Bonitur Note&quot;</span>) <span class="sc">+</span></span>
+<span id="cb83-5"><a href="zähldaten.html#cb83-5" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Anzahl&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="768" /></p>
+<p>Das package ‘likert’ stellt einige Plot-Funktionen zur Verfügung, die speziell für Bonitur- und andere Typen von likert-Daten geeignet sind.
+Dazu brauchen wir die Daten allerdings im ‘wide’ Format. Im Moment haben wir die Daten im ‘long’ Format: es gibt eine eigene Spalte für das Substrat, sodass ‘Presstopf’ und ‘Steinwolle’ je 10 Mal genannt werden.
+Wir nutzen wieder die Funktion ‘reshape’ wie oben, jetzt allerdings in umgekehrter Richtung, vom ‘long’ zum ‘wide’ Format:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="zähldaten.html#cb84-1" tabindex="-1"></a>Bohne_Entw_w <span class="ot">&lt;-</span> <span class="fu">reshape</span>(Bohne_Entw_l, <span class="at">v.names=</span><span class="st">&quot;Entwicklung&quot;</span>, <span class="at">idvar =</span> <span class="st">&quot;ID&quot;</span>, </span>
+<span id="cb84-2"><a href="zähldaten.html#cb84-2" tabindex="-1"></a>    <span class="at">timevar =</span> <span class="st">&quot;Substrat&quot;</span>, <span class="at">direction=</span><span class="st">&quot;wide&quot;</span>)</span>
+<span id="cb84-3"><a href="zähldaten.html#cb84-3" tabindex="-1"></a><span class="fu">head</span>(Bohne_Entw_w)</span></code></pre></div>
+<pre><code>##   ID Entwicklung.Presstopf Entwicklung.Steinwolle
+## 1  1                     8                      5
+## 2  2                     5                      5
+## 3  3                     8                      5
+## 4  4                     8                      3
+## 5  5                     4                      2
+## 6  6                     5                      1</code></pre>
+<p>‘idvar’ sind jetzt also die Zeilenbezeichnungen, ‘timevar’ die Spaltenbezeichnungen, ‘v.names’ die eigentlichen Werte.</p>
+<p>Als nächstes müssen wir ein sogenanntes ‘likert-Objekt’ aus den beiden Spalten mit den Bonitur-Noten erstellen, dann kann die plot-Funktion des likert-packages genutzt werden:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="zähldaten.html#cb86-1" tabindex="-1"></a>Bohne_Entw_likert <span class="ot">=</span> <span class="fu">likert</span>(Bohne_Entw_w[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb86-2"><a href="zähldaten.html#cb86-2" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="zähldaten.html#cb86-3" tabindex="-1"></a><span class="fu">plot</span>(Bohne_Entw_likert)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="768" /></p>
+<p>Dies ist eine andere - etwas kompaktere - Darstellung der gleichen Daten. Die %-Werte geben an, wieviel % im schlechten Bereich (1-3), im mittleren Bereich (4-6) und im guten Bereich (7 - 9) waren.</p>
+<p>Bonitur-Daten sind Ordinal-Daten und haben damit andere Eigenschaften als metrische Daten. Wie oben erwähnt, erfüllen sie häufig nicht die Annahmen, die für eine normale Varianzanalyse zutreffen müssen. Wir greifen hier auf ‘cumulative link models’ (CLM) aus der library ‘ordered’ zurück. CLMs sind im Prinzip das gleiche wie proportional odds model, falls Ihnen dieser Begriff mal über den Weg läuft.
+Ähnlich wie in den vorherigen beiden Kapiteln formulieren wir wieder ein komplexeres Modell mit Substrat als erklärender Variable und das Null-Modell, indem angenommen wird, dass alle Bohnen sich ungeachtet der Behandlung gleich Entwickeln:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="zähldaten.html#cb87-1" tabindex="-1"></a>Model1 <span class="ot">&lt;-</span> <span class="fu">clm</span>(Entwicklung <span class="sc">~</span> Substrat, <span class="at">data =</span> Bohne_Entw_l, <span class="at">threshold =</span> <span class="st">&quot;equidistant&quot;</span>)</span>
+<span id="cb87-2"><a href="zähldaten.html#cb87-2" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="zähldaten.html#cb87-3" tabindex="-1"></a>Model2 <span class="ot">&lt;-</span> <span class="fu">clm</span>(Entwicklung <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Bohne_Entw_l, <span class="at">threshold =</span> <span class="st">&quot;equidistant&quot;</span>)</span></code></pre></div>
+<p>Als threshhold geben wir ‘equidistant’ an, weil wir davon ausgehen, dass zum Beispiel der Unterschied in der Entwicklung zwischen den Bonitur-Noten 2 und 3 genauso groß ist, wie der Unterschied zwischen den Noten 3 und 4 usw.</p>
+<p>Auch für CLMs gibt es die Funktion anova(). Hier wird allerdings kein t- oder F-Test durchgeführt, sondern ein Chi-square Test, der uns einen p-Wert liefert:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="zähldaten.html#cb88-1" tabindex="-1"></a><span class="fu">anova</span>(Model1, Model2)</span></code></pre></div>
+<pre><code>## Likelihood ratio tests of cumulative link models:
+##  
+##        formula:               link: threshold: 
+## Model2 Entwicklung ~ 1        logit equidistant
+## Model1 Entwicklung ~ Substrat logit equidistant
+## 
+##        no.par    AIC  logLik LR.stat df Pr(&gt;Chisq)   
+## Model2      2 78.001 -37.000                         
+## Model1      3 73.330 -33.665  6.6711  1   0.009799 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Wie sie sehen, ist der p-Wert etwa 0.01, das heißt, das Substrat hat einen signifikanten Effekt auf die Entwicklung der Bohnen.
+Hiermit ist auch eine grundlegende Analyse der Bonitur-Daten abgeschlossen.</p>
+<p>Ein interessanter Link zum Thema, inklusive Auswertungsmöglichkeiten mit R:
+<a href="https://bookdown.org/Rmadillo/likert/">‘Do not use averages with Likert scale data’</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="daten.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="zeitreihen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/03-zähldaten_bonitur.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

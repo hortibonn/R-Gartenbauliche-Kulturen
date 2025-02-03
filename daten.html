@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Daten vorbereiten, Prinzip Anova | Gartenbauliche Kulturen - Daten auswerten mit R</title>
+  <meta name="description" content="Chapter 3 Daten vorbereiten, Prinzip Anova | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Daten vorbereiten, Prinzip Anova | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Daten vorbereiten, Prinzip Anova | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  
+  
+  
+
+<meta name="author" content="Katja Schiffers" />
+
+
+<meta name="date" content="2025-02-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="einführungR.html"/>
+<link rel="next" href="zähldaten.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#zeitplan"><i class="fa fa-check"></i>Zeitplan</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-daten_einlesen_prinzip_anova.html"><a href="#einf%C3%BChrungR"><i class="fa fa-check"></i><b>2</b> Einführung R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="einführungR.html"><a href="einführungR.html"><i class="fa fa-check"></i><b>2.1</b> Was ist R?</a></li>
+<li class="chapter" data-level="2.2" data-path="einführungR.html"><a href="einführungR.html#r-und-r-studio-installieren"><i class="fa fa-check"></i><b>2.2</b> R und R-Studio installieren</a></li>
+<li class="chapter" data-level="2.3" data-path="einführungR.html"><a href="einführungR.html#erste-schritte-mit-r"><i class="fa fa-check"></i><b>2.3</b> Erste Schritte mit R</a></li>
+<li class="chapter" data-level="2.4" data-path="einführungR.html"><a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r"><i class="fa fa-check"></i><b>2.4</b> Importieren von Daten aus Excel/LibreOffice nach R</a></li>
+<li class="chapter" data-level="2.5" data-path="einführungR.html"><a href="einführungR.html#daten-kontrollieren"><i class="fa fa-check"></i><b>2.5</b> Daten kontrollieren</a></li>
+<li class="chapter" data-level="2.6" data-path="einführungR.html"><a href="einführungR.html#hilfe-bekommen"><i class="fa fa-check"></i><b>2.6</b> Hilfe bekommen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="daten.html"><a href="daten.html"><i class="fa fa-check"></i><b>3</b> Daten vorbereiten, Prinzip Anova</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="daten.html"><a href="daten.html#r-projekte"><i class="fa fa-check"></i><b>3.1</b> R-Projekte</a></li>
+<li class="chapter" data-level="3.2" data-path="daten.html"><a href="daten.html#datentypen-und--transformationen"><i class="fa fa-check"></i><b>3.2</b> Datentypen und -transformationen</a></li>
+<li class="chapter" data-level="3.3" data-path="daten.html"><a href="daten.html#umgang-mit-nas"><i class="fa fa-check"></i><b>3.3</b> Umgang mit NAs</a></li>
+<li class="chapter" data-level="3.4" data-path="02-daten_einlesen_prinzip_anova.html"><a href="#datens%C3%A4tze-umstrukturieren"><i class="fa fa-check"></i><b>3.4</b> Datensätze umstrukturieren</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="daten.html"><a href="daten.html#der-pipe-operator"><i class="fa fa-check"></i><b>3.4.1</b> Der Pipe-Operator</a></li>
+<li class="chapter" data-level="3.4.2" data-path="daten.html"><a href="daten.html#drop_na"><i class="fa fa-check"></i><b>3.4.2</b> drop_na()</a></li>
+<li class="chapter" data-level="3.4.3" data-path="daten.html"><a href="daten.html#select"><i class="fa fa-check"></i><b>3.4.3</b> select()</a></li>
+<li class="chapter" data-level="3.4.4" data-path="daten.html"><a href="daten.html#filter"><i class="fa fa-check"></i><b>3.4.4</b> filter()</a></li>
+<li class="chapter" data-level="3.4.5" data-path="daten.html"><a href="daten.html#mutate"><i class="fa fa-check"></i><b>3.4.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.4.6" data-path="daten.html"><a href="daten.html#pivot_longer"><i class="fa fa-check"></i><b>3.4.6</b> pivot_longer()</a></li>
+<li class="chapter" data-level="3.4.7" data-path="daten.html"><a href="daten.html#pivot_wider"><i class="fa fa-check"></i><b>3.4.7</b> pivot_wider()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="daten.html"><a href="daten.html#kontinuierlich"><i class="fa fa-check"></i><b>3.5</b> Kontinuierliche Daten auswerten</a></li>
+<li class="chapter" data-level="3.6" data-path="daten.html"><a href="daten.html#das-grundprinzip-der-varianzanalyse"><i class="fa fa-check"></i><b>3.6</b> Das Grundprinzip der Varianzanalyse</a></li>
+<li class="chapter" data-level="3.7" data-path="daten.html"><a href="daten.html#das-prinzip-der-parsimonie"><i class="fa fa-check"></i><b>3.7</b> Das Prinzip der Parsimonie</a></li>
+<li class="chapter" data-level="3.8" data-path="02-daten_einlesen_prinzip_anova.html"><a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>3.8</b> Annahmen der ANOVA überprüfen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="02-daten_einlesen_prinzip_anova.html"><a href="#z%C3%A4hldaten"><i class="fa fa-check"></i><b>4</b> Zähl- und Boniturdaten auswerten</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="zähldaten.html"><a href="zähldaten.html"><i class="fa fa-check"></i><b>4.1</b> Nicht-normalverteilte Daten</a></li>
+<li class="chapter" data-level="4.2" data-path="zähldaten.html"><a href="zähldaten.html#daten-transformieren"><i class="fa fa-check"></i><b>4.2</b> Daten transformieren?</a></li>
+<li class="chapter" data-level="4.3" data-path="zähldaten.html"><a href="zähldaten.html#generalisierte-lineare-modelle"><i class="fa fa-check"></i><b>4.3</b> Generalisierte lineare Modelle</a></li>
+<li class="chapter" data-level="4.4" data-path="zähldaten.html"><a href="zähldaten.html#beispiel-tomaten"><i class="fa fa-check"></i><b>4.4</b> Beispiel: Tomaten</a></li>
+<li class="chapter" data-level="4.5" data-path="zähldaten.html"><a href="zähldaten.html#overdispersion"><i class="fa fa-check"></i><b>4.5</b> Overdispersion</a></li>
+<li class="chapter" data-level="4.6" data-path="zähldaten.html"><a href="zähldaten.html#bonitur"><i class="fa fa-check"></i><b>4.6</b> Anteils- und Boniturdaten auswerten</a></li>
+<li class="chapter" data-level="4.7" data-path="zähldaten.html"><a href="zähldaten.html#anteilsdaten-auswerten"><i class="fa fa-check"></i><b>4.7</b> Anteilsdaten auswerten</a></li>
+<li class="chapter" data-level="4.8" data-path="zähldaten.html"><a href="zähldaten.html#bonitur-daten"><i class="fa fa-check"></i><b>4.8</b> Bonitur-Daten</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zeitreihen.html"><a href="zeitreihen.html"><i class="fa fa-check"></i><b>5</b> Zeitreihen auswerten und PostHoc Tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-plotten"><i class="fa fa-check"></i><b>5.1</b> Zeitreihen plotten</a></li>
+<li class="chapter" data-level="5.2" data-path="02-daten_einlesen_prinzip_anova.html"><a href="#zuf%C3%A4llige-effekte"><i class="fa fa-check"></i><b>5.2</b> Zufällige Effekte</a></li>
+<li class="chapter" data-level="5.3" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-analysieren"><i class="fa fa-check"></i><b>5.3</b> Zeitreihen analysieren</a></li>
+<li class="chapter" data-level="5.4" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests"><i class="fa fa-check"></i><b>5.4</b> Post-hoc Tests</a></li>
+<li class="chapter" data-level="5.5" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests---die-problematik"><i class="fa fa-check"></i><b>5.5</b> Post-hoc Tests - die Problematik</a></li>
+<li class="chapter" data-level="5.6" data-path="zeitreihen.html"><a href="zeitreihen.html#die-herangehensweise"><i class="fa fa-check"></i><b>5.6</b> Die Herangehensweise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>6</b> Bayesische Auswertung (19. Dez)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayes.html"><a href="bayes.html#der-satz-von-bayes"><i class="fa fa-check"></i><b>6.1</b> Der Satz von Bayes</a></li>
+<li class="chapter" data-level="6.2" data-path="bayes.html"><a href="bayes.html#das-prinzip-des-bayes-statistik"><i class="fa fa-check"></i><b>6.2</b> Das Prinzip des Bayes-Statistik</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bayes.html"><a href="bayes.html#mcmc---markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.2.1</b> MCMC - Markov Chain Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bayes.html"><a href="bayes.html#ein-etwas-konstruiertes-beispiel"><i class="fa fa-check"></i><b>6.3</b> Ein (etwas konstruiertes) Beispiel</a></li>
+<li class="chapter" data-level="6.4" data-path="bayes.html"><a href="bayes.html#frequentistisch-versus-bayesisch"><i class="fa fa-check"></i><b>6.4</b> Frequentistisch versus Bayesisch</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="daten" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Daten vorbereiten, Prinzip Anova<a href="daten.html#daten" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Nachdem Sie nun R und R-Studio kennengelernt und ein paar erste Versuche gemacht haben, stellen wir Ihnen in diesem Kapitel die wichtigsten Arbeitsschritte für ein Datenprojekt mit R vor, die Ihnen helfen, ihre Arbeit zu organisieren und die Daten in ein auswertbares Format zu bringen. Am Ende des Kapitels wissen Sie</p>
+<ul>
+<li>dass Sie ihre Dateien am besten in sogenannten R-Projekten organisieren</li>
+<li>welche häufigen Datentypen es gibt und wie sie ineinander umgewandelt werden können</li>
+<li>wie Sie Datensätze mit dem Paketbündel ‘tidyverse’ transformieren und manipulieren können</li>
+</ul>
+<hr />
+<div id="r-projekte" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> R-Projekte<a href="daten.html#r-projekte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R-Projekte sind gewissermaßen das zu Hause von allen R-Skripten und Daten, die zu einem Projekt (zum Beispiel einem Experiment) gehören. Dabei ist ein Projekt aber mehr als nur ein Ordner. Die Vorteile eines Projekts im Vergleich zu einer einzelnen neuen R Script-Datei sind, dass</p>
+<ul>
+<li>beim Öffnen des Projekts das Arbeitsverzeichnis automatisch auf den Ordner gesetzt wird, in dem sich die Projekt-Datei befindet. Man kann dann Dateien direkt aufrufen/einlesen ohne den vollständigen Pfad angeben zu müssen (höchstens Unterordner, wenn man denn welche angelegt hat). In Bezug auf das letzte Kapitel sollte jetzt also <code>kirschen &lt;- read.csv("Kirschen.csv")</code>
+immer funktionieren, wenn die Datei ‘Kirschen.csv’ im gleicher Ordner, wie die .Rproj-Datei liegt.</li>
+<li>RStudio bei einem Neustart alle Dateien wieder öffnet, die beim letzten Schließen offen waren</li>
+<li>man gleichzeitig mehrere Projekte offen haben kann, ohne durcheinander zu kommen</li>
+<li>man das ganze Projekt komplett mit richtigen Verknüpfungen zwischen Daten/Dateien weiterreichen kann und die Skripte (zumindest bei gleicher R-Version) auf jedem Rechner reproduziert werden können.</li>
+</ul>
+<p>Sie können ein RStudio-Projekt sowohl in einem neuen Verzeichnis als auch in einem vorhandenen Verzeichnis, in dem Sie bereits R-Code und Daten haben, erstellen. Um ein neues Projekt zu erstellen, verwenden Sie den Befehl ‘File -&gt; New Project’.</p>
+<p><img src="images/Rproj_start_File.png" alt="Ansicht von R-Studio ‘Projekt erstellen’ wird auch als ‘New Project’ bezeichnet" />
+Es öffnet sich dann ein Fenster, in dem Sie entscheiden können, ob Sie das Projekt in einem neuen Verzeichnis, einem schon existierenden Verzeichnis oder mit Versionskontrolle (zum Beispiel mit git) anlegen wollen. Letzteres ist sehr sinnvoll, würde hier aber den Rahmen sprengen.</p>
+<p><img src="images/Rproj_start.png" alt="Ansicht vom 'New Project Wizard" width="500"/></p>
+<p>Durch das Anlegen eines neuen Projekts in RStudio wird eine Projektdatei (mit der Erweiterung .Rproj) im Projektverzeichnis erstellt. Diese Datei kann später als Verknüpfung zum direkten Öffnen des Projekts verwendet werden.</p>
+</div>
+<div id="datentypen-und--transformationen" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Datentypen und -transformationen<a href="daten.html#datentypen-und--transformationen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Das Einlesen der Daten sollte jetzt kein Problem mehr sein, allerdings haben die Daten manchmal nicht den Datentyp der für bestimmte statistische Auswertungen oder Abbildungen gebraucht wird. Zuerst eine Übersicht über die gängigsten Typen:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Bezeichnung</th>
+<th>Beispiele</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>integer</td>
+<td>1, -2, 3, (NA)</td>
+</tr>
+<tr class="even">
+<td>numeric</td>
+<td>32.5, 74.3, (NA)</td>
+</tr>
+<tr class="odd">
+<td>character</td>
+<td>‘ein Wort’, “ein Wort”, (NA)</td>
+</tr>
+<tr class="even">
+<td>logical</td>
+<td>TRUE, FALSE, T, F, (NA)</td>
+</tr>
+<tr class="odd">
+<td>factor</td>
+<td>treat1, treat2, treat3, (NA)</td>
+</tr>
+<tr class="even">
+<td>date</td>
+<td>2022-10-24, (NA)</td>
+</tr>
+</tbody>
+</table>
+<p>Mit der Funktion <code>str()</code>kann man testen, als welche Datentypen R die Daten interpretiert und bekommt eine Übersicht der Struktur des Datensatzes:</p>
+<pre><code>str(kirschen)</code></pre>
+<p>Wie oben erwähnt, werden für einige Auswertungen/Abbildungen manchmal andere Datentypen benötigt, als R erkannt hat. So werden zum Beispiel manchmal die Bezeichnungen für Behandlungsgruppen als ‘character’ eingelesen, für eine Varianzanalyse werden aber Faktoren benötigt. In diesem Fall kann der Datentyp mit der Funktion <code>as.factor()</code> umgewandelt werden.</p>
+<pre><code>kirschen$Inokulat &lt;- as.factor(kirschen$Inokulat)</code></pre>
+<p>Das geht natürlich nur, wenn der neue Datentyp zu der umzuwandelnden Variablen passt: ‘Gi_12’ kann nicht in eine numerische Variable umgewandelt werden, wohl aber die Zahlen 1, 2, 3, .. in Faktoren (die dann als “1”, “2”, “3” ausgegeben werden). Andere häufig genutzte Funktionen sind <code>as.numeric()</code> , <code>as.character()</code> und <code>as.Date()</code>.</p>
+</div>
+<div id="umgang-mit-nas" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Umgang mit NAs<a href="daten.html#umgang-mit-nas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Auch NAs können manchmal zu Fehlermeldungen oder unvollständigen Abbildungen führen. Da NA nicht Null bedeutet, sondern eher ‘wissen wir nicht’, kann zum Beispiel nicht ohne Weiteres ein Mittelwert berechnet werden.</p>
+<pre><code>Daten &lt;- c(5, 3, 9, NA, 4, NA)
+mean(Daten)</code></pre>
+<p>Die meisten Funktionen haben aber die Option, NA-Werte bei der Berechnung auszuschließen:</p>
+<pre><code>mean(Daten, na.rm = TRUE)</code></pre>
+<p>Schauen Sie also am besten zuerst in der Hilfe zu der Funktion , die Sie verwenden möchten (<code>?mean</code>), ob es ein Funktionsargument gibt, das den Umgang mit NA-Werten festlegt und ändern Sie die Einstellung entsprechend. Wenn es gar nicht anders geht, kann man als Alternative auch die Zeilen in den NAs vorkommen vor der Analyse herausfiltern. Wie solche Daten-Operationen funktionieren, lernen Sie im folgenden Kapitel.</p>
+</div>
+<div id="datensätze-umstrukturieren" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Datensätze umstrukturieren<a href="#datens%C3%A4tze-umstrukturieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Manchmal ist es nötig, den eingelesenen Datensatz umzustrukturieren, Teildatensätze herauszufiltern oder nue Variablen zu berechnen. Dazu sollte man am besten das Paketbündel ‘tidyverse’ installieren. Hat man das getan, steht auch eine weitere Konvertierungsfunktion zur Verfügung, die aus einem normalen Datensatz (data.frame) ein ‘tibble’ macht. Tibble haben ein paar Vorteile, zum Beispiel, dass standardmäßig nur die ersten 10 Zeilen ausgegeben werden und zu jeder Spalte der Datentyp gleich dabei steht (wobei Fließkommazahlen hier nicht als numeric sondern double (dbl) bezeichnet werden. ‘fct’ steht für Faktor, ‘int’ für Integer).</p>
+<pre><code>kirschen &lt;- as_tibble(kirschen)
+kirschen</code></pre>
+<div id="der-pipe-operator" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Der Pipe-Operator<a href="daten.html#der-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Einer der wichtigsten Operatoren des tidyverse ist der Pipe-Operator <code>%&gt;%</code>. Mit ihm leiten wir ein Objekt (zum Beispiel einen Datensatz) an eine Funktion weiter. Lesen können wir ihn als ‘dann’. Anstelle von</p>
+<pre><code>Daten &lt;- c(5, 9, 2, 5, 3, 9, 5, 3, 5)
+Ergebnis &lt;- round(sqrt(sum(Daten^2)), 3)
+Ergebnis</code></pre>
+<p>oder</p>
+<pre><code>Daten_quad &lt;- Daten^2
+Daten_quad_sum &lt;- sum(Daten_quad)
+Daten_quad_sum_wurzel &lt;- sqrt(Daten_quad_sum)
+Ergebnis &lt;- round(Daten_quad_sum_wurzel, 3)</code></pre>
+<p>können wir jetzt schreiben</p>
+<pre><code>Ergebnis &lt;- Daten^2 %&gt;%   
+            sum() %&gt;%     
+            sqrt() %&gt;%    
+            round(3)      </code></pre>
+<p>Gelesen: wir nehmen die quadrierten Daten, dann berechnen wir die Summe, dann nehmen wir die Quadratwurzel und dann runden wir auf 3 Nachkommastellen. Wir wollen hier aber keine mathematischen Berechnungen durchführen sondern Datensätze bearbeiten und umordnen. Die dafür bereitgestellten Funktionen können aber genauso mit dem Pipe-Operator genutzt werden. Hier wiederum nur die wichtisten:</p>
+<table>
+<colgroup>
+<col width="38%" />
+<col width="61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Funktion</th>
+<th>Verwendung</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>drop_na()</td>
+<td>löscht alle Zeilen des Datensatzes die NAs enthalten</td>
+</tr>
+<tr class="even">
+<td>select()</td>
+<td>wählt Spalten aus</td>
+</tr>
+<tr class="odd">
+<td>filter()</td>
+<td>wählt Zeilen aus</td>
+</tr>
+<tr class="even">
+<td>mutate()</td>
+<td>erstellt neue Variablen oder ersetzt scho vorhandene</td>
+</tr>
+<tr class="odd">
+<td>group_by ()</td>
+<td>Berechnungen an Untergruppen von Daten</td>
+</tr>
+<tr class="even">
+<td>arrange()</td>
+<td>sortiert den Datensatz nach einer bestimmten Variable</td>
+</tr>
+<tr class="odd">
+<td>pivot_wider()</td>
+<td>verringert die Anzahl der Zeilen, erhöht die Anzahl der Spalten</td>
+</tr>
+<tr class="even">
+<td>pivot_longer()</td>
+<td>erhöht die Anzahl der Zeilen, verringert die Anzahl der Spalten</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="drop_na" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> drop_na()<a href="daten.html#drop_na" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Der Funktionsname spricht für sich: alle Zeilen des Datensatzes, die ein NA enthalten werden komplett aus dem Datensatz gelöscht:</p>
+<pre><code>library(tidyverse)
+# mit der Funktion &#39;tibble()&#39; legt man einen Datensatz an
+Daten1 &lt;- tibble(spalte1 = c(1, NA, 5, 7), spalte2 = c(&quot;a&quot;, &quot;b&quot;, NA, &quot;d&quot;))
+# wir schauen uns den Datensatz an:
+Daten1
+# wir löschen die Zeilen mit NA heraus
+Daten2 &lt;- Daten1 %&gt;% drop_na()
+# uns sehen uns das Ergebnis an:
+Daten2</code></pre>
+</div>
+<div id="select" class="section level3 hasAnchor" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> select()<a href="daten.html#select" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Mit der Funktion select() können sehr einfach Spalten ausgewählt werden. Hier verwenden wir zusätzlich die Funktion head() um nur die ersten 6 Spalten ausgeben zu lassen:</p>
+<pre><code>kirschen %&gt;% select(Trockengewicht, Blattfläche) %&gt;% head()</code></pre>
+<p>Mit einem Minus vor der Spaltenüberschrift, werden die entsprechenden Spalten ausgeschlossen:</p>
+<pre><code>kirschen %&gt;% select(-Trockengewicht, -Blattfläche) %&gt;% head()</code></pre>
+<p>Wenn der Teildatensatz gespeichert werden soll, muss er einem Variablennamen zugewiesen werden</p>
+<pre><code>kirschen_neu &lt;- kirschen %&gt;% select(-Trockengewicht, -Blattfläche)
+head(kirschen_neu)</code></pre>
+</div>
+<div id="filter" class="section level3 hasAnchor" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> filter()<a href="daten.html#filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>…funktioniert analog mit Zeilen. Hier wird allerdings mit einem doppelten Gleichzeichen geprüft, welche Bedingung erfüllt sein muss, um im Datensatz zu bleiben.</p>
+<pre><code>kirschen_nurPDV &lt;- kirschen %&gt;% filter(Inokulat == &quot;PDV&quot;)
+summary(kirschen_nurPDV)
+</code></pre>
+<p>Aber Achtung! Wie man in der summary sieht, sind trotzdem noch alle 4 Level von ‘Inokulat’ vorhanden, nur sind die Zähler der Level ‘ohne’, ‘PDV + PNRSV’ und ‘PNRSV’ auf 0 gesetzt. In Analysen und bei Abbildungen würden sie deshalb trotzdem auftauchen. Deshalb ist es wichtig, die nicht mehr benötigten Level mit der Funktion droplevels() herauszuwerfen:</p>
+<pre><code>plot(kirschen_nurPDV$Inokulat, kirschen_nurPDV$Frischgewicht)
+
+kirschen_nurPDV &lt;- kirschen %&gt;% 
+                   filter(Inokulat == &quot;PDV&quot;) %&gt;%
+                   droplevels()
+                   
+ plot(kirschen_nurPDV$Inokulat, kirschen_nurPDV$Frischgewicht)                  
+</code></pre>
+<p>Genau entgegengesetzt zum <code>==</code>funktioniert das ‘ungleich’ Symbol <code>!=</code>. Hiermit würden alle Zeilen im Datensatz bleiben die NICHT “PDV” als Inokulat-Level haben.</p>
+</div>
+<div id="mutate" class="section level3 hasAnchor" number="3.4.5">
+<h3><span class="header-section-number">3.4.5</span> mutate()<a href="daten.html#mutate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Mit mutate() kann man eine neue Variable anlegen oder eine schon vorhandene überschreiben. Das Beispiel erklärt am besten, wie es funktioniert:</p>
+<pre><code>kirschen %&gt;% mutate(Gesamttrieblänge_m = Gesamttrieblänge/100)</code></pre>
+</div>
+<div id="pivot_longer" class="section level3 hasAnchor" number="3.4.6">
+<h3><span class="header-section-number">3.4.6</span> pivot_longer()<a href="daten.html#pivot_longer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>… wird dazu verwendet, aus einem Datensatz im ‘weiten’ Format ein Datensatz im ‘langen’ Format zu machen. Häufig ist es zum Beispiel so, dass es bei Zeitreihen (Wachstum eines Baumes) für jeden Messzeitpunkt eine eigene Spalte gibt in der die Größe eingetragen wird. Manchmal ist es aber notwendig, dass alle gemessenen Größen in einer einzigen Spalte untereinander stehen und in der Spalte daneben, der Zeitpunkt als Variable angegeben ist. Wird im Beispiel klarer…</p>
+<pre><code>Wachstum &lt;- tibble(Baum = c(&quot;Nr1&quot;, &quot;Nr2&quot;, &quot;Nr3&quot;, &quot;Nr4&quot;), 
+                   Zeitp1 = c(338,459,558,439), 
+                   Zeitp2 = c(437,560,729,658), 
+                   Zeitp3 = c(469,579,937,774))
+                   
+Wachstum_lang &lt;- Wachstum %&gt;% 
+                 pivot_longer(
+                 cols = c(Zeitp1, Zeitp2, Zeitp3),
+                 names_to = &quot;Zeitpunkt&quot;,
+                 values_to = &quot;Größe_cm&quot;)
+                 
+# cols: die Zeilen die zusammengefügt werden sollen
+# names_to: neuer Spaltenname des Faktors
+# values_to: neuer Spaltenname der Daten
+
+# &#39;Zeitpunkt&#39; und &#39;Baum&#39; wurden noch nicht als Faktor erkannt, deshalb:
+Wachstum_lang$Zeitpunkt &lt;- as.factor(Wachstum_lang$Zeitpunkt)
+Wachstum_lang$Baum &lt;- as.factor(Wachstum_lang$Baum)</code></pre>
+<p>Dieses lange Format wird zum Beispiel benötigt, um einen ggplot, der das Wachstum darstellt, machen zu können</p>
+<pre><code>ggplot(Wachstum_lang, aes(x = Zeitpunkt, y = Größe_cm, color=Baum)) + 
+   geom_point() +   labs(y=&quot;Größe (cm)&quot;, x=&quot;Zeitpunkt&quot;)</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-1-1.png" width="768" /></p>
+</div>
+<div id="pivot_wider" class="section level3 hasAnchor" number="3.4.7">
+<h3><span class="header-section-number">3.4.7</span> pivot_wider()<a href="daten.html#pivot_wider" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Und ganz zum Schluss noch die Umkehrfunktion von pivot_longer(): pivot_wider. Sie nimmt einen Faktor und eine Messvariable und “verteilt” die Werte der Messvariable über neue Spalten, welche die Stufen des Faktors repräsentieren:</p>
+<pre><code>Wachstum_ww &lt;- Wachstum_lang %&gt;% 
+               pivot_wider(
+               names_from = &quot;Zeitpunkt&quot;,
+               values_from = &quot;Größe_cm&quot;
+               )</code></pre>
+</div>
+</div>
+<div id="kontinuierlich" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Kontinuierliche Daten auswerten<a href="daten.html#kontinuierlich" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bevor wir in die eigentliche Datenanalyse einsteigen, ist es wichtig, dass Sie das Grundprinzip der statistischen Tests verstanden haben. Auf die Gefahr hin, dass es eine Wiederholung für einige von Ihnen ist, wollen wir deshalb nochmal die Idee der Varianzanalyse, die den meisten Tests zugrunde liegt, erklären. Am Ende dieses Kapitels</p>
+<ul>
+<li>haben Sie die Logik der Varianzanalyse verstanden</li>
+<li>können Sie etwas mit den Begriffen ‘Occams Razor’ und ‘Homoskedastizität’ anfangen</li>
+<li>sind Sie in der Lage, eine einfache Varianzanalyse mit kontinuierlichen Daten in R durchführen</li>
+<li>wissen Sie, wie man die Voraussetzungen einer ANOVA visuell testet</li>
+<li>wissen Sie auch, dass nicht die Daten als Gesamtheit normalverteilt sein müssen, sondern die Daten innerhalb der Behandlungsgruppen, bzw. die Residuen (Fehler, Abstände zum Mittelwert der Gruppe).</li>
+</ul>
+<hr />
+</div>
+<div id="das-grundprinzip-der-varianzanalyse" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Das Grundprinzip der Varianzanalyse<a href="daten.html#das-grundprinzip-der-varianzanalyse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wir nehmen an, wir haben einen sehr einfachen Versuch mit Tomaten durchgeführt, in dem die Hälfte aller 40 Pflanzen gedüngt wird und die andere Hälfte als Kontrollgruppe ungedüngt bleibt. Am Ende bestimmen wir das Gesamtgewicht der Tomaten pro Pflanze als ein Maß für den Ertrag. Jetzt interessiert uns, ob die Düngung einen signifikanten Effekt auf den Ertrag hat. Unsere Hypothese ist: Die Düngung hat einen Effekt auf den Ertrag. Statistisch ausgedrückt bedeutet das, dass die Ertragsdaten aus zwei Normalverteilungen mit unterschiedlichen Mittelwerten stammen. Diese Hypothese ist auf folgender Abbildung auf der linken Seite dargestellt. Das zugehörige statistische Modell hat zwei Parameter: a ist der Mittelwert der Normalverteilung ohne Dünger, b die Differenz zwischen a und dem Mittelwert für die Normalverteilung mit Dünger (die Effektgröße). Die Variable Dünger nimmt entweder den Wert 0 (ohne Dünger) oder 1 (mit Dünger) an. Die Streuung der Daten (sie liegen nicht alle genau auf dem Mittelwert) wird durch den Fehlerterm aufgefangen.</p>
+<div class="float">
+<img src="images/Hypothesen.png" alt="Hypothesen, statistische Modelle und Umsetzung in R. Links: Düngung hat einen Effekt auf den Ertrag -&gt; die Daten stammen aus zwei Normalverteilungen mit unterschiedlichen Mittelwerten; rechts (Nullhypothese): Düngung hat keinen Effekt auf den Ertrag -&gt; die Daten stammen aus einer einzigen Normalverteilung." />
+<div class="figcaption">Hypothesen, statistische Modelle und Umsetzung in R. Links: Düngung hat einen Effekt auf den Ertrag -&gt; die Daten stammen aus zwei Normalverteilungen mit unterschiedlichen Mittelwerten; rechts (Nullhypothese): Düngung hat keinen Effekt auf den Ertrag -&gt; die Daten stammen aus einer einzigen Normalverteilung.</div>
+</div>
+<p>Die Null-Hypothese zu diesem Modell ist: Die Düngung hat keinen Effekt auf den Ertrag -&gt; die Daten stammen alle aus einer einzigen Normalverteilung mit dem Mittelwert a (rechte Seite der Abbildung). Entsprechend einfacher ist das statistische Modell.</p>
+<p>In R formulieren wir diese beiden konkurrierenden Modelle mit der Funktion <code>lm()</code>. lm steht für ‘linear model’ und es schätzt Mittelwert (oder in anderen Fällen auch Achsenabschnitt und Steigung einer Regressionsgeraden), indem es die Werte so wählt, dass die Fehlerquadrate (quadrierter Abstand der Messungen zu den Mittelwerten) möglichst klein sind.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="daten.html#cb28-1" tabindex="-1"></a><span class="co"># hier lesen wir keine Daten aus Excel ein sondern geben sie einfach händisch direkt </span></span>
+<span id="cb28-2"><a href="daten.html#cb28-2" tabindex="-1"></a><span class="co"># in R ein. Zuerst Ertragsdaten von 10 ungedüngten Pflanzen</span></span>
+<span id="cb28-3"><a href="daten.html#cb28-3" tabindex="-1"></a>ohne <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">417.1</span>,<span class="fl">558.8</span>,<span class="fl">519.1</span>,<span class="fl">611.7</span>,<span class="fl">450.3</span>,<span class="fl">461.9</span>,<span class="fl">517.3</span>,<span class="fl">453.2</span>,<span class="fl">533.1</span>,<span class="fl">514.7</span>)</span>
+<span id="cb28-4"><a href="daten.html#cb28-4" tabindex="-1"></a><span class="co"># dann von 10 gedüngten Pflanzen</span></span>
+<span id="cb28-5"><a href="daten.html#cb28-5" tabindex="-1"></a>mit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">581.9</span>,<span class="fl">517.4</span>,<span class="fl">641.3</span>,<span class="fl">659.8</span>,<span class="fl">587.8</span>,<span class="fl">483.3</span>,<span class="fl">703.0</span>,<span class="fl">589.5</span>,<span class="fl">532.4</span>,<span class="fl">569.3</span>)</span>
+<span id="cb28-6"><a href="daten.html#cb28-6" tabindex="-1"></a><span class="co"># hier werden die beiden Datensätze mit c() wie combine</span></span>
+<span id="cb28-7"><a href="daten.html#cb28-7" tabindex="-1"></a><span class="co">#  zu einem Vektor (= Spalte) zusammengeführt </span></span>
+<span id="cb28-8"><a href="daten.html#cb28-8" tabindex="-1"></a>Ertrag <span class="ot">&lt;-</span> <span class="fu">c</span>(ohne, mit)</span>
+<span id="cb28-9"><a href="daten.html#cb28-9" tabindex="-1"></a><span class="co"># jetzt generieren wir noch einen Vektor der die Behandlung anzeigt</span></span>
+<span id="cb28-10"><a href="daten.html#cb28-10" tabindex="-1"></a>Düngung <span class="ot">&lt;-</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;ohne&quot;</span>,<span class="st">&quot;mit&quot;</span>))</span>
+<span id="cb28-11"><a href="daten.html#cb28-11" tabindex="-1"></a><span class="co"># Mit diesen beiden Vektoren können wir das statistische Modell formulieren, </span></span>
+<span id="cb28-12"><a href="daten.html#cb28-12" tabindex="-1"></a><span class="co"># dass der Ertrag von der Düngung abhängt. In R wird das mit der Tilde ~ ausgedrückt</span></span>
+<span id="cb28-13"><a href="daten.html#cb28-13" tabindex="-1"></a><span class="co">#  (oben links auf der Tastatur). </span></span>
+<span id="cb28-14"><a href="daten.html#cb28-14" tabindex="-1"></a><span class="co"># Wir nennen dieses Modell &#39;model1&#39;</span></span>
+<span id="cb28-15"><a href="daten.html#cb28-15" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ertrag <span class="sc">~</span> Düngung)</span>
+<span id="cb28-16"><a href="daten.html#cb28-16" tabindex="-1"></a><span class="co"># mit der folgenden Zeile schauen wir uns eine summary (Zusammenfassung)</span></span>
+<span id="cb28-17"><a href="daten.html#cb28-17" tabindex="-1"></a><span class="co">#  des gefitteten Modells an</span></span></code></pre></div>
+<pre><code>summary(model1)</code></pre>
+<div class="float">
+<img src="images/anova1.png" alt="Interpretation der Ausgabe einer model summary" />
+<div class="figcaption">Interpretation der Ausgabe einer model summary</div>
+</div>
+<p>In der Zeile ‘Intercept’ finden wir unter ‘Estimate’ den geschätzten Mittelwert für die Gruppe ohne Düngung, also das a in der Abbildung oben, linke Seite. Darunter, in der Zeile ‘Düngungmit’ ist die Differenz (das b aus der Abbildung) das auf das a aufaddiert werden muss, um die Schätzung für den Mittelwert der gedüngten Pflanzen zu erhalten.</p>
+<p>Als nächstes formulieren wir die Nullhypothese</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="daten.html#cb30-1" tabindex="-1"></a>null_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Ertrag <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb30-2"><a href="daten.html#cb30-2" tabindex="-1"></a><span class="fu">summary</span>(null_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Ertrag ~ 1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -128.04  -38.30  -12.39   43.08  157.85 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   545.14      16.68   32.69   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 74.59 on 19 degrees of freedom</code></pre>
+<p>Wie erwartet, erhalten wir jetzt nur einen Mittelwert über alle Tomatenpflanzen.</p>
+<p>Welches der beiden Modelle ist nun besser? Das Modell mit Düngung als erklärender Variable passt sich besser an die Daten an -&gt; kleinere Summe der Fehlerquadrate, ist aber komplizierter.</p>
+</div>
+<div id="das-prinzip-der-parsimonie" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Das Prinzip der Parsimonie<a href="daten.html#das-prinzip-der-parsimonie" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="float">
+<img src="images/Parsimonie.png" alt="Die Grundlagen für das Prinzip der Parsimonie, auch bezeichnet als Occam’s Rasor. Verändert nach einer Folie von Frank Schurr" />
+<div class="figcaption">Die Grundlagen für das Prinzip der Parsimonie, auch bezeichnet als Occam’s Rasor. Verändert nach einer Folie von Frank Schurr</div>
+</div>
+<p>Um zu entscheiden, ob eine erklärende Variable einen signifikanten Effekt hat, stellen wir die Frage: Wie wahrscheinlich ist es, die Daten so - oder mit noch größeren Unterschieden zwischen den Behandlungen - zu beobachten, wenn in Wahrheit die erklärende Variable keinen Effekt hat (= die Nullhypothese wahr ist bzw. alle Daten aus einer einzigen Normalverteilung stammen). Um diese Wahrscheinlichkeit ausrechnen zu können, müssen die Daten innerhalb der Behandlungsgruppen normalverteilt sein und die Streuung (Varianz) muss in etwa gleich sein. Das sind die wichtigsten Vorraussetzungen für eine Varianzanalyse, weil sonst evtl. die berechnete Wahrscheinlichkeit nicht stimmt. In R nutzten wir die Funktion <code>anova()</code> um die beiden Modelle zu vergleichen und die oben genannte Wahrscheinlichkeit auszurechnen:</p>
+<pre><code>anova(model1, null_model)</code></pre>
+<div class="float">
+<img src="images/anova_results.png" alt="Interpretation der Ausgabe einer ANOVA" />
+<div class="figcaption">Interpretation der Ausgabe einer ANOVA</div>
+</div>
+<p>Die Wahrscheinlichkeit nach der wir suchen, finden wir unter Pr(&gt;F) und ist der berühmte p-Wert. Die Wahrscheinlichkeit zufällig solche (oder noch extremere) Daten zu finden, wie wir sie für die Tomaten gefunden haben, obwohl die Düngung in Wahrheit keinen Einfluss auf den Ertrag hat, ist nur 0,86% und damit so unwahrscheinlich, dass wir den Effekt der Düngung als eindeutig signifikant interpretieren können. Damit ist model1 das bessere Model. Eine allgemeine, wenn auch etwas arbiträre Übereinkunft, ist, dass alle Variablen mit einem p-Wert von unter 5% bzw p &lt; 0.05 als signifikant gelten.</p>
+<blockquote>
+<p><strong>Kritik an der Verwendung des p-Wertes</strong><br />
+In den letzten Jahren gibt es mehr und mehr Kritik an dem starken Fokus auf den p-Wert. Zum einen, weil zumeist einfach das Signifikanzniveau verwendet wird, was fast immer verwendet wird, ohne weiter darüber nachzudenken: 5%. Dieses Niveau stellt einen Kompromiss zwischen der Fähigkeit eine Entdeckung zu machen und unserer Bereitschaft ein fehlerhaftes Testergebnis zu akzeptieren dar. Es sollte eigentlich einleuchtend sein, dass das Signifikanzniveau für verschiedene Fragestellungen auch unterschiedlich angesetzt werden sollte (was der Begründer der frequentistischen Statistik, Ronald Fisher auch schon 1956 selbst so geraten hat).
+Zum anderen ist der Nachweis eines signifikanten Effekts außer von der Effektgröße stark vom Informationsgehalt der Daten abhängig (wie groß ist die Stichproble). So kann es sein, dass, wenn man hunderte von Proben hat, eine Variable als signifikant nachgewiesen werden kann, ihr Effekt und die wissenschaftliche Relevanz aber nur minimal ist. Es ist also immer, immer wichtig, den Bezug zur eigentlichen Frage und zum untersuchten System zu behalten und die Ergebnisse mit gesundem Menschen- und Sachverstand zu interpretieren.</p>
+</blockquote>
+</div>
+<div id="annahmen-der-anova-überprüfen" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Annahmen der ANOVA überprüfen<a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wie oben schon kurz angesprochen, müssen für glaubwürdige Ergebnisse einer Varianzanalyse einige Vorraussetzungen erfüllt sein</p>
+<ol style="list-style-type: decimal">
+<li>Unabhängigkeit der Messungen - das sollte beim Design des Experiments bereits bedacht worden sein.</li>
+<li>Keine großen Ausreißer in den Daten - das geht am einfachsten durch das Plotten der Daten und evtl. Ausreißer herausnehmen.</li>
+<li>Die abhängige Variable ist innerhalb der Behandlungsgruppen normalverteilt.</li>
+<li>Die Varianz in jeder Gruppe sollte annähernd gleich sein. Das wird auch mit dem Begriff Homoskedastizität beschrieben.</li>
+</ol>
+<p>Um die Normalverteilung der Daten innerhalb der Behandlungsgruppen zu prüfen, ist es einfacher, sich die Daten nicht gruppenweise anzuschauen, sondern einfach die Residuen/Fehler aller Daten (also den Abstand jedes Datenpunktes zum geschätzten Gruppen-Mittelwert) zu nehmen. Es gibt numerische Tests, um die Normalverteilung der Residuen zu prüfen, in den letzten Jahren setzt sich aber mehr und mehr eine visuelle Überprüfung durch. Am besten eignet sich dafür ein qq-Plot (Quantile-Quantile-Plot). Wenn die Punkte annähernd auf einer Geraden liegen, sind die Residuen normalverteilt. Da ‘annähernd’ ein dehnbarer Begriff ist, liefert die Funktion <code>qqPlot</code> aus dem Package ‘car’ ein Konfidenzintervall. Liegen die Punkte innerhalb dieses Intervalls, kann man von einer Normalverteilung ausgehen.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="daten.html#cb33-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="daten.html#cb38-1" tabindex="-1"></a><span class="fu">qqPlot</span>(<span class="fu">resid</span>(model1))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre><code>## [1] 17  4</code></pre>
+<p>Außer dem Plot gibt die Funktion die ‘Namen’ der Punkte aus, die im Bezug auf die x-Achse outlier darstellen (also Punkte, die besonders stark abweidchen,hier Punkt 4 und Punkt 17). Es lohnt sich, diese Punkte genauer anzuschauen (waren die Versuchsbedingungen hier aus irgendeinem Grund anders?) und evtl. auszuschließen, insbesondere, wenn sie außerdem außerhalb der Konfidenzlinien liegen.</p>
+<p>Eine gute Erklärung wie qq-plots Funktionieren finden Sie hier: <a href="https://www.youtube.com/watch?v=okjYjClSjOg" class="uri">https://www.youtube.com/watch?v=okjYjClSjOg</a>
+… auf Englisch und mit toller Intro :)</p>
+<p>Um die Homoskedastizität visuell zu überprüfen, plotten Sie die Residuen gegen die von der Funktion lm() geschätzten Mittelwerte. Wenn die Daten der Gruppen etwa einen gleichen Bereich auf der y-Achse umfassen, sind die Varianzen homogen. Hierfür gibt es leider derzeit keine Konfidenzintervalle, eine Daumenregel ist aber, dass die Varianzen als homogen gelten, wenn die größte Varianz nicht mehr als 1,5fach größer ist als die kleinste Varianz. In unserem Beispiel reichen die Residuen beider Gruppen von etwa -100 bis 100, die Varianzen sind also annähernd gleich groß. Formal kann Varianzhomogenität mit dem Leven’s Test überprüft werden. R bietet dazu die Funktion <code>leveneTest()</code> aus dem package <code>car</code>. Wer interessiert daran ist, kann sich mit <code>?leveneTest</code> die Hilfeseite mit Erklärungen zur Anwendung der Funktion anschauen.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="daten.html#cb40-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(model1), <span class="fu">resid</span>(model1))</span>
+<span id="cb40-2"><a href="daten.html#cb40-2" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Für unsere Analyse sind alle Annahmen erfüllt. Wir können also davon ausgehen, dass die Düngung in unserem hypothetischen Experiment tatsächlich einen signifikanten Effekt auf den Ertrag hat. In einer Arbeit würden wir den F-Wert (aus summary(model1)), die Anzahl der Freiheitsgrade und den p-Wert angeben, wobei p-Werte, die kleiner als 0.05 sind, üblicherweise mit p &lt; 0.05 angegeben werden.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="einführungR.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="zähldaten.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-daten_einlesen_prinzip_anova.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

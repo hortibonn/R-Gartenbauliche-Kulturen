@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Einführung R | Gartenbauliche Kulturen - Daten auswerten mit R</title>
+  <meta name="description" content="Chapter 2 Einführung R | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Einführung R | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Einführung R | Gartenbauliche Kulturen - Daten auswerten mit R" />
+  
+  
+  
+
+<meta name="author" content="Katja Schiffers" />
+
+
+<meta name="date" content="2025-02-03" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="daten.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Einleitung</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#zeitplan"><i class="fa fa-check"></i>Zeitplan</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="01-einführungR.html"><a href="#einf%C3%BChrungR"><i class="fa fa-check"></i><b>2</b> Einführung R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="einführungR.html"><a href="einführungR.html"><i class="fa fa-check"></i><b>2.1</b> Was ist R?</a></li>
+<li class="chapter" data-level="2.2" data-path="einführungR.html"><a href="einführungR.html#r-und-r-studio-installieren"><i class="fa fa-check"></i><b>2.2</b> R und R-Studio installieren</a></li>
+<li class="chapter" data-level="2.3" data-path="einführungR.html"><a href="einführungR.html#erste-schritte-mit-r"><i class="fa fa-check"></i><b>2.3</b> Erste Schritte mit R</a></li>
+<li class="chapter" data-level="2.4" data-path="einführungR.html"><a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r"><i class="fa fa-check"></i><b>2.4</b> Importieren von Daten aus Excel/LibreOffice nach R</a></li>
+<li class="chapter" data-level="2.5" data-path="einführungR.html"><a href="einführungR.html#daten-kontrollieren"><i class="fa fa-check"></i><b>2.5</b> Daten kontrollieren</a></li>
+<li class="chapter" data-level="2.6" data-path="einführungR.html"><a href="einführungR.html#hilfe-bekommen"><i class="fa fa-check"></i><b>2.6</b> Hilfe bekommen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="daten.html"><a href="daten.html"><i class="fa fa-check"></i><b>3</b> Daten vorbereiten, Prinzip Anova</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="daten.html"><a href="daten.html#r-projekte"><i class="fa fa-check"></i><b>3.1</b> R-Projekte</a></li>
+<li class="chapter" data-level="3.2" data-path="daten.html"><a href="daten.html#datentypen-und--transformationen"><i class="fa fa-check"></i><b>3.2</b> Datentypen und -transformationen</a></li>
+<li class="chapter" data-level="3.3" data-path="daten.html"><a href="daten.html#umgang-mit-nas"><i class="fa fa-check"></i><b>3.3</b> Umgang mit NAs</a></li>
+<li class="chapter" data-level="3.4" data-path="01-einführungR.html"><a href="#datens%C3%A4tze-umstrukturieren"><i class="fa fa-check"></i><b>3.4</b> Datensätze umstrukturieren</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="daten.html"><a href="daten.html#der-pipe-operator"><i class="fa fa-check"></i><b>3.4.1</b> Der Pipe-Operator</a></li>
+<li class="chapter" data-level="3.4.2" data-path="daten.html"><a href="daten.html#drop_na"><i class="fa fa-check"></i><b>3.4.2</b> drop_na()</a></li>
+<li class="chapter" data-level="3.4.3" data-path="daten.html"><a href="daten.html#select"><i class="fa fa-check"></i><b>3.4.3</b> select()</a></li>
+<li class="chapter" data-level="3.4.4" data-path="daten.html"><a href="daten.html#filter"><i class="fa fa-check"></i><b>3.4.4</b> filter()</a></li>
+<li class="chapter" data-level="3.4.5" data-path="daten.html"><a href="daten.html#mutate"><i class="fa fa-check"></i><b>3.4.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.4.6" data-path="daten.html"><a href="daten.html#pivot_longer"><i class="fa fa-check"></i><b>3.4.6</b> pivot_longer()</a></li>
+<li class="chapter" data-level="3.4.7" data-path="daten.html"><a href="daten.html#pivot_wider"><i class="fa fa-check"></i><b>3.4.7</b> pivot_wider()</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="daten.html"><a href="daten.html#kontinuierlich"><i class="fa fa-check"></i><b>3.5</b> Kontinuierliche Daten auswerten</a></li>
+<li class="chapter" data-level="3.6" data-path="daten.html"><a href="daten.html#das-grundprinzip-der-varianzanalyse"><i class="fa fa-check"></i><b>3.6</b> Das Grundprinzip der Varianzanalyse</a></li>
+<li class="chapter" data-level="3.7" data-path="daten.html"><a href="daten.html#das-prinzip-der-parsimonie"><i class="fa fa-check"></i><b>3.7</b> Das Prinzip der Parsimonie</a></li>
+<li class="chapter" data-level="3.8" data-path="01-einführungR.html"><a href="#annahmen-der-anova-%C3%BCberpr%C3%BCfen"><i class="fa fa-check"></i><b>3.8</b> Annahmen der ANOVA überprüfen</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="01-einführungR.html"><a href="#z%C3%A4hldaten"><i class="fa fa-check"></i><b>4</b> Zähl- und Boniturdaten auswerten</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="zähldaten.html"><a href="zähldaten.html"><i class="fa fa-check"></i><b>4.1</b> Nicht-normalverteilte Daten</a></li>
+<li class="chapter" data-level="4.2" data-path="zähldaten.html"><a href="zähldaten.html#daten-transformieren"><i class="fa fa-check"></i><b>4.2</b> Daten transformieren?</a></li>
+<li class="chapter" data-level="4.3" data-path="zähldaten.html"><a href="zähldaten.html#generalisierte-lineare-modelle"><i class="fa fa-check"></i><b>4.3</b> Generalisierte lineare Modelle</a></li>
+<li class="chapter" data-level="4.4" data-path="zähldaten.html"><a href="zähldaten.html#beispiel-tomaten"><i class="fa fa-check"></i><b>4.4</b> Beispiel: Tomaten</a></li>
+<li class="chapter" data-level="4.5" data-path="zähldaten.html"><a href="zähldaten.html#overdispersion"><i class="fa fa-check"></i><b>4.5</b> Overdispersion</a></li>
+<li class="chapter" data-level="4.6" data-path="zähldaten.html"><a href="zähldaten.html#bonitur"><i class="fa fa-check"></i><b>4.6</b> Anteils- und Boniturdaten auswerten</a></li>
+<li class="chapter" data-level="4.7" data-path="zähldaten.html"><a href="zähldaten.html#anteilsdaten-auswerten"><i class="fa fa-check"></i><b>4.7</b> Anteilsdaten auswerten</a></li>
+<li class="chapter" data-level="4.8" data-path="zähldaten.html"><a href="zähldaten.html#bonitur-daten"><i class="fa fa-check"></i><b>4.8</b> Bonitur-Daten</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zeitreihen.html"><a href="zeitreihen.html"><i class="fa fa-check"></i><b>5</b> Zeitreihen auswerten und PostHoc Tests</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-plotten"><i class="fa fa-check"></i><b>5.1</b> Zeitreihen plotten</a></li>
+<li class="chapter" data-level="5.2" data-path="01-einführungR.html"><a href="#zuf%C3%A4llige-effekte"><i class="fa fa-check"></i><b>5.2</b> Zufällige Effekte</a></li>
+<li class="chapter" data-level="5.3" data-path="zeitreihen.html"><a href="zeitreihen.html#zeitreihen-analysieren"><i class="fa fa-check"></i><b>5.3</b> Zeitreihen analysieren</a></li>
+<li class="chapter" data-level="5.4" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests"><i class="fa fa-check"></i><b>5.4</b> Post-hoc Tests</a></li>
+<li class="chapter" data-level="5.5" data-path="zeitreihen.html"><a href="zeitreihen.html#post-hoc-tests---die-problematik"><i class="fa fa-check"></i><b>5.5</b> Post-hoc Tests - die Problematik</a></li>
+<li class="chapter" data-level="5.6" data-path="zeitreihen.html"><a href="zeitreihen.html#die-herangehensweise"><i class="fa fa-check"></i><b>5.6</b> Die Herangehensweise</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bayes.html"><a href="bayes.html"><i class="fa fa-check"></i><b>6</b> Bayesische Auswertung (19. Dez)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bayes.html"><a href="bayes.html#der-satz-von-bayes"><i class="fa fa-check"></i><b>6.1</b> Der Satz von Bayes</a></li>
+<li class="chapter" data-level="6.2" data-path="bayes.html"><a href="bayes.html#das-prinzip-des-bayes-statistik"><i class="fa fa-check"></i><b>6.2</b> Das Prinzip des Bayes-Statistik</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bayes.html"><a href="bayes.html#mcmc---markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.2.1</b> MCMC - Markov Chain Monte Carlo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bayes.html"><a href="bayes.html#ein-etwas-konstruiertes-beispiel"><i class="fa fa-check"></i><b>6.3</b> Ein (etwas konstruiertes) Beispiel</a></li>
+<li class="chapter" data-level="6.4" data-path="bayes.html"><a href="bayes.html#frequentistisch-versus-bayesisch"><i class="fa fa-check"></i><b>6.4</b> Frequentistisch versus Bayesisch</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="einführungR" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Einführung R<a href="#einf%C3%BChrungR" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In den nächsten Kapiteln werde ich mit Ihnen die Grundzüge der Datenauswertung mit der Statistik-Software R besprechen. Am Ende dieses Kapitels wissen Sie (hoffentlich)</p>
+<ul>
+<li>dass R toll ist</li>
+<li>wie Sie Versuchsdaten am besten in ein Tabellenkalkulationsprogramm eingeben</li>
+<li>wie Sie diese Daten nach R importieren</li>
+<li>wie die grundlegenden Arbeitsschritte in R aussehen</li>
+<li>wo Sie Hilfe bekommen</li>
+</ul>
+<hr />
+<div id="was-ist-r" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Was ist R?<a href="einführungR.html#was-ist-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R ist eine Programmiersprache, die zur Datenanalyse entwickelt wurde und damit eine Alternative zu Programmen wie SPSS, SAS und den Statistik-Funktionen von Excel. Die zwei größten Vorteile von R gegenüber point-and-click Programmen sind:</p>
+<ol style="list-style-type: decimal">
+<li>Der Funktionsumfang ist grundsätzlich nicht beschränkt → durch Programmierung unendlich erweiterbar → Über 10.000 Software-Pakete, die verschiedenste Analyseverfahren ermöglichen</li>
+<li>Die Analysen mit R sind reproduzierbar und transparent! Analyse kann ohne Aufwand wiederholt werden, z.B. nach Fehler in den Rohdaten. Jeder, der den Code sieht (und versteht), kann nachvollziehen, wie die Daten verwendet worden sind.</li>
+</ol>
+<p>Weitere Vorteile sind:</p>
+<ul>
+<li>die Software ist open source also kostenfrei verfügbar</li>
+<li>sie läuft auf allen gängigen Betriebssystemen</li>
+<li>es gibt verschiedene Editoren, die die Nutzung erleichtern, der bekannteste ist R-Studio</li>
+<li>es gibt eine sehr aktive Community im Netz, die Hilfe bietet, oft innerhalb von Minuten bis Stunden</li>
+</ul>
+<p>R ist auch eine Investition in Ihre (berufliche) Zukunft. Außer Daten auswerten kann man damit</p>
+<ul>
+<li>komplexe und schöne Graphiken erzeugen (siehe Abbildung unten)</li>
+<li>Berichte, Paper und Bücher schreiben (auch Bachelor- und Masterarbeiten)</li>
+<li>Web-Seiten erstellen (wie diese hier)</li>
+<li>Apps entwickeln</li>
+<li>Simulationsmodelle implementieren</li>
+<li>Eigene Methoden entwickeln und veröffentlichen</li>
+</ul>
+<div class="float">
+<img src="images/R_example_images.png" alt="Beispiele für R-Graphiken" />
+<div class="figcaption">Beispiele für R-Graphiken</div>
+</div>
+<p>Ganz allgemein gilt R zunehmend als <em>die</em> Standardsprache für statistische Problemstellungen sowohl in der Wirtschaft als auch in der Wissenschaft <span class="citation">(<a href="#ref-amirtha_how_2014">Amirtha, Amirtha, and Amirtha 2014</a>)</span>.</p>
+</div>
+<div id="r-und-r-studio-installieren" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> R und R-Studio installieren<a href="einführungR.html#r-und-r-studio-installieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Zuerst sollten Sie die eigentliche Programmiersprache R installieren. Auf dieser Seite finden Sie Downloads für verschiedene Betriebssysteme:</li>
+</ol>
+<p><a href="https://www.r-project.org" class="uri">https://www.r-project.org</a></p>
+<p>Sie gelangen hier auf eine Seite mit einem Link zum R-download. Folgen Sie diesem Link und suchen Sie dann einen CRAN-mirror aus. Im Prinzip ist egal, welchen Sie wählen (auf allen sind die gleichen Ressources verfügbar, deshalb ‘Spiegel’), es macht aber Sinn, einen Mirror in der Nähe zu wählen. Es wird dann ein Installationsprogramm (z.B. eine exe-Datei oder eine .deb Datei) heruntergeladen. Wenn Sie diese öffnen, werden Sie durch die Installation geführt - bei den Auswahlmöglichkeiten passen normalerweise voreingestellten Optionen.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Dann (und erst dann! sonst kann es zu Konfigurationsproblemen kommen) installieren Sie auch noch einen Editor für R. Der Editor ist hauptsächlich dafür da, den Code, zum Beispiel für statistische Analysen, zu schreiben, zu kommentieren und zu speichern. R-Studio ist der bekannteste und wahrscheinlich beste Editor:</li>
+</ol>
+<p><a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a></p>
+<p>Wenn Sie R-Studio öffnen, sehen Sie vier Fenster: den eigentlich Editor, in dem Sie R-code schreiben, die R Konsole, in der die aktive R-Session läuft, eine Übersicht über den Arbeitsspeicher und unten rechts ein Fenster in dem je nach Aktion Plots, Hilfedateien oder die Ordnerstruktur und Dateien des Verzeichnisses, in dem der R-Prozess gestartet wurde, zu sehen sind. Eventuell fehlt auch der Editor oben links noch, das ändert sich aber, wenn Sie ein neues Skript anlegen (siehe ‘Erste Schritte mit R’)</p>
+<div class="float">
+<img src="images/R-Studio.png" alt="Ansicht von R-Studio mit 4 Fenstern" />
+<div class="figcaption">Ansicht von R-Studio mit 4 Fenstern</div>
+</div>
+</div>
+<div id="erste-schritte-mit-r" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Erste Schritte mit R<a href="einführungR.html#erste-schritte-mit-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Ein neues Skript im Editor öffnen, um Code schreiben zu können
+(File → new file → R-Script)</li>
+<li>R als Taschenrechner benutzen: In den Editor</li>
+</ul>
+<pre><code>5 + 7</code></pre>
+<p>schreiben → auf den ‘Run’ Button klicken (über dem Editor) → der Code wird an den laufenden R Prozess in der Konsole geschickt und das Ergebnis in der Konsole ausgegeben</p>
+<ul>
+<li>Eine Variable anlegen: im Editor</li>
+</ul>
+<pre><code>Ergebnis1 &lt;- 5 + 7</code></pre>
+<p>eingeben → Run-Button anklicken → nichts passiert außer dass die Zeile in der Konsole auftaucht? → das Ergebnis wird in der Variable <em>Ergebnis1 </em> gespeichert, diese Variable wird jetzt auch in der Übersicht des Arbeitsspeichers gelistet. Wenn man in der Konsole</p>
+<pre><code>Ergebnis1</code></pre>
+<p>eingibt, wird der Wert der Variable ausgegeben. Anstelle des Pfeils kann auch ein = verwendet werden.</p>
+<ul>
+<li>Kommentare schreiben: Damit andere oder unsere zukünftigen Ichs später noch wissen, was wir warum gemacht haben, kann und sollte man in das R-Skript Kommentare schreiben. Wenn solche Zeilen zum R-Prozess geschickt werden, werden sie einfach ignoriert. Ein Kommentar wird mit einem Raute-Zeichen (hash) eingeleitet.</li>
+</ul>
+<pre><code># Hier benutzen wir R als Taschenrechner
+Ergebnis1 &lt;- 5 + 7</code></pre>
+<ul>
+<li>das Skript speichern: File → Save Dabei werden nicht die Variablen, Ergebnisse und Daten gespeichert (das lernen wir später). Sie können aber mit einem Knopfdruck das gesamte Skript laufen lassen und so alle Arbeitsschritte wiederholen → alle Ergebnisse wieder herstellen.</li>
+</ul>
+</div>
+<div id="importieren-von-daten-aus-excellibreoffice-nach-r" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Importieren von Daten aus Excel/LibreOffice nach R<a href="einführungR.html#importieren-von-daten-aus-excellibreoffice-nach-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Daten in Excel/LibreOffice eingeben
+<ul>
+<li>Häufige Fehlerquelle! Am besten zu zweit: einer liest vor, einer tippt. Zwei/drei durch zwo/drei disambiguieren. Wenn nur eine Person die Daten eingibt, am besten den Nummernblock der Tastatur verwenden und Zahlen blind eingeben, also nur auf Zettel und Bildschirm schauen. Eingegebene Daten danach nochmal prüfen.</li>
+<li>Keine leeren Zellen im Datenblock → wenn die Werte fehlen: “NA” (= not available)</li>
+<li>Erste Reihe wird per default als Spaltenüberschrift interpretiert, hier aussagekräftige aber nicht zu lange Überschriften wählen</li>
+<li>Zeichenketten (wie Überschriften) sollten aus einem einzigen Wort bestehen. Wenn nötig, zum Beispiel Unterstriche verwenden um einzelne Wörter zu verbinden</li>
+<li>Als Dezimaltrenner sollte ein Punkt genutzt werden → “7.5” nicht “7,5”<br />
+</li>
+<li>Pro Beobachtung sollte es eine Zeile geben</li>
+</ul></li>
+<li>Die Daten in csv-Format speichern</li>
+<li>Die Datei mit der Funktion read.csv() importieren.</li>
+</ol>
+<pre><code>kirschen &lt;- read.csv(“Kirschen.csv”)</code></pre>
+<p>Die Datei ‘Kirschen.csv’ können Sie hier herunterladen:<br />
+<a href="https://ecampus.uni-bonn.de/goto_ecampus_file_3187959_download.html" class="uri">https://ecampus.uni-bonn.de/goto_ecampus_file_3187959_download.html</a></p>
+<p>Wenn die R-Session nicht im gleichen Ordner läuft, in dem auch die Datei gespeichert ist, wird R eine Fehlermeldung ausgeben, dass es die Datei nicht finden kann. Entweder, Sie geben dann den gesamten Pfad bis zur Datei ein (z.B. “~/Downloads/Kirschen.csv”) oder - am einfachsten - folgenden Code:</p>
+<pre><code>kirschen &lt;- read.csv(file.choose())</code></pre>
+<p>Es öffnet sich dann ein Browser-Fenster (manchmal nicht im Vordergrund), in dem Sie die Datei suchen und auswählen können. Das ist nicht ganz ideal, weil nicht unbedingt reproduzierbar (eventuell gibt es zwei oder mehr verschiedene Dateien mit dem Namen “Kirschen.csv” auf Ihrem Computer…), ist aber immerhin leicht zu händeln. Sauberere Lösungen zeigen wir Ihnen im nächsten Kapitel.</p>
+<div class="float">
+<img src="images/Excel.png" alt="Beispiel für richtig eingegebene Daten" />
+<div class="figcaption">Beispiel für richtig eingegebene Daten</div>
+</div>
+</div>
+<div id="daten-kontrollieren" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Daten kontrollieren<a href="einführungR.html#daten-kontrollieren" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Wenn Sie die Daten in R eingelesen haben, sollten Sie als erstes kontrollieren, ob der Import geklappt hat. Eine erste Übersicht bekommen Sie mit den Funktionen <code>summary()</code> und <code>head()</code></p>
+<pre><code>summary(kirschen)
+# gibt eine Zusammenfassung der Daten mit Mittelwerten etc. aus
+
+head(kirschen)
+# Zeigt die ersten 6 Zeilen des Datensatzes, wie er in R eingelesen wurde</code></pre>
+<p>Hier prüft man unter anderem, ob die Daten den richtigen Typ haben, zum Beispiel die Blockbezeichnungen als Faktoren und nicht als Zahlen interpretiert werden. Ist das nicht der Fall, kann es jetzt geändert werden (→ späteres Kapitel).</p>
+<p>Auch einfache Plots sind ein gutes Mittel, um eine erste Vorstellung der Daten zu bekommen und Auffälligkeiten wie extreme Werte (verrutscher Punkt in den Zahlen) zu entdecken. Dafür eignen sich</p>
+<ul>
+<li><p>die einfach plot-Funktion</p>
+<pre><code>plot(kirschen$Inokulat, kirschen$Frischgewicht, 
+ main = &quot;Inokulat&quot;, ylab = &quot;Frischgewicht der Blätter [g]&quot;)</code></pre></li>
+<li><p>oder eine schönere Version mit dem Paket ‘ggplot2’. Dazu muss das Paket ‘ggplot2’ erst installiert werden. In R-Studio geht das über ‘Tools -&gt; Install Packages’ -&gt; a search in the ‘Packages’ field.</p>
+<pre><code>library(ggplot2)    
+ggplot(kirschen, aes(x=Inokulat, y=Frischgewicht)) +  
+  geom_boxplot(notch=TRUE)</code></pre></li>
+</ul>
+</div>
+<div id="hilfe-bekommen" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Hilfe bekommen<a href="einführungR.html#hilfe-bekommen" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hilfe zu finden ist zu Beginn des Arbeitens mit R die wichtigste Kompetenz überhaupt. Am einfachsten ist es natürlich, wenn Sie direkte Unterstützung durch jemanden bekommen, der sich mit R auskennt (und das ist bei der Bachelor-Arbeit - zumindest im Gartenbau - natürlich der Fall). Es gibt aber auch eine Reihe anderer Möglichkeiten:</p>
+<ol style="list-style-type: decimal">
+<li>in R selbst
+<ul>
+<li>ein “?” vor den Funktionsnamen setzen <code>?sd()</code> → es öffnet sich eine Hilfedatei,</li>
+<li><code>help.start()</code> → öffnet Hilfeseite mit wichtigen Dokumenten</li>
+</ul></li>
+<li>im Internet
+<ul>
+<li>Bei der Suche in der Suchmaschine ein <em>R</em> zu der Frage oder der Fehlermeldung hinzufügen (Fehlermeldungen gründlich lesen!)</li>
+<li>Nach Tutorials und online Büchern suchen, zum Beispiel YaRrr - the pirates guide to R <a href="https://bookdown.org/ndphillips/YaRrr/" class="uri">https://bookdown.org/ndphillips/YaRrr/</a></li>
+<li>Cheat cheets<br />
+…bieten einen Überblick der verfügbaren Funktionen und kurze Beschreibungen zu einem bestimmten Thema. Hier finden Sie eine Sammlung von cheat cheets:
+<a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a>
+Hier ein cheat sheet mit den grundlegenden Funktionen: <a href="https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf" class="uri">https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf</a></li>
+</ul></li>
+</ol>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-amirtha_how_2014" class="csl-entry">
+Amirtha, Tina, Tina Amirtha, and Tina Amirtha. 2014. <span>“How the Rise of the <span>‘r’</span> Computer Language Is Bringing Open Source to Science. Fast Company.”</span> March 28, 2014. <a href="https://www.fastcompany.com/3028381/how-the-rise-of-the-r-computer-language-is-bringing-open-source-to-science">https://www.fastcompany.com/3028381/how-the-rise-of-the-r-computer-language-is-bringing-open-source-to-science</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="daten.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-einführungR.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
