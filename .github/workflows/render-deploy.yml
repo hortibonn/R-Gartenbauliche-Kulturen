@@ -57,7 +57,7 @@ jobs:
       
       # Step 3: Set up Pandoc
       - name: Install Pandoc
-        uses: pandoc/actions/setup@v3
+        uses: pandoc/actions/setup@v1
 
       # Step 4: Install renv and restore dependencies integrated with github cache
       - name: Install renv and restore dependencies
