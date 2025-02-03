@@ -1,0 +1,52 @@
+--- 
+title: "Gartenbauliche Kulturen - Daten auswerten mit R"
+author: "Katja Schiffers"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: 
+- bibliography.bib 
+# - packages.bib
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+# description: |
+#   This is a minimal example of using the bookdown package to write a book.
+#   The HTML output format for this example is bookdown::gitbook,
+#   set in the _output.yml file.
+link-citations: yes
+# github-repo: rstudio/bookdown-demo
+---
+
+<!-- # ![Experimente durchführen, Daten auswerten, Bachelor-Arbeiten schreiben](images/Gartenbaulogo.png){width=50%} {-#header} -->
+
+# Einleitung
+
+**Liebe Studierende,**
+
+an drei Terminen in diesem Semester möchten wir Ihnen die wichtigsten Grundlagen zum Arbeiten mit dem Programmier- und Statistikprogramm R vermitteln. 
+
+Um Ihnen einen Leitfaden durch die Themen und das Semester zu geben, haben wir dieses online-Buch erstellt. Jeder Lerneinheit ist ein Kapitel zugeordnet, in dem Sie verschiedene Materialien wie Texte, Abbildungen und Videos finden. Noch sind nicht alle Kapitel vollständig, das wird sich aber im Verlauf des Semesters ändern. 
+    
+Falls Sie Fragen haben, schreiben Sie mir gerne!
+
+*Katja Schiffers (katja.schiffers@uni-bonn.de)*
+
+aus der AG [Gartenbauwissenschaften](https://www.gartenbauwissenschaft.uni-bonn.de/) der Uni Bonn.
+ 
+
+## Zeitplan {-#zeitplan}
+
+| Datum        | Thema                                                |
+|--------------|------------------------------------------------------|
+| 23. Oktober  | Einführung R                                          |
+| 13. November  | Daten einlesen, Prinzip Anova        |
+| 18. Dezember  | Zähldaten und Boniturdaten                                       |
+| 08. Januar  | Zeitreihen und Posthoc Tests
+
+
+<!-- ```{r include=FALSE} -->
+<!-- # automatically create a bib database for R packages -->
+<!-- knitr::write_bib(c( -->
+<!--   .packages(), 'bookdown', 'knitr', 'rmarkdown' -->
+<!-- ), 'packages.bib') -->
+<!-- ``` -->

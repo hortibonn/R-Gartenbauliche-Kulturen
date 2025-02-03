@@ -1,0 +1,13 @@
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+
+rmd_files:
+- "index.Rmd"
+- "01-einführungR.Rmd"
+- "02-daten_einlesen_prinzip_anova.Rmd"
+- "03-zähldaten_bonitur.Rmd"
+- "04-zeitreihen_posthoc.Rmd"
+- "05-bayes.Rmd"
+- "06-references.Rmd"

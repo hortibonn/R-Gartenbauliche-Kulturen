@@ -1,0 +1,27 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    sharing: null
+    # sharing:
+    #   facebook: yes
+    #   twitter: yes
+    #   google: no
+    #   weibo: no
+    #   instapper: no
+    #   vk: no
+    #   all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper'] ## move two lines down if needed above the logo
+    toc:
+     # <li><a href="./">Gartenbauliche Kulturen - Daten auswerten mit R</a></li>
+      before: |
+        <li><a href="index.html"><img src="images/Gartenbaulogo.png" width="100%"></a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/USERNAME/REPO/edit/BRANCH/%s
+    download: ["pdf", "epub"]
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
