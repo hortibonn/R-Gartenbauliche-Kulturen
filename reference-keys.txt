@@ -1,5 +1,5 @@
 einleitung
-einführungR
+einfuehrungR
 was-ist-r
 r-und-r-studio-installieren
 erste-schritte-mit-r
@@ -22,7 +22,7 @@ kontinuierlich
 das-grundprinzip-der-varianzanalyse
 das-prinzip-der-parsimonie
 annahmen-der-anova-überprüfen
-zähldaten
+zaehldaten
 nicht-normalverteilte-daten
 daten-transformieren
 generalisierte-lineare-modelle
