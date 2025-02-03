@@ -1,5 +1,4 @@
-
-# Einführung R {#einführungR}
+# Einführung R {#einfuehrungR}
 
 In den nächsten Kapiteln werde ich mit Ihnen die Grundzüge der Datenauswertung mit der Statistik-Software R besprechen. Am Ende dieses Kapitels wissen Sie (hoffentlich)
 

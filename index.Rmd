@@ -17,7 +17,6 @@ link-citations: yes
 # github-repo: rstudio/bookdown-demo
 ---
 
-<!-- # ![Experimente durchführen, Daten auswerten, Bachelor-Arbeiten schreiben](images/Gartenbaulogo.png){width=50%} {-#header} -->
 
 # Einleitung
 

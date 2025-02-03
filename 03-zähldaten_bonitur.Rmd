@@ -1,4 +1,4 @@
-# Zähl- und Boniturdaten auswerten {#zähldaten}
+# Zähl- und Boniturdaten auswerten {#zaehldaten}
 
 In der letzten Woche haben Sie gelernt, wie man Experimente mit kontinuierlichen Daten der abhängigen Variable auswertet. In den Agrarwissenschaften kommen aber auch häufig andere Datentypen vor. In diesem Kapitel beschäftigen wir uns speziell mit Zähldaten (wieviele Äpfel trägt der Baum? wieviele Läuse sitzen auf der Pflanze? wieviele Eier legt das Huhn?)
 
